@@ -50,6 +50,8 @@ func Append() {
         arr.removeFirst()
         arr.removeLast()
         arr.removeSubrange(0...1) // 0~1번째 인덱스의 값을 삭제
+        arr.removeAll()
+            
     }
     //MARK: 나머지
     func other() {
@@ -58,6 +60,8 @@ func Append() {
         // 배열 앞에서부터 <3> 이라는 값을찾아 인덱스를 반환
         arr.lastIndex(of: 3)
         //요건 뒤에서부터
+        arr.swapAt(<#T##i: Int##Int#>, <#T##j: Int##Int#>)
+        //인덱스를 교환
     }
     
     
