@@ -6,20 +6,16 @@ import Foundation
 //
 //}
 
-func collatz(_ num: Int) -> Int {
+func equal(_ a: Int, _ b: Int, _ c: Int) -> Int {
     var count:Int = 0
-    while num > 1 {
-        if num % 2 == 0   {
-            num / 2
+    var result:[Int] = [a,b,c]
+  
+    for i in result {
+        if a == i {
             count+=1
-            break
-        }
-        else  {
-//            num * 3 + 1
-//            count+=1
-            print("GI")
         }
     }
+    count-=1
     return count
 }
-collatz(<#T##num: Int##Int#>)
+
