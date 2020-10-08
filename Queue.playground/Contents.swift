@@ -24,3 +24,16 @@ public protocol Queue {
     //해당 큐의 뒤쪽에 요소가 존재하는지 확인합니다 .
     var back:Element? { get }
 }
+class Person {
+   class func method() {
+      print("method")
+  }
+}
+class Student: Person {
+    override class func method() {
+        print("overriden method")
+    }
+}
+
+Person.method()
+Student.method()
