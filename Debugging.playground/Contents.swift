@@ -1,12 +1,7 @@
 import Foundation
 
 
-func checkPalindrome(_ str: String) -> Bool {
-    if str[str.startIndex] == str[str.index(before: str.endIndex)] {
-        return true
-    }
-    return false
+func oddProduct(_ arr: [Int]) -> Int {
+    return arr.filter{ $0 % 2 != 0}.reduce(0, { $0 * $1 } )
+    
 }
-    
-    
-
