@@ -1,14 +1,8 @@
 import Foundation
 
 
-func isOmnipresent(_ arr: [[Int]], _ val: Int) -> Bool {
-    for i in arr {
-        for j in i  {
-            if i.contains(j) == false {
-                return false
-            }
-        }
-    }
-    return true
+func myPi(_ n: Int) -> Double {
+    var product:Double = pow(10, Double(n))
+    return round((Double.pi) * product) / product
 }
-isOmnipresent(<#T##arr: [[Int]]##[[Int]]#>, <#T##val: Int##Int#>)
+myPi(3)
