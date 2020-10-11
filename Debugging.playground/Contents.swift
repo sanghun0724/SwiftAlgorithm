@@ -1,15 +1,10 @@
 import Foundation
 
 
-func isIdentical(_ s: String) -> Bool {
-    var result:[Character] = []
-    for i in s {
-        result.append(i)
+func getAbsSum(_ arr: [Int]) -> Int {
+    return arr.reduce(0) {
+        $0 + abs($1)
     }
-    if Set(result).count != 1 {
-        return false
-    }
-    return true
+    
     
 }
-isIdentical("sssssssa")
