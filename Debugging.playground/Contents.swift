@@ -1,6 +1,14 @@
 import Foundation
 
-func isStrangePair(_ str1: String, _ str2: String) -> Bool {
-    return str1[str1.startIndex] == str2[str2.index(before: str2.endIndex)] && str1[str1.index(before: str1.endIndex)] == str2[str2.startIndex]
-    
+func greetPeople(_ names:[String]) -> String {
+    var result:String  = ""
+    for (index, value) in names.enumerated() {
+        if index == 0 {
+            result.append("Hello \(value)")
+    }
+        else {
+            result.append(", Hello \(value)")
+        }
+    }
+    return result
 }
