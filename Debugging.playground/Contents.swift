@@ -1,14 +1,7 @@
 import Foundation
 
-func greetPeople(_ names:[String]) -> String {
-    var result:String  = ""
-    for (index, value) in names.enumerated() {
-        if index == 0 {
-            result.append("Hello \(value)")
+func dictionary(_ initial: String, _ words: [String]) -> [String] {
+    return words.filter{
+        $0.hasPrefix(initial)
     }
-        else {
-            result.append(", Hello \(value)")
-        }
-    }
-    return result
 }
