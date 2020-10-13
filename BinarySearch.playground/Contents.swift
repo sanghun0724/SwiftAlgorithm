@@ -1,6 +1,6 @@
-import Foundation
+import UIKit
 
-func Test<T: Comparable>(target: T, in collection:[T]) -> T?{
+func binarySearch<T: Comparable>(target: T, in collection:[T]) -> T?{
     var array = collection.sorted()
     
     var startIndex:Int = 0
