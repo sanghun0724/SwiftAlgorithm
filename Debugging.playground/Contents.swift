@@ -1,10 +1,8 @@
 import Foundation
 
-func makeIncrementer(forIncrement amount:Int) -> (() -> Int) {
-    var runningTatal = 0
-    func incremental() -> Int {
-        runningTatal += amount
-        return runningTatal
+func redundant(_ s: String) -> () -> String {
+    func HI() -> String {
+        return s
     }
-    return incremental
+return HI
 }
