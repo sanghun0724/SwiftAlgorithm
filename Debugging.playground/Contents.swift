@@ -1,9 +1,10 @@
 import Foundation
 
-func trace(_ matrix: [[Int]]) -> Int {
-    var result:Int = 0
-    for (index,value) in matrix.enumerated()  {
-       result += value[index]
+func makeIncrementer(forIncrement amount:Int) -> (() -> Int) {
+    var runningTatal = 0
+    func incremental() -> Int {
+        runningTatal += amount
+        return runningTatal
     }
-    return result
+    return incremental
 }
