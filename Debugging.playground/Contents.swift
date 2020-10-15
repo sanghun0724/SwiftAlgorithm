@@ -1,11 +1,9 @@
 import Foundation
 
-func test(_ n:[Int]){
-    for i in n {
-        print(i)
+func trace(_ matrix: [[Int]]) -> Int {
+    var result:Int = 0
+    for (index,value) in matrix.enumerated()  {
+       result += value[index]
     }
-    for i in n {
-        print(i)
-    }
-    
+    return result
 }
