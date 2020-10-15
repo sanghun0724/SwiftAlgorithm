@@ -1,8 +1,10 @@
 import Foundation
 
-func redundant(_ s: String) -> () -> String {
-    func HI() -> String {
-        return s
+func checkFactors(_ factors: [Int], _ num: Int) -> Bool {
+    for i in factors {
+        if num % i  != 0  {
+            return false
+        }
     }
-return HI
+    return true
 }
