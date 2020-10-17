@@ -1,30 +1,9 @@
 import Foundation
 
-enum VendingMachineError:Error  {
-  case invalidInput
-  case insufficientFunds(moneyNeeded: Int)
-  case outOfStock
-}
-
-class VendingMachine {
-  var deposited: Int = 0
-
-  func receiveMoney(_ money: Int) throws {
-    guard money > 0 else {
-       throw VendingMachineError.invalidInput
+func arrayOfMultiples(_ num: Int, _ length: Int) -> [Int] {
+    var result:[Int] = []
+    for i in 1...length {
+        result.append(num * i)
     }
-    self.deposited += money
-    print("\(money)원 받음")
-  }
-}
-let machine: VendingMachine = VendingMachine()
-
-do {
-  try machine.receiveMoney(0)
-} catch VendingMachineError.invalidInput {
-  print("입력이 잘못되었습니다")
-} catch VendingMachineError.insufficientFunds(let moneyNeeded) {
-  print("\(moneyNeeded)원이 부족합니다")
-} catch VendingMachineError.outOfStock {
-  print("수량이 부족합니다")
+    return result
 }
