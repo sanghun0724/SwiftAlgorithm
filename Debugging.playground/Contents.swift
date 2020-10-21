@@ -1,9 +1,10 @@
 import Foundation
-func solution(_ n:Int) -> String {
-    var waterMelon:String = ""
-    for i in 1...5000{
-        waterMelon.append("수박")
+func solution(_ s:String) -> Bool {
+    if s.count == 4 || s.count == 6 {
+        if Int(s) != nil {
+            return true 
     }
-    return String(waterMelon[waterMelon.startIndex...waterMelon.index(waterMelon.startIndex, offsetBy: n-1)])
+        
+    }
+    return false
 }
-solution(4)
