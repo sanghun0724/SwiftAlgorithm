@@ -1,9 +1,5 @@
 import Foundation
-let n = readLine()!.components(separatedBy: [" "]).map { Int($0)! }
-let (a, b) = (n[0], n[1])
-for  i in 0..<b {
-     print(String(repeating: "*", count: a))
+func solution(_ n:Int) -> Int {
+    return 0
 }
-print(a + b)
- 
 
