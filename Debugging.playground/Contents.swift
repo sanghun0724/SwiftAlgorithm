@@ -1,8 +1,11 @@
 import Foundation
-func solution(_ s:String) -> Bool
-{
-    return (s.filter{$0 == "p" || $0 == "P"}.count == s.filter{$0 == "y" || $0 == "Y"}.count) ?  true:false
-    
-
+func solution(_ n:Int) -> Int
+{ var result = n
+   var result2 = 0
+    while result > 0 {
+      result2 += result % 10
+        result/=10
+    }
+    return result2
 }
-solution("qwd")
+solution(1234)
