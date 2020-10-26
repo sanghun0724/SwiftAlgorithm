@@ -1,12 +1,11 @@
 import Foundation
 func solution(_ n:Int64) -> Int64 {
-    var r:Int64 = 1
-    var sub = String(n).map{Int64(String($0))!}.sorted(by: <)
-    var result:Int64 = 0
-    for i in sub {
-         result+=Int64(i * r)
-        r*=10
+   var x = 1
+    while x * x < n {
+        if x*x == n {
+             return Int64((x+1)*(x+1))
+        }
+        x+=1
     }
-    return result
+    return -1
 }
-solution(118372)
