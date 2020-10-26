@@ -1,5 +1,7 @@
 import Foundation
-func solution(_ n:Int64) -> [Int] {
-    return  String(n).map{Int(String($0))!}.reversed()
+func solution(_ arr:[Int], _ divisor:Int) -> [Int] {
+   
+    var result = arr.filter{ $0 % divisor == 0}.sorted()
+    
+    return result.isEmpty ?  [-1]: result
 }
-solution(123452)
