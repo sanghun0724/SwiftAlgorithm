@@ -1,6 +1,5 @@
 import Foundation
-func solution(_ arr:[Int]) -> Double {
-  return Double(arr.reduce(0) {
-    $0 + $1
-   }) / Double(arr.count)
+func solution(_ n:Int64) -> [Int] {
+    return  String(n).map{Int(String($0))!}.reversed()
 }
+solution(123452)
