@@ -1,4 +1,14 @@
 import Foundation
 func solution(_ n:Int) -> Int {
-   return Array(1...n).filter{ n / $0 != 0 }.count
+    var count = 0
+   var arr = Array.init(repeating: false, count: n)
+    for i in 2...n {
+        if arr[i] == false{
+            count+=1
+        }
+        for j in stride(from: 2, through: n, by: i) {
+            arr[j] = true
+        }
+    }
+    return count
 }
