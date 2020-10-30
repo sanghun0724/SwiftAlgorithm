@@ -13,20 +13,16 @@ import Foundation
 //    return count
 //}
 func solution(_ n:Int, _ m:Int) -> [Int] {
-    let first =  Array(1...n).filter{$0 % n == 0}
-    let second = Array(1...m).filter{$0 % n == 0}
-    var result:[Int] = []
-    for i in first  {
-        for j in second.reversed()  {
-            if i == j  { result.append(j); break; }
-        }
+    func gcd(_ min:Int , _ max:Int) -> Int {
+        return min % max == 0 ? max : gcd(max, min % max)
     }
-    for i in 1...10000000  {
-        if n * i ==  m * i {
-            result.append(n*i)
-        }
+    func lcm (_ a:Int,_ b:Int) -> Int {
+        return a * b  / gcd(a, b)
     }
-    return result
+    func result (n:Int,m:Int) ->[Int] {
+        return [gcd(n, m),lcm(n, m)]
+    }
+    return result(n: n, m: m)
     
 }
 solution(2, 4)
