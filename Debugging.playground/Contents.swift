@@ -1,14 +1,12 @@
 import Foundation
-func solution(_ strings:[String], _ n:Int) -> [String] {
-    let index = strings[0].index(strings[0].startIndex,offsetBy: n)
-    let result = strings.sorted(by: {(a:String,b:String) -> Bool in
-        if a[index] == b[index] {
-               return a < b
+func solution(_ arr:[Int]) -> [Int] {
+    var arr1 = arr
+    var result = arr.sorted()
+   var check = result.removeFirst()
+    for (i,v) in arr.enumerated() {
+        if check == v {
+            arr1.remove(at: i)
         }
-        else {
-          return a[index] < b[index]
-        }
-    })
-   return result
+    }
+   return arr1.isEmpty ? [-1]:arr1
 }
-solution(["sun","bed","car"], 1)
