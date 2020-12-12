@@ -1,17 +1,18 @@
 import Foundation
 
-func solution(_ a:Int, _ b:Int) -> String {
+func solution(_ numbers:[Int]) -> [Int] {
+    var resultArr:[Int] = []
     
-    var dateCount = 0
-    let weekend = ["THU","FRI","SAT","SUN","MON","TUE","WED"]
-    let date = [31,29,31,30,31,30,30,31,30,29,30,31]
-    
-    for i in stride(from: 1, to: a-1, by: 1) {
-        dateCount+=date[i]
+    for i in 0...numbers.count-1 {
+        if i == numbers.count-1 {
+            break
+        }
+        for j in i+1...numbers.count-1 {
+            resultArr.append(numbers[i]+numbers[j])
+        }
     }
-    dateCount += b
-    
-    return weekend[dateCount%7]
-    
+    let resultSet = Set(resultArr)
+    return Array(resultSet).sorted()
 }
-solution(1, 12)
+
+solution([2,1,3,5])
