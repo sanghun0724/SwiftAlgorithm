@@ -1,18 +1,20 @@
 import Foundation
 
-func solution(_ numbers:[Int]) -> [Int] {
-    var resultArr:[Int] = []
+func solution(_ d:[Int], _ budget:Int) -> Int {
+    var alternativeValue = budget
+    var alternativeArray = d
+    var count = 0
     
-    for i in 0...numbers.count-1 {
-        if i == numbers.count-1 {
+    alternativeArray.sort()
+    
+    for i in alternativeArray {
+        if alternativeValue < i {
             break
         }
-        for j in i+1...numbers.count-1 {
-            resultArr.append(numbers[i]+numbers[j])
-        }
+        alternativeValue-=i
+        count+=1
+       
     }
-    let resultSet = Set(resultArr)
-    return Array(resultSet).sorted()
+    return count
+    
 }
-
-solution([2,1,3,5])
