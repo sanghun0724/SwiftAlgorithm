@@ -13,9 +13,6 @@ SwiftAlgorithm/[SangHeon BLOG ##Swift](https://sangheon0724.medium.com/, "blog l
 ](https://sangheon0724.medium.com/%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0-arraylist-feat-swift-3ad22703b67c, "blog post")
   * [자료구조 Linked List(Feat.Swift)](https://sangheon0724.medium.com/%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0-linked-list-feat-swift-c274b94f0cab, "blog post")
        * [](, "blog post")
-        * [](, "blog post")
-         * [](, "blog post")
-          * [](, "blog post")
 * Swift Algorithm&Tip 
   * [Big-O 표기법이란? 초보자들을 위한 Big-o 파헤치기](https://sangheon0724.medium.com/big-o-%ED%91%9C%EA%B8%B0%EB%B2%95%EC%9D%B4%EB%9E%80-%EC%B4%88%EB%B3%B4%EC%9E%90%EB%93%A4%EC%9D%84-%EC%9C%84%ED%95%9C-big-o-%ED%8C%8C%ED%97%A4%EC%B9%98%EA%B8%B0-8fb067474821, "blog post")
 * English Blog Post
