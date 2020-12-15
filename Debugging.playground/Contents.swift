@@ -1,20 +1,18 @@
 import Foundation
 
-func solution(_ d:[Int], _ budget:Int) -> Int {
-    var alternativeValue = budget
-    var alternativeArray = d
-    var count = 0
-    
-    alternativeArray.sort()
-    
-    for i in alternativeArray {
-        if alternativeValue < i {
-            break
-        }
-        alternativeValue-=i
-        count+=1
+
+    func reverse(_ x: Int) -> Int {
+        var result = x
+         var process = Array(String(result))
+        process.reverse()
+         Int(process.map{String($0)}.joined())
+      
        
+     
+     
     }
-    return count
     
-}
+
+
+
+reverse(-12)
