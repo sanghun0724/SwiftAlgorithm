@@ -1,18 +1,20 @@
 import Foundation
 
-
-    func reverse(_ x: Int) -> Int {
+class Solution {
+    func isPalindrome(_ x: Int) -> Bool {
         var result = x
-         var process = Array(String(result))
-        process.reverse()
-         Int(process.map{String($0)}.joined())
-      
-       
-     
-     
-    }
+        var revertedNumber = 0
+        if result < 0 || (result % 10 == 0 && result != 0) {
+            return false
+        }
+        
+        while result > revertedNumber {
+            revertedNumber = revertedNumber * 10 + result % 10
+            result /= 10
+        }
     
+        return result == revertedNumber || result == revertedNumber/10
+    }
+}
 
 
-
-reverse(-12)
