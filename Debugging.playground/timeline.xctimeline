@@ -3,7 +3,12 @@
    version = "3.0">
    <TimelineItems>
       <LoggerValueHistoryTimelineItem
-         documentLocation = "file:///Users/sangheon/Desktop/SwiftAlgorithm/Debugging.playground#CharacterRangeLen=423&amp;CharacterRangeLoc=0&amp;EndingColumnNumber=0&amp;EndingLineNumber=19&amp;StartingColumnNumber=0&amp;StartingLineNumber=0&amp;Timestamp=629904971.1217591"
+         documentLocation = "file:///Users/sangheon/Desktop/SwiftAlgorithm/Debugging.playground#CharacterRangeLen=548&amp;CharacterRangeLoc=0&amp;EndingColumnNumber=0&amp;EndingLineNumber=23&amp;StartingColumnNumber=0&amp;StartingLineNumber=0&amp;Timestamp=631201386.974942"
+         selectedRepresentationIndex = "0"
+         shouldTrackSuperviewWidth = "NO">
+      </LoggerValueHistoryTimelineItem>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/sangheon/Desktop/SwiftAlgorithm/Debugging.playground#CharacterRangeLen=0&amp;CharacterRangeLoc=547&amp;EndingColumnNumber=0&amp;EndingLineNumber=22&amp;StartingColumnNumber=0&amp;StartingLineNumber=22&amp;Timestamp=631201386.975192"
          selectedRepresentationIndex = "0"
          shouldTrackSuperviewWidth = "NO">
       </LoggerValueHistoryTimelineItem>
