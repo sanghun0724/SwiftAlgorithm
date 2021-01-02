@@ -1,18 +1,24 @@
 import Foundation
 
     func isValid(_ s: String) -> Bool {
-        let arr = ["{}","[]","()"]
-        var pari = s
-        pari = pari.components(separatedBy: " ").joined()
-        while true {
-            if pari.count == 0 {
-                return true
-            } else {
-                for i in arr {
-                    pari = pari.replacingOccurrences(of: i, with: "")
-                }
+        //stack 사용!
+        var arr = [Character]()
+        for i in s {
+            switch i {
+            case ")":
+                if arr.isEmpty {return false}
+                if arr.removeLast() != "(" {return false}
+            case "}":
+                if arr.isEmpty {return false}
+                if arr.removeLast() != "{" {return false}
+            case "]":
+                if arr.isEmpty {return false}
+                if arr.removeLast() != "[" {return false}
+            default:
+                arr.append(i)
             }
         }
+        return arr.isEmpty
     }
 
 isValid("{ ([]) }")
