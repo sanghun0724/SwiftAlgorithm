@@ -1,23 +1,18 @@
 import Foundation
-func longestCommonPrefix(_ strs: [String]) -> String {
-    
-   if strs.count == 0 { return "" }
-    
-    let shortestWord = strs.min{$0.count < $1.count}!
-    var longestPrefix = shortestWord
-    
-        for str in strs {
-            
-            while !str.hasPrefix(longestPrefix), longestPrefix.count > 0 {
-                longestPrefix.removeLast()
+
+    func isValid(_ s: String) -> Bool {
+        let arr = ["{}","[]","()"]
+        var pari = s
+        pari = pari.components(separatedBy: " ").joined()
+        while true {
+            if pari.count == 0 {
+                return true
+            } else {
+                for i in arr {
+                    pari = pari.replacingOccurrences(of: i, with: "")
+                }
             }
-            
-            if longestPrefix.count == 0 { return longestPrefix }
         }
-    
-    return longestPrefix
-}
+    }
 
-longestCommonPrefix(["flower","flow"])
-
-
+isValid("{ ([]) }")
