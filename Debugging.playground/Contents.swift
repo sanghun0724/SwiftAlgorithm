@@ -1,6 +1,7 @@
 import Foundation
 
 
-func noting () {
-     return 
-}
+func maxSubArray(_ nums: [Int]) -> Int {
+        
+    }
+
