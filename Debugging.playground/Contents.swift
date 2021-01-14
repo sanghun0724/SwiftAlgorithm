@@ -1,16 +1,19 @@
 import Foundation
 
 
-    func maxSubArray(_ nums: [Int]) -> Int {
-        var m = 0
-        var result = Int.min
-        for i in 0..<nums.count {
-            m = max(nums[i], nums[i] + m)
-            result = max(result, m)
+    func plusOne(_ digits: [Int]) -> [Int] {
+        var result = digits
+        var check = true
+        for i in digits {
+            if i < 0 {
+                check = false
+                break
+            }
         }
-        
+        if check == true {
+           var k = result.removeLast()
+            result.append(k+1)
+        }
         return result
     }
 
-
- maxSubArray([-2,1,-3,4,-1,2,1,-5,4])
