@@ -1,14 +1,26 @@
 
-    func climbStairs(_ n: Int) -> Int {
-        if n == 1 { return 1}
-       
-        var dpArray:[Int] = Array(repeating: 0, count: n+1)
+
+ 
+  public class ListNode {
+      public var val: Int
+      public var next: ListNode?
+      public init() { self.val = 0; self.next = nil; }
+      public init(_ val: Int) { self.val = val; self.next = nil; }
+      public init(_ val: Int, _ next: ListNode?) { self.val = val; self.next = next; }
+  }
+ 
+
+    func deleteDuplicates(_ head: ListNode?) -> ListNode? {
+        var current = head
         
-        dpArray[0] = 1
-        dpArray[1] = 1
-        for i in 2...n {
-            dpArray[i] = dpArray[i - 1] + dpArray[i - 2]
+        while current?.val != nil && current?.next != nil {
+            if current?.val == current?.next?.val {
+                current = current?.next?.next
+            } else {
+                current = current?.next
+            }
         }
-        return dpArray[n]
+    return head
     }
+
 
