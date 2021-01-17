@@ -17,22 +17,14 @@
  }
  
 class Solution {
-    var count = 1
-    var a = 0
     func maxDepth(_ root: TreeNode?) -> Int {
-        return dfs(leftTree: root?.left, rightTree: root?.right)
+        return dfs(node: root, sum: 0)
     }
-    func dfs(leftTree:TreeNode?,rightTree:TreeNode?) -> Int {
-        count+=1
-        if leftTree?.val == nil  {
-             rightTree?.val == nil ?  a = count : dfs(leftTree: rightTree?.left, rightTree: rightTree?.left)
-        }
-        if rightTree?.val == nil {
-            return leftTree?.val == nil ? count-1 : dfs(leftTree: leftTree?.left, rightTree: leftTree?.right)
-        }
-        
-       
-        return count
+    func dfs(node:TreeNode?,sum:Int) -> Int {
+        guard let node = node else {
+            return sum
+    }
+        return max(dfs(node: node.left, sum: sum + 1), dfs(node: node.right, sum: sum + 1))
     }
 }
 
