@@ -15,16 +15,55 @@
          self.right = right
       }
  }
- 
+public struct Queue<T> {
+    private var leftStack: [T] = []
+    private var rightStack: [T] = []
+    
+    public init() {}
+    
+    public mutating func enqueue(_ element:T) -> Bool {
+        rightStack.append(element)
+        return true
+    }
+    
+    public mutating func dequeue(_ element:T) -> T? {
+        if leftStack.isEmpty {
+            leftStack = rightStack.reversed()
+            rightStack.removeAll()
+        }
+        return leftStack.popLast()
+    }
+}
+
 class Solution {
-    func maxDepth(_ root: TreeNode?) -> Int {
-        return dfs(node: root, sum: 0)
-    }
-    func dfs(node:TreeNode?,sum:Int) -> Int {
-        guard let node = node else {
-            return sum
-    }
-        return max(dfs(node: node.left, sum: sum + 1), dfs(node: node.right, sum: sum + 1))
+    func levelOrderBottom(_ root: TreeNode?) -> [[Int]] {
+        var result = [[Int]]()
+        if root == nil {
+            return [[0]]
+        }
+        
+        var queue = [TreeNode?]()
+        queue.append(root)
+        
+        while queue.count != 0 {
+            var nodeCount = queue.count
+            var rowResult = [Int]()
+            
+            while nodeCount > 0 {
+                var currentNode = queue.removeFirst()
+                
+                if currentNode?.left != nil {
+                    queue.append(currentNode?.left)
+                }
+                if currentNode?.right != nil {
+                    queue.append(currentNode?.right)
+                }
+                rowResult.append(currentNode!.val)
+                nodeCount-=1
+            }
+            result.append(rowResult)
+        }
+        return result.reversed()
     }
 }
 
