@@ -15,56 +15,20 @@
          self.right = right
       }
  }
-public struct Queue<T> {
-    private var leftStack: [T] = []
-    private var rightStack: [T] = []
-    
-    public init() {}
-    
-    public mutating func enqueue(_ element:T) -> Bool {
-        rightStack.append(element)
-        return true
-    }
-    
-    public mutating func dequeue(_ element:T) -> T? {
-        if leftStack.isEmpty {
-            leftStack = rightStack.reversed()
-            rightStack.removeAll()
-        }
-        return leftStack.popLast()
-    }
-}
-
 class Solution {
-    func levelOrderBottom(_ root: TreeNode?) -> [[Int]] {
-        var result = [[Int]]()
-        if root == nil {
-            return [[0]]
+    func sortedArrayToBST(_ nums: [Int]) -> TreeNode? {
+        return makeBst(arr: nums, left: 0, right: nums.count - 1)
+        }
+    func makeBst(arr:[Int],left:Int,right:Int) ->TreeNode? {
+        if left > right {
+            return nil
         }
         
-        var queue = [TreeNode?]()
-        queue.append(root)
-        
-        while queue.count != 0 {
-            var nodeCount = queue.count
-            var rowResult = [Int]()
-            
-            while nodeCount > 0 {
-                var currentNode = queue.removeFirst()
-                
-                if currentNode?.left != nil {
-                    queue.append(currentNode?.left)
-                }
-                if currentNode?.right != nil {
-                    queue.append(currentNode?.right)
-                }
-                rowResult.append(currentNode!.val)
-                nodeCount-=1
-            }
-            result.append(rowResult)
-        }
-        return result.reversed()
+        let mid = left + (right - left) / 2
+       return TreeNode(arr[mid],
+                       makeBst(arr: arr, left: left, right: mid - 1 ),
+                       makeBst(arr: arr, left: mid + 1, right: right))
+
     }
+    
 }
-
-
