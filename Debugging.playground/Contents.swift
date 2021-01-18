@@ -3,32 +3,39 @@
  
 
  
-  public class TreeNode {
-      public var val: Int
-      public var left: TreeNode?
-      public var right: TreeNode?
-      public init() { self.val = 0; self.left = nil; self.right = nil; }
-      public init(_ val: Int) { self.val = val; self.left = nil; self.right = nil; }
-      public init(_ val: Int, _ left: TreeNode?, _ right: TreeNode?) {
-          self.val = val
-         self.left = left
-         self.right = right
-      }
- }
+//  public class TreeNode {
+//      public var val: Int
+//      public var left: TreeNode?
+//      public var right: TreeNode?
+//      public init() { self.val = 0; self.left = nil; self.right = nil; }
+//      public init(_ val: Int) { self.val = val; self.left = nil; self.right = nil; }
+//      public init(_ val: Int, _ left: TreeNode?, _ right: TreeNode?) {
+//          self.val = val
+//         self.left = left
+//         self.right = right
+//      }
+// }
 class Solution {
-    func sortedArrayToBST(_ nums: [Int]) -> TreeNode? {
-        return makeBst(arr: nums, left: 0, right: nums.count - 1)
+    var count = 0
+    func isBalanced(_ root: TreeNode?) -> Bool {
+        if root?.val == nil {
+            return true
         }
-    func makeBst(arr:[Int],left:Int,right:Int) ->TreeNode? {
-        if left > right {
-            return nil
+        return checkDFS(root) != -1
+    }
+    func checkDFS(_ root:TreeNode?) -> Int {
+        guard  let root = root  else {
+            return 0
         }
         
-        let mid = left + (right - left) / 2
-       return TreeNode(arr[mid],
-                       makeBst(arr: arr, left: left, right: mid - 1 ),
-                       makeBst(arr: arr, left: mid + 1, right: right))
-
+        var leftHeight = checkDFS(root.left)
+        var rightHeight = checkDFS(root.right)
+        
+        if leftHeight == -1 || rightHeight == -1 || abs(leftHeight - rightHeight) > 1 {
+            return -1
+        }
+        return max(leftHeight,rightHeight) + 1
+        
     }
     
 }
