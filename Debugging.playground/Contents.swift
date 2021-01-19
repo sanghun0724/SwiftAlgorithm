@@ -15,22 +15,14 @@
 //         self.right = right
 //      }
 // }
-class Solution {
-    func runningSum(_ nums: [Int]) -> [Int] {
-        var sum = 0
-        return nums.map{(sum+=$0,sum).1}
-    }
+
+    func shuffle(_ nums: [Int], _ n: Int) -> [Int] {
+       var result = [Int]()
+       var sequence = zip(nums[0..<n], nums[n..<nums.count])
+        for (i,j) in sequence {
+            result.append(i)
+            result.append(j)
+        }
+        return result
+        
 }
-
-let alpa:[String:String] = ["a":"A","b":"B"]
-
-var keys:[String] = alpa.map{(tuple:(String,String)) -> String in
-    return tuple.0
-}
-print(keys)
-
-keys = alpa.map{$0.0}
-print(keys)
-let values:[String] = alpa.map{$0.1}
-print(values)
- 
