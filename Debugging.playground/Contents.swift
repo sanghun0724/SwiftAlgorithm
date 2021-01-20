@@ -15,14 +15,19 @@
 //         self.right = right
 //      }
 // }
-
-    func shuffle(_ nums: [Int], _ n: Int) -> [Int] {
-       var result = [Int]()
-       var sequence = zip(nums[0..<n], nums[n..<nums.count])
-        for (i,j) in sequence {
-            result.append(i)
-            result.append(j)
+    func singleNumber(_ nums: [Int]) -> Int {
+        var dict:[Int:Int] = [:]
+        for i in 0..<nums.count {
+            if let value = dict[nums[i]] {
+                dict[nums[i]] = nil
+            } else {
+                dict[nums[i]] = 1
+            }
         }
-        return result
+        for i in dict {
+            return i.key
+        }
+        return -1
         
-}
+    }
+
