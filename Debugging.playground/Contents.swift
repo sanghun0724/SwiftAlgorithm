@@ -15,19 +15,37 @@
 //         self.right = right
 //      }
 // }
-    func singleNumber(_ nums: [Int]) -> Int {
-        var dict:[Int:Int] = [:]
-        for i in 0..<nums.count {
-            if let value = dict[nums[i]] {
-                dict[nums[i]] = nil
-            } else {
-                dict[nums[i]] = 1
-            }
-        }
-        for i in dict {
-            return i.key
-        }
-        return -1
+
+  public class ListNode {
+      public var val: Int
+      public var next: ListNode?
+      public init(_ val: Int) {
+          self.val = val
+          self.next = nil
+      }
+  }
+ 
+
+class MinStack {
+
+    /** initialize your data structure here. */
+    init() {
         
     }
-
+    
+    func push(_ x: Int) {
+        
+    }
+    
+    func pop() {
+        
+    }
+    
+    func top() -> Int {
+        
+    }
+    
+    func getMin() -> Int {
+        
+    }
+}
