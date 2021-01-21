@@ -27,25 +27,25 @@
  
 
 class MinStack {
-
+    var stack:[Int] = [Int]()
     /** initialize your data structure here. */
     init() {
-        
+       
     }
     
     func push(_ x: Int) {
-        
+        stack.append(x)
     }
     
     func pop() {
-        
+        stack.popLast()
     }
     
     func top() -> Int {
-        
+        return stack.last!
     }
     
     func getMin() -> Int {
-        
+        return stack.min()!
     }
 }
