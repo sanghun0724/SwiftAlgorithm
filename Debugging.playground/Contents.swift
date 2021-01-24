@@ -24,28 +24,19 @@
           self.next = nil
       }
   }
- 
-func getIntersectionNode(_ headA: ListNode?, _ headB: ListNode?) -> ListNode? {
-    if headA == nil && headB == nil {
-        return nil
-    }
-    
-    var pointer1 = headA
-    var pointer2 = headB
-    
-    while pointer1 !== pointer2 {
-        pointer1 = pointer1?.next
-        pointer2 = pointer2?.next
-        
-        if pointer2 === pointer1 {
-            return pointer2
-        }
-        if pointer1 == nil {
-            pointer1 = headB
-        }
-        if pointer2 == nil {
-            pointer2 = headA
+
+func convertToTitle(_ n: Int) -> String {
+    var resultString = ""
+    var dict = [Int:String]()
+    for i in 65..<91 {
+        if let num = UnicodeScalar(i) {
+            var a = i - 64
+            dict[a] = String(num)
         }
     }
-    return pointer2
+   var A = n / 26
+   var B = n % 26
+    dict[0] = ""
+    return dict[A]! + dict[B]!
     }
+convertToTitle(26)
