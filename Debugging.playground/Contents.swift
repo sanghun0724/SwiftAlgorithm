@@ -25,27 +25,27 @@
       }
   }
  
-
-class MinStack {
-    var stack:[Int] = [Int]()
-    /** initialize your data structure here. */
-    init() {
-       
+func getIntersectionNode(_ headA: ListNode?, _ headB: ListNode?) -> ListNode? {
+    if headA == nil && headB == nil {
+        return nil
     }
     
-    func push(_ x: Int) {
-        stack.append(x)
-    }
+    var pointer1 = headA
+    var pointer2 = headB
     
-    func pop() {
-        stack.popLast()
+    while pointer1 !== pointer2 {
+        pointer1 = pointer1?.next
+        pointer2 = pointer2?.next
+        
+        if pointer2 === pointer1 {
+            return pointer2
+        }
+        if pointer1 == nil {
+            pointer1 = headB
+        }
+        if pointer2 == nil {
+            pointer2 = headA
+        }
     }
-    
-    func top() -> Int {
-        return stack.last!
+    return pointer2
     }
-    
-    func getMin() -> Int {
-        return stack.min()!
-    }
-}
