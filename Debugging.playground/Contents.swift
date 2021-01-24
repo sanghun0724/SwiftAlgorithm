@@ -25,16 +25,22 @@
       }
   }
 
-class Solution {
-    func majorityElement(_ nums: [Int]) -> Int {
-        var setArr = Set(nums)
-        var result = 0
-        var resultArr = [Int]()
-            for i in setArr {
-                if nums.filter{$0 == i}.count > nums.count / 2 {
-                    return i
-                }
-            }
-      return -1
+
+func numWaterBottles(_ numBottles: Int, _ numExchange: Int) -> Int {
+     var count = 0
+    var recycleBottle = numBottles
+    var rest = 0
+    
+    while rest + recycleBottle * numExchange >= numExchange {
+        count += recycleBottle
+        rest += recycleBottle % numExchange
+        recycleBottle = recycleBottle / numExchange
+        if rest >= numExchange {
+            recycleBottle += rest / numExchange
+            rest = rest % numExchange
+        }
     }
+   return count
 }
+numWaterBottles(9,3)
+
