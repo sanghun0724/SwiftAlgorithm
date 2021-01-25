@@ -26,21 +26,9 @@
   }
 
 
-func numWaterBottles(_ numBottles: Int, _ numExchange: Int) -> Int {
-     var count = 0
-    var recycleBottle = numBottles
-    var rest = 0
-    
-    while rest + recycleBottle * numExchange >= numExchange {
-        count += recycleBottle
-        rest += recycleBottle % numExchange
-        recycleBottle = recycleBottle / numExchange
-        if rest >= numExchange {
-            recycleBottle += rest / numExchange
-            rest = rest % numExchange
-        }
+class Solution {
+    func countOdds(_ low: Int, _ high: Int) -> Int {
+        return (low % 2 == 1) ? (1 + (high - low) / 2) : ((high - low) / 2 + (high - low) % 2)
     }
-   return count
 }
-numWaterBottles(9,3)
 
