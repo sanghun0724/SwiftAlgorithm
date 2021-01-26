@@ -26,9 +26,27 @@
   }
 
 
-class Solution {
-    func countOdds(_ low: Int, _ high: Int) -> Int {
-        return (low % 2 == 1) ? (1 + (high - low) / 2) : ((high - low) / 2 + (high - low) % 2)
+
+    func findKthPositive(_ arr: [Int], _ k: Int) -> Int {
+        var dict:[Int:Int] = [:]
+        var restArr:[Int] = [Int]()
+        for i in arr {
+            dict[i] = i
+        }
+
+        for j in 1...Int.max {
+         
+            if j == dict[j] {
+                continue
+            } else {
+                restArr.append(j)
+                if restArr.count == k {
+                    return restArr[k-1]
+                }
+            }
+        }
+        return -1
     }
-}
+
+findKthPositive([1,2,3,4], 2)
 
