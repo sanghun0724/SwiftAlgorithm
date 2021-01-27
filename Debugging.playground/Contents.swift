@@ -27,26 +27,9 @@
 
 
 
-    func findKthPositive(_ arr: [Int], _ k: Int) -> Int {
-        var dict:[Int:Int] = [:]
-        var restArr:[Int] = [Int]()
-        for i in arr {
-            dict[i] = i
-        }
-
-        for j in 1...Int.max {
-         
-            if j == dict[j] {
-                continue
-            } else {
-                restArr.append(j)
-                if restArr.count == k {
-                    return restArr[k-1]
-                }
-            }
-        }
-        return -1
+class Solution {
+    func makeGood(_ s: String) -> String {
+        
     }
-
-findKthPositive([1,2,3,4], 2)
+}
 
