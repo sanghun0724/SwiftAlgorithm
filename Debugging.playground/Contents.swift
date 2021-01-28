@@ -27,15 +27,23 @@
 
 
 
-
-    func makeGood(_ s: String) -> String {
-        var stack:[Character] = [Character]()
-        
-        for i in 0..<s.count {
-            stack.append(s[s.index(s.startIndex, offsetBy: i)])
-            
-            
+func makeGood(_ s: String) -> String {
+    var stack : [Character] = []
+    for c in s{
+        if stack.isEmpty{
+            stack.append(c)
         }
-        return ""
+        else{
+            if stack.last?.uppercased() == String(c) && stack.last!.isLowercase && c.isUppercase{
+                stack.popLast()
+            }
+            else if stack.last?.lowercased() == String(c) && c.isLowercase && stack.last!.isUppercase{
+                stack.popLast()
+            }
+            else{
+                stack.append(c)
+            }
+        }
     }
-makeGood("leEeetcode")
+    return String(stack)
+}
