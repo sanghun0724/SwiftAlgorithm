@@ -27,9 +27,15 @@
 
 
 
-class Solution {
-    func makeGood(_ s: String) -> String {
-        
-    }
-}
 
+    func makeGood(_ s: String) -> String {
+        var stack:[Character] = [Character]()
+        
+        for i in 0..<s.count {
+            stack.append(s[s.index(s.startIndex, offsetBy: i)])
+            
+            
+        }
+        return ""
+    }
+makeGood("leEeetcode")
