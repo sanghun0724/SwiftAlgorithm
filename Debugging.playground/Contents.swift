@@ -28,17 +28,21 @@
 
 
 class Solution {
-    func reverseList(_ head: ListNode?) -> ListNode? {
-        var previous:ListNode? = nil
-        var currentNode = head
-        
-        while currentNode != nil {
-            let next = currentNode?.next
-            currentNode?.next = previous
-            previous = currentNode
-            currentNode = next
-        }
-        return previous
+    func invertTree(_ root: TreeNode?) -> TreeNode? {
+        reculsive(left: root?.left, right: root?.right)
     }
-   
+    
+    func reculsive(left:TreeNode?,right:TreeNode?) -> TreeNode? {
+        if left == nil || right == nil {
+            
+        }
+        var rightV = right?.val
+        var leftV = left?.val
+        left?.val = rightV!
+        right?.val = leftV!
+        
+        reculsive(left: left?.left, right: right?.right)
+    }
+    
+    
 }
