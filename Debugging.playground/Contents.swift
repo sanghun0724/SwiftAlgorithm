@@ -27,31 +27,18 @@
 
 
 
-func isIsomorphic(_ s: String, _ t: String) -> Bool {
-        var charsS = Array(s)
-        var charsT = Array(t)
-        var map = [Character: Character]()
+class Solution {
+    func reverseList(_ head: ListNode?) -> ListNode? {
+        var previous:ListNode? = nil
+        var currentNode = head
         
-        if charsS.count != charsT.count {
-            return false
+        while currentNode != nil {
+            let next = currentNode?.next
+            currentNode?.next = previous
+            previous = currentNode
+            currentNode = next
         }
-        
-        for i in 0..<charsS.count {
-            let charS = charsS[i]
-            let charT = charsT[i]
-            if let value = map[charS] {
-                if value == charT {
-                    continue
-                } else {
-                    return false
-                }
-            } else {
-               
-                    map[charS] = charT
-                
-            }
-        }
-        
-        return true
+        return previous
     }
-
+   
+}
