@@ -25,32 +25,9 @@
       }
   }
 
-func removeElements(_ head: ListNode?, _ val: Int) -> ListNode? {
-      var currentNode = head
-    if head == nil {
-        return nil
-    }
-       
-       while currentNode?.next != nil  {
-           if currentNode?.next!.val == val {
-               currentNode?.next = currentNode?.next?.next
-           } else {
-               currentNode = currentNode!.next
-           }
-       }
-    return head!.val == val ? head!.next : head!
-   }
-   
-    
-//    func checkNode(at index:Int,head:ListNode?) -> ListNode? {
-//        var currentNode = head
-//        var currentIndex = 0
-//
-//        while currentNode?.next != nil && currentIndex < index {
-//            currentNode = currentNode!.next
-//            currentIndex += 1
-//        }
-//        return currentNode
-//    }
 
+
+    func countPrimes(_ n: Int) -> Int {
     
+    }
+
