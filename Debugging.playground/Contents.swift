@@ -28,46 +28,8 @@ import UIKit
 
 
 
-class MyQueue {
-    var stack1:[Int] = [Int]()
-    var stack2:[Int] = [Int]()
-    /** Initialize your data structure here. */
-    init() {
+class Solution {
+    func isPalindrome(_ head: ListNode?) -> Bool {
         
-    }
-    
-    /** Push element x to the back of queue. */
-    func push(_ x: Int) {
-        stack2.append(x)
-    }
-    
-    /** Removes the element from in front of queue and returns that element. */
-    func pop() -> Int {
-        if stack1.isEmpty == true  {
-            stack1 = stack2.reversed()
-            stack2.removeAll()
-        }
-        guard let pop = stack1.popLast() else {
-            return 0
-        }
-        return pop
-    }
-    
-    /** Get the front element. */
-    func peek() -> Int {
-        if stack1.isEmpty == true {
-            stack1 = stack2.reversed()
-            stack2.removeAll()
-        }
-        guard let last = stack1.last else {
-            return 0
-        }
-        return last
-       
-    }
-    
-    /** Returns whether the queue is empty. */
-    func empty() -> Bool {
-        return stack1.isEmpty && stack2.isEmpty ? true : false
     }
 }
