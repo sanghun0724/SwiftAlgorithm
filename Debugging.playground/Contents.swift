@@ -28,27 +28,5 @@ import UIKit
 
 
 
-class Solution {
-    func isPalindrome(_ head: ListNode?) -> Bool {
-        if head == nil {
-            return true
-        }
-        if head?.next == nil {
-            return true
-        }
-        
-        var current = head
-        var previous:ListNode? = nil
-        while current?.next == nil {
-            let next = current?.next
-            current?.next = previous
-            previous = current
-            current = next
-            if previous?.val == current?.val {
-                return true
-            }
-        }
-        
-        return false
-    }
-}
+ 
+
