@@ -129,22 +129,39 @@ import Foundation
             }
             
             repalcement?.remove()
-            
+            //새거 갈아 끼운거 연결시켜주기
             repalcement?.right = right
             repalcement?.left = left
             right?.parent = repalcement
             left?.parent = repalcement
             reconnectParentTo(node:repalcement)
             
-            //
+            // 지금 현재노드에 있던 정보 초기화 새걸로 갈아끼웠으니
             parent = nil
             left = nil
             right = nil
             
             return repalcement
-            
         }
         
+        //Traversal
+        public func traverseInOrder(process:(T) -> Void) {
+            left?.traverseInOrder(process: process)
+            process(value)
+            right?.traverseInOrder(process: process)
+        }
         
+        public func traversePreOrder(process:(T) -> Void) {
+            process(value)
+            left?.traversePreOrder(process: process)
+            right?.traversePreOrder(process: process)
+        }
+        
+        public func traversePostOrder(process: (T) -> Void) {
+            left?.traversePreOrder(process: process)
+            right?.traversePreOrder(process: process)
+            process(value)
+        }
+        // u can write like that : tree.traverseInOrder { value in print(value) }
     }
 
