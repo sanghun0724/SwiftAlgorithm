@@ -25,17 +25,12 @@ import UIKit
       }
   }
 
-class Solution {
-    func lowestCommonAncestor(_ root: TreeNode?, _ p: TreeNode?, _ q: TreeNode?) -> TreeNode? {
-        if p!.val < root!.val && q!.val < root!.val {
-            return lowestCommonAncestor(root?.left,p,q)
-        } else if p!.val > root!.val && q!.val > root!.val {
-            return lowestCommonAncestor(root?.right, p, q)
-        } else {
-            return root
-        }
+
+    func isAnagram(_ s: String, _ t: String) -> Bool {
+        var dic:[Int:Character] = [:]
+       
     }
-}
+isAnagram("aacc", "ccac")
 
 
  
