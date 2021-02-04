@@ -27,8 +27,17 @@ import UIKit
 
 
     func isAnagram(_ s: String, _ t: String) -> Bool {
-        var dic:[Int:Character] = [:]
-       
+        
+        var dicS:[Character:Int] = [:]
+        s.forEach { (c) in
+            dicS[c,default: 0] += 1
+        }
+        
+        var dicT:[Character:Int] = [:]
+        t.forEach { (c) in
+            dicT[t,default: 0] += 1
+        }
+        return dicT == dicS
     }
 isAnagram("aacc", "ccac")
 
