@@ -27,26 +27,15 @@ import UIKit
 
 
 
-func isBadVersion(_ version: Int) -> Bool{
-    return true
-}
 
-
-    func firstBadVersion(_ n: Int) -> Int {
-        var left = 1
-        var right = n
-        
-        while left < right {
-            let mid = left + (right - left) / 2
-            if isBadVersion(mid) {
-                right = mid
-            } else {
-                left = mid + 1
-            }
+    func moveZeroes(_ nums: inout [Int]) {
+        let count = nums.count
+        nums = nums.filter{ $0 != 0}
+        for _ in 0..<(count - nums.count) {nums.append(0) }
         }
-        return left
-    }
-
-
+        
+    
+var arr = [0,0,1]
+moveZeroes(&arr)
  
 
