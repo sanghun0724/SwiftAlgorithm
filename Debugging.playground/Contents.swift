@@ -44,10 +44,29 @@ import UIKit
         return true
     }
 
-    wordPattern("abba", "dog dog dog dog")
+    
 
 
 
-
+func wordPattern2(_ pattern: String, _ str: String) -> Bool {
+        
+        let words = str.split(separator: " ")
+        let patterns = Array(pattern)
+        
+        if patterns.count != words.count || Set(patterns).count != Set(words).count { return false }
+        
+        var patternDict = [Character:Int]()
+        for i in 0..<patterns.count {
+            if let index = patternDict[patterns[i]] {
+                if words[i] != words[index] {
+                    return false
+                }
+            } else {
+                patternDict[patterns[i]] = i
+            }
+        }
+        return true
+    }
  
 
+wordPattern2("abba", "dog dog dog dog")
