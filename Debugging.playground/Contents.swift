@@ -25,11 +25,28 @@ import UIKit
       }
   }
 
-class Solution {
     func wordPattern(_ pattern: String, _ s: String) -> Bool {
+        var hashTable:[Character:String] = [:]
+        let arr = s.components(separatedBy: " ")
+        var dupicatedArr:[String] = [String]()
         
+        for i in 0..<pattern.count - 1 {
+            
+            hashTable[pattern[pattern.index(pattern.startIndex, offsetBy: i)]] = arr[i]
+            
+        }
+        
+        
+        var comparison:String = ""
+        pattern.forEach { (j) in
+            comparison += hashTable[j]! +  " "
+        }
+        comparison.removeLast()
+        return s == comparison
     }
-}
+
+    wordPattern("abba", "dog dog dog dog")
+
 
 
 
