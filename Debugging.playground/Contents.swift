@@ -25,17 +25,13 @@ import UIKit
       }
   }
 
-
-
-
-    func moveZeroes(_ nums: inout [Int]) {
-        let count = nums.count
-        nums = nums.filter{ $0 != 0}
-        for _ in 0..<(count - nums.count) {nums.append(0) }
-        }
+class Solution {
+    func wordPattern(_ pattern: String, _ s: String) -> Bool {
         
-    
-var arr = [0,0,1]
-moveZeroes(&arr)
+    }
+}
+
+
+
  
 
