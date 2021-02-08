@@ -47,26 +47,19 @@ import UIKit
     
 
 
-
-func wordPattern2(_ pattern: String, _ str: String) -> Bool {
-        
-        let words = str.split(separator: " ")
-        let patterns = Array(pattern)
-        
-        if patterns.count != words.count || Set(patterns).count != Set(words).count { return false }
-        
-        var patternDict = [Character:Int]()
-        for i in 0..<patterns.count {
-            if let index = patternDict[patterns[i]] {
-                if words[i] != words[index] {
-                    return false
-                }
-            } else {
-                patternDict[patterns[i]] = i
-            }
+class Solution {
+    func isPowerOfTwo(_ n: Int) -> Bool {
+        if n < 1 {
+            return false
         }
-        return true
+        
+        var pw = 1
+        
+        while pw < n {
+            pw *= 2
+        }
+        
+        return pw == n
+       
     }
- 
-
-wordPattern2("abba", "dog dog dog dog")
+}
