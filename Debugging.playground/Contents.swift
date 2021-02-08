@@ -26,23 +26,22 @@ import UIKit
   }
 
     func wordPattern(_ pattern: String, _ s: String) -> Bool {
-        var hashTable:[Character:String] = [:]
-        let arr = s.components(separatedBy: " ")
-        var dupicatedArr:[String] = [String]()
-        
-        for i in 0..<pattern.count - 1 {
-            
-            hashTable[pattern[pattern.index(pattern.startIndex, offsetBy: i)]] = arr[i]
-            
+    let patternArray = Array(pattern)
+        let strArray = s.components(separatedBy:" ")
+        guard patternArray.count == strArray.count  else {return false }
+        var strHashMap  = [String:Character]()
+        var patternHashMap = [Character:String]()
+        for i in  0..<patternArray.count {
+            if strHashMap[strArray[i]] != nil || patternHashMap[patternArray[i]] != nil {
+                if patternArray[i] != strHashMap[strArray[i]] || strHashMap[strArray[i]] != patternArray[i] {
+                    return false
+                }
+            } else {
+                strHashMap[strArray[i]] = patternArray[i]
+                patternHashMap[patternArray[i]] = strArray[i]
+            }
         }
-        
-        
-        var comparison:String = ""
-        pattern.forEach { (j) in
-            comparison += hashTable[j]! +  " "
-        }
-        comparison.removeLast()
-        return s == comparison
+        return true
     }
 
     wordPattern("abba", "dog dog dog dog")
