@@ -25,8 +25,8 @@ import UIKit
       }
   }
 
-    func addStrings(_ num1: String, _ num2: String) -> String {
-       
+class Solution {
+    func findDisappearedNumbers(_ nums: [Int]) -> [Int] {
+        
     }
-
-    addStrings("9", "99")
+}
