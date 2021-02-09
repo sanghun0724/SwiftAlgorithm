@@ -25,41 +25,8 @@ import UIKit
       }
   }
 
-    func wordPattern(_ pattern: String, _ s: String) -> Bool {
-    let patternArray = Array(pattern)
-        let strArray = s.components(separatedBy:" ")
-        guard patternArray.count == strArray.count  else {return false }
-        var strHashMap  = [String:Character]()
-        var patternHashMap = [Character:String]()
-        for i in  0..<patternArray.count {
-            if strHashMap[strArray[i]] != nil || patternHashMap[patternArray[i]] != nil {
-                if patternArray[i] != strHashMap[strArray[i]] || strHashMap[strArray[i]] != patternArray[i] {
-                    return false
-                }
-            } else {
-                strHashMap[strArray[i]] = patternArray[i]
-                patternHashMap[patternArray[i]] = strArray[i]
-            }
-        }
-        return true
-    }
-
-    
-
-
-class Solution {
-    func isPowerOfTwo(_ n: Int) -> Bool {
-        if n < 1 {
-            return false
-        }
-        
-        var pw = 1
-        
-        while pw < n {
-            pw *= 2
-        }
-        
-        return pw == n
+    func addStrings(_ num1: String, _ num2: String) -> String {
        
     }
-}
+
+    addStrings("9", "99")
