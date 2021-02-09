@@ -25,8 +25,22 @@ import UIKit
       }
   }
 
-class Solution {
+
     func findDisappearedNumbers(_ nums: [Int]) -> [Int] {
+        if nums.count < 1 {
+            return []
+        }
         
+        var resultArr = [Int]()
+        for i in 1...nums.count {
+            if !nums.contains(i) {
+                resultArr.append(i)
+            }
+            if !nums.contains(i+1) {
+                resultArr.append(i+1)
+            }
+        }
+
+         
+        return
     }
-}
