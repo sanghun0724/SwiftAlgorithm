@@ -27,10 +27,22 @@ import UIKit
 
 
     func findDisappearedNumbers(_ nums: [Int]) -> [Int] {
-        if nums.count < 1 {
-            return []
+       var nums = nums
+        
+        for i in 0..<nums.count {
+            let n = abs(nums[i])
+            if nums[n - 1] >= 0 {
+                nums[n - 1] = -nums[n - 1]
+            }
         }
         
+        var missing = [Int]()
+        for i in 0 ..< nums.count {
+            if nums[i] >= 0 {
+                missing.append(i+1)
+            }
+        }
         
+        return missing
         
     }
