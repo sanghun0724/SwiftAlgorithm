@@ -26,19 +26,10 @@ import UIKit
   }
 
 
-    func findContentChildren(_ g: [Int], _ s: [Int]) -> Int {
-        var sortG = g.sorted()
-        var sortS = s.sorted()
-        var result = 0
+
+    func repeatedSubstringPattern(_ s: String) -> Bool {
         
-        var i = 0
-        while result < sortG.count && i < s.count {
-            if sortG[result] <= sortS[i] {
-                result+=1
-            }
-            i+=1
-        }
-        return result
+        
+        
     }
- findContentChildren([1,2,3], [1,1])
-    
+
