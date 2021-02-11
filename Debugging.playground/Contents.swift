@@ -26,23 +26,19 @@ import UIKit
   }
 
 
-    func findDisappearedNumbers(_ nums: [Int]) -> [Int] {
-       var nums = nums
+    func findContentChildren(_ g: [Int], _ s: [Int]) -> Int {
+        var sortG = g.sorted()
+        var sortS = s.sorted()
+        var result = 0
         
-        for i in 0..<nums.count {
-            let n = abs(nums[i])
-            if nums[n - 1] >= 0 {
-                nums[n - 1] = -nums[n - 1]
+        var i = 0
+        while result < sortG.count && i < s.count {
+            if sortG[result] <= sortS[i] {
+                result+=1
             }
+            i+=1
         }
-        
-        var missing = [Int]()
-        for i in 0 ..< nums.count {
-            if nums[i] >= 0 {
-                missing.append(i+1)
-            }
-        }
-        
-        return missing
-        
+        return result
     }
+ findContentChildren([1,2,3], [1,1])
+    
