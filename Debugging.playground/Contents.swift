@@ -28,8 +28,10 @@ import UIKit
 
 
     func repeatedSubstringPattern(_ s: String) -> Bool {
-        
-        
-        
+        let r = s+s
+        return String(
+            r[r.index(after: r.startIndex)..<r.index(before:r.endIndex)]
+        ).contains(s)
     }
+
 
