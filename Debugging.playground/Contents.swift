@@ -24,7 +24,14 @@ import UIKit
           self.next = nil
       }
   }
-
    
-
-
+  func islandPerimeter(_ grid: [[Int]]) -> Int {
+    var hashTable:[Int:[Int]] = [:]
+//        hashTable[1] = [0,1,0,0]
+//        hashTable[2] = [1,1,1,0]
+    for i in 0..<grid.count {
+        hashTable[i+1] = grid[i]
+        hashTable[i+2] = grid[i]
+        return 1 
+    }
+}
