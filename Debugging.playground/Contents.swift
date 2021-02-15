@@ -26,14 +26,8 @@ import UIKit
   }
 
 
-    func findComplement(_ num: Int) -> Int {
-       var i = 1
+class Solution {
+    func findMaxConsecutiveOnes(_ nums: [Int]) -> Int {
         
-        while i <= num {
-            i<<=1
-        }
-        return (i-1)^num
     }
-
-findComplement(5)
- 
+}
