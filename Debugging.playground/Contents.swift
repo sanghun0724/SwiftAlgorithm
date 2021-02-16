@@ -26,9 +26,25 @@ import UIKit
   }
 
 class Solution {
+    var node = [TreeNode]()
     func findMode(_ root: TreeNode?) -> [Int] {
+        var result = [Int]()
+        node.append(some(root: root)!)
+        result.append(node.max(by:<))
+    }
+    func some(root:TreeNode?) -> TreeNode? {
+        if root?.left == nil && root?.right == nil {
+            return root
+        }
+        
+        some(root: root?.right)
+        some(root: root?.left)
+        
+        return root
         
     }
+    
+ 
 }
 
 
