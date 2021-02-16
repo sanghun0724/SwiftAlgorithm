@@ -26,22 +26,38 @@ import UIKit
   }
 
 class Solution {
-    var node = [TreeNode]()
-    func findMode(_ root: TreeNode?) -> [Int] {
-        var result = [Int]()
-        node.append(some(root: root)!)
-        result.append(node.max(by:<))
+    func travelMode(root:TreeNode?,arr:inout [Int]) {
+        guard let root = root else {
+            return
+        }
+        travelMode(root: root.left, arr: &arr)
+        arr.append(root.val)
+        travelMode(root: root.right, arr: &arr)
     }
-    func some(root:TreeNode?) -> TreeNode? {
-        if root?.left == nil && root?.right == nil {
-            return root
+    
+    func findMode(_ root: TreeNode?) -> [Int] {
+     var arr  = [Int]()
+      
+        guard let root = root else {
+            return arr
         }
         
-        some(root: root?.right)
-        some(root: root?.left)
+        travelMode(root: root, arr: &arr)
         
-        return root
+        var count = [Int:Int]()
         
+        arr.forEach{ count[$0] = (count[$0] ?? 0) + 1}
+        
+        arr.removeAll()
+        
+        let max = count.values.max()
+        
+        for (k,v) in count {
+            if v == max {
+                arr.append(k)
+            }
+        }
+        return arr
     }
     
  
