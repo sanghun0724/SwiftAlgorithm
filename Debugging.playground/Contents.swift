@@ -25,9 +25,34 @@ import UIKit
       }
   }
 
+
+
+ //해쉬로 풀어보자~ 
 class Solution {
     func detectCapitalUse(_ word: String) -> Bool {
         
+    }
+}
+
+
+class Solution {
+    func detectCapitalUse(_ word: String) -> Bool {
+        var myWord = word
+        myWord.removeFirst()
+
+        if word.first?.isUppercase == true {
+            for i in myWord {
+
+            }
+        } else {
+            for i in myWord {
+                if i.isUppercase == true {
+                    return false
+                }
+            }
+        }
+
+        return true
     }
 }
 
