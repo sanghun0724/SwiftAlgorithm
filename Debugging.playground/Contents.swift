@@ -28,31 +28,20 @@ import UIKit
 
 
  //해쉬로 풀어보자~ 
-class Solution {
+
+
+
     func detectCapitalUse(_ word: String) -> Bool {
-        
-    }
-}
-
-
-class Solution {
-    func detectCapitalUse(_ word: String) -> Bool {
-        var myWord = word
-        myWord.removeFirst()
-
-        if word.first?.isUppercase == true {
-            for i in myWord {
-
-            }
-        } else {
-            for i in myWord {
-                if i.isUppercase == true {
-                    return false
-                }
-            }
+        var arr1 = Array(repeating: false, count: word.count)
+        var arr2 = Array(repeating: true, count: word.count)
+        var arr3 = arr1
+        arr3[0] = true
+        print(arr1)
+        print(arr3)
+        for s in word {
+            
         }
-
-        return true
+       return true
     }
-}
 
+detectCapitalUse("qwdasdwd@")
