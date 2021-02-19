@@ -38,10 +38,14 @@ import UIKit
         arr3[0] = true
         print(arr1)
         print(arr3)
+        var resultArr = [Bool]()
         for s in word {
-            
+            s.isUppercase ? resultArr.append(true) : resultArr.append(false)
         }
-       return true
+        if resultArr == arr1 || resultArr == arr2 || resultArr == arr3 {
+            return true
+        }
+        return false
     }
 
-detectCapitalUse("qwdasdwd@")
+detectCapitalUse("qwdasdwd")
