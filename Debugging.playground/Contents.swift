@@ -31,21 +31,8 @@ import UIKit
 
 
 
-    func detectCapitalUse(_ word: String) -> Bool {
-        var arr1 = Array(repeating: false, count: word.count)
-        var arr2 = Array(repeating: true, count: word.count)
-        var arr3 = arr1
-        arr3[0] = true
-        print(arr1)
-        print(arr3)
-        var resultArr = [Bool]()
-        for s in word {
-            s.isUppercase ? resultArr.append(true) : resultArr.append(false)
-        }
-        if resultArr == arr1 || resultArr == arr2 || resultArr == arr3 {
-            return true
-        }
-        return false
-    }
 
-detectCapitalUse("qwdasdwd")
+        func getMinimumDifference(_ root: TreeNode?) -> Int {
+            
+        }
+    
