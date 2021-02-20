@@ -24,15 +24,33 @@ import UIKit
           self.next = nil
       }
   }
-
-
-
- //해쉬로 풀어보자~ 
-
-
-
-
+class Solution {
         func getMinimumDifference(_ root: TreeNode?) -> Int {
+            var resultArr = [Int]()
+            guard let root = root else {
+                return 0
+            }
+            traversel(root: root, arr: &resultArr)
+            
+            var result = Int.max
+          
+            for i in 0..<resultArr.count {
+                for j in i+1..<resultArr.count{
+                    if abs(resultArr[i] - resultArr[j]) < result {
+                        result = abs(resultArr[i] - resultArr[j])
+                    }
+                }
+            }
+            return result
             
         }
-    
+    func traversel(root:TreeNode?,arr:inout [Int]) {
+        guard let root = root else {
+            return
+        }
+        traversel(root: root.left
+                  , arr: &arr)
+        arr.append(root.val)
+        traversel(root: root.right, arr: &arr)
+    }
+}
