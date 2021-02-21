@@ -25,8 +25,4 @@ import UIKit
       }
   }
 
-class Solution {
-    func diameterOfBinaryTree(_ root: TreeNode?) -> Int {
-        
-    }
-}
+
