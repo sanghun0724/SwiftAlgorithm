@@ -24,6 +24,4 @@ import UIKit
           self.next = nil
       }
   }
-func testt {
- print("shet")
-}
+
