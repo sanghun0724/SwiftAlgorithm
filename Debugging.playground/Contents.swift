@@ -26,21 +26,8 @@ import UIKit
   }
 
 class Solution {
-    func diameterOfBinaryTree(_ root: TreeNode?) -> Int {
-        guard let root = root else  {
-            return 0
-        }
-        let left = heightBST(root: root.left)
-        let right = heightBST(root: root.right)
-        return max(left+right,max(diameterOfBinaryTree(root.left),diameterOfBinaryTree(root.right)))
-    }
-    func heightBST(root:TreeNode?) -> Int {
-        guard let root = root else {
-            return 0
-        }
+    func reverseWords(_ s: String) -> String {
         
-       var left = heightBST(root: root.left)
-       var right = heightBST(root: root.right)
-        return max(left, right) + 1
     }
 }
+
