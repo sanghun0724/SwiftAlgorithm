@@ -25,9 +25,15 @@ import UIKit
       }
   }
 
-class Solution {
+
     func reverseWords(_ s: String) -> String {
-        
+        var arr = s.split(separator: " ")
+        var result = [String]()
+        for i in arr {
+            result.append(String(i.reversed()))
+        }
+       var real = result.joined(separator: " ")
+        return real 
     }
-}
+reverseWords("let's take ")
 
