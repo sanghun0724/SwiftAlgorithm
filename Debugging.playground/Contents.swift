@@ -25,15 +25,9 @@ import UIKit
       }
   }
 
-
-    func reverseWords(_ s: String) -> String {
-        var arr = s.split(separator: " ")
-        var result = [String]()
-        for i in arr {
-            result.append(String(i.reversed()))
-        }
-       var real = result.joined(separator: " ")
-        return real 
+class Solution {
+    func maxDepth(_ root: Node?) -> Int {
+        
     }
-reverseWords("let's take ")
-
+}
+   
