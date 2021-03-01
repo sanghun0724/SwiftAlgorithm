@@ -56,30 +56,21 @@ public struct Queue<T> {
 
     
     func maxDepth(_ root: Node?) -> Int {
-        var resultCount = 1
-        var queue = Queue<Node>()
-        guard let root = root else {
-            return 0
+       var depth = 0
+        if root  == nil {
+            return depth
         }
-        if root.children.isEmpty == true {
-            return 1
-        }else {
-            resultCount+=1
-        root.children.forEach {
-            queue.enqueue($0)
-        } }
-        while let node = queue.dequeue() {
-            if node.children.isEmpty == true {
-                return resultCount
-            } else {
-                resultCount+=1
-            node.children.forEach {
-                queue.enqueue($0)
-            
+        var stack = [Node]()
+        stack.append(root!)
+        while !stack.isEmpty {
+            depth += 1
+            var nodes = [Node]()
+            for val in stack {
+                nodes.append(contentsOf: val.children)
             }
-            }
+            stack = nodes
         }
-        return resultCount
+        return depth
     }
     
 
