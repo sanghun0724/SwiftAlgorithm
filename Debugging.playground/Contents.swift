@@ -54,16 +54,8 @@ public struct Queue<T> {
     
 }
 
-func arrayPairSum(_ nums: [Int]) -> Int {
-    let tempArray = nums.sorted(by: <)
-    var result = 0
-    for value in tempArray.enumerated() {
-        if(value.offset % 2 == 0){
-            result+=value.element
-        }
+class Solution {
+    func matrixReshape(_ nums: [[Int]], _ r: Int, _ c: Int) -> [[Int]] {
+        
     }
-    return result;
 }
-arrayPairSum([1,2,4,3])
-
-
