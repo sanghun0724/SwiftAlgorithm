@@ -54,8 +54,25 @@ public struct Queue<T> {
     
 }
 
-class Solution {
+
     func matrixReshape(_ nums: [[Int]], _ r: Int, _ c: Int) -> [[Int]] {
+        var result = [[Int]]()
+        var elements = Array(nums.joined())
+
+        if nums.count * nums[0].count < r * c {
+            return nums
+        }
+        //var arr = Array(repeating: 0, count: c)
+        var arr = [Int]()
         
+        
+        for i in 1...r {
+            for j in 0..<c {
+                arr.append(elements[j])
+            }
+            result.append(arr)
+        }
+        
+        return result
     }
-}
+matrixReshape([[1,2],[3,4]], 4, 1)
