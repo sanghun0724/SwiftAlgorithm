@@ -54,10 +54,19 @@ public struct Queue<T> {
     
 }
 
-    
-class Solution {
+
     func arrayPairSum(_ nums: [Int]) -> Int {
+        var num = nums.sorted()
+        var result = 0
+        var index = 0
         
+        while index < num.count - 1 {
+            var arr = num[index...index+1]
+            result += min(arr[0],arr[1])
+            index+=2
+        }
+        return result
     }
-}
+arrayPairSum([1,2,4,3])
+
 
