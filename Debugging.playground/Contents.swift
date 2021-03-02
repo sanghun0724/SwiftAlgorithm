@@ -55,22 +55,9 @@ public struct Queue<T> {
 }
 
     
-    func maxDepth(_ root: Node?) -> Int {
-       var depth = 0
-        if root  == nil {
-            return depth
-        }
-        var stack = [Node]()
-        stack.append(root!)
-        while !stack.isEmpty {
-            depth += 1
-            var nodes = [Node]()
-            for val in stack {
-                nodes.append(contentsOf: val.children)
-            }
-            stack = nodes
-        }
-        return depth
+class Solution {
+    func arrayPairSum(_ nums: [Int]) -> Int {
+        
     }
-    
+}
 
