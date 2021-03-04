@@ -54,30 +54,20 @@ public struct Queue<T> {
 
 }
 
+class Solution {
     func matrixReshape(_ nums: [[Int]], _ r: Int, _ c: Int) -> [[Int]] {
-        var result = [[Int]]()
-        var elements = Array(nums.joined())
-        var count = 0
-
-        if nums.count * nums[0].count < r * c {
+        let row = nums.count
+        let col = nums[0].count
+        if(row * col != r * c) {
             return nums
         }
-        //var arr = Array(repeating: 0, count: c)
-        var arr = [Int]()
-
-
-        for i in 1...r {
-            for j in 1...c {
-                arr.append(elements[count])
-                count+=1
-            
-            }
-            result.append(arr)
-            arr.removeAll()
-        }
-        return result
+        var reshapeMatrix = [[Int]](repeatElement([Int](repeatElement(0, count: c)), count: r))
+        for i in 0..<r * c {
+            reshapeMatrix[i/c][i%c] = nums[i/col][i%col]
+        } //바꿔주는거구만, ,   쉽네
+        return reshapeMatrix
     }
-
+}
 matrixReshape([[1,2],[3,4]], 4, 1)
 
 
