@@ -54,26 +54,12 @@ public struct Queue<T> {
 
 }
 
+
+
+
+
 class Solution {
-    func matrixReshape(_ nums: [[Int]], _ r: Int, _ c: Int) -> [[Int]] {
-        let row = nums.count
-        let col = nums[0].count
-        if(row * col != r * c) {
-            return nums
-        }
-        var reshapeMatrix = [[Int]](repeatElement([Int](repeatElement(0, count: c)), count: r))
-        for i in 0..<r * c {
-            reshapeMatrix[i/c][i%c] = nums[i/col][i%col]
-        } //바꿔주는거구만, ,   쉽네
-        return reshapeMatrix
+    func isSubtree(_ s: TreeNode?, _ t: TreeNode?) -> Bool {
+        
     }
 }
-matrixReshape([[1,2],[3,4]], 4, 1)
-
-
-
-
-
-
-
-
