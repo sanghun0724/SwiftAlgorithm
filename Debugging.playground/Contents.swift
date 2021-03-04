@@ -1,8 +1,8 @@
 
 
- 
+
 import UIKit
- 
+
   public class TreeNode {
       public var val: Int
       public var left: TreeNode?
@@ -36,14 +36,14 @@ public class Node {
 public struct Queue<T> {
     private var leftStack:[T] = [] //dequeue
     private var rightStack:[T] = [] //enqueueu
-    
+
     public init() {}
-    
+
     public mutating func enqueue(_ element:T) -> Bool  {
         rightStack.append(element)
         return true
     }
-    
+
     public mutating func dequeue() -> T? {
         if leftStack.isEmpty {
             leftStack = rightStack.reversed()
@@ -51,28 +51,39 @@ public struct Queue<T> {
         }
         return leftStack.popLast()
     }
-    
-}
 
+}
 
     func matrixReshape(_ nums: [[Int]], _ r: Int, _ c: Int) -> [[Int]] {
         var result = [[Int]]()
         var elements = Array(nums.joined())
+        var count = 0
 
         if nums.count * nums[0].count < r * c {
             return nums
         }
         //var arr = Array(repeating: 0, count: c)
         var arr = [Int]()
-        
-        
+
+
         for i in 1...r {
-            for j in 0..<c {
-                arr.append(elements[j])
+            for j in 1...c {
+                arr.append(elements[count])
+                count+=1
+            
             }
             result.append(arr)
+            arr.removeAll()
         }
-        
         return result
     }
+
 matrixReshape([[1,2],[3,4]], 4, 1)
+
+
+
+
+
+
+
+
