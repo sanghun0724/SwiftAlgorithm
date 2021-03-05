@@ -62,4 +62,16 @@ class Solution {
     func isSubtree(_ s: TreeNode?, _ t: TreeNode?) -> Bool {
         
     }
+    
+    
+    func travers(root:TreeNode?,arr: inout [Int]) {
+        guard let root = root else {
+            return
+        }
+        travers(root: root.left,arr:&arr)
+        arr.append(root.val)
+        travers(root: root.right, arr: &arr)
+
+    }
 }
+
