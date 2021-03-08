@@ -59,10 +59,19 @@ public struct Queue<T> {
 
 
 class Solution {
+   
     func isSubtree(_ s: TreeNode?, _ t: TreeNode?) -> Bool {
+            var sArr = [Int]()
+            var tArr = [Int]()
+         
+        travers(root: s, arr: &sArr)
+        travers(root: t, arr: &tArr)
         
-    }
-    
+        let notFoundList = tArr.filter{sArr.contains($0) == false }
+        
+        return notFoundList.isEmpty
+        
+        }
     
     func travers(root:TreeNode?,arr: inout [Int]) {
         guard let root = root else {
