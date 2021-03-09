@@ -54,33 +54,15 @@ public struct Queue<T> {
 
 }
 
-
-
-
-
 class Solution {
-   
     func isSubtree(_ s: TreeNode?, _ t: TreeNode?) -> Bool {
-            var sArr = [Int]()
-            var tArr = [Int]()
-         
-        travers(root: s, arr: &sArr)
-        travers(root: t, arr: &tArr)
-        
-        let notFoundList = tArr.filter{sArr.contains($0) == false }
-        
-        return notFoundList.isEmpty
-        
-        }
+        if s == nil { return false }
+        return isSame(s, t) || isSubtree(s?.left, t) || isSubtree(s?.right, t)
+    }
     
-    func travers(root:TreeNode?,arr: inout [Int]) {
-        guard let root = root else {
-            return
-        }
-        travers(root: root.left,arr:&arr)
-        arr.append(root.val)
-        travers(root: root.right, arr: &arr)
-
+    func isSame(_ s:TreeNode?,_ t:TreeNode?) -> Bool {
+        if s == nil && t == nil { return true }
+        if s == nil || t == nil { return false }
+        return ((s?.val == t?.val) && isSame(s?.left,t?.left) && isSame(s?.right,t?.right))
     }
 }
-
