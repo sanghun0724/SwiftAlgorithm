@@ -55,10 +55,38 @@ public struct Queue<T> {
 
 class Solution {
     func preorder(_ root: Node?) -> [Int] {
+        guard let root = root else {
+            return []
+        }
+        var currentNode = root
+        var childArr = root.children
+        var resultArr = [Int]()
+        
+        while currentNode != nil {
+            resultArr.append(currentNode.val)
+            if !currentNode.children.isEmpty {
+                childArr = currentNode.children
+                
+            } else {
+                currentNode =
+            }
+        }
         
         
         
         
+        
+        
+       
+//        while !childArr.isEmpty {
+//            for i in childArr {
+//                resultArr.append(currentNode.val)
+//                if currentNode.children.isEmpty {
+//                    currentNode = i
+//                    childArr = i.children
+//                }
+//            }
+//        }
         
     }
 }
