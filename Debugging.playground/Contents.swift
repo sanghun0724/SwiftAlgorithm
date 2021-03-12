@@ -52,3 +52,13 @@ public struct Queue<T> {
         return leftStack.popLast()
     }
 }
+
+class Solution {
+    func preorder(_ root: Node?) -> [Int] {
+        
+        
+        
+        
+        
+    }
+}
