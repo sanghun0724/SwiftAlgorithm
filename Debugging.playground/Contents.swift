@@ -30,7 +30,7 @@ public class Node {
      public var children: [Node]
      public init(_ val: Int) {
         self.val = val
-         self.children = []
+         self.children  = []
      }
  }
 public struct Queue<T> {
@@ -58,35 +58,15 @@ class Solution {
         guard let root = root else {
             return []
         }
-        var currentNode = root
-        var childArr = root.children
-        var resultArr = [Int]()
-        
-        while currentNode != nil {
-            resultArr.append(currentNode.val)
-            if !currentNode.children.isEmpty {
-                childArr = currentNode.children
-                
-            } else {
-                currentNode =
-            }
+        var result = [Int]()
+        var stack = [Node]()
+        stack.append(root)
+        while stack.count > 0 {
+            var cur = stack.removeLast()
+            result.append(cur.val)
+            var child = cur.children
+            stack += child.reversed()
         }
-        
-        
-        
-        
-        
-        
-       
-//        while !childArr.isEmpty {
-//            for i in childArr {
-//                resultArr.append(currentNode.val)
-//                if currentNode.children.isEmpty {
-//                    currentNode = i
-//                    childArr = i.children
-//                }
-//            }
-//        }
-        
-    }
+        return result
+   }
 }
