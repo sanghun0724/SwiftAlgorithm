@@ -53,8 +53,29 @@ public struct Queue<T> {
     }
 }
 
+
 class Solution {
     func postorder(_ root: Node?) -> [Int] {
+        var result = [Int]()
+        var stack = [Node]()
+       
+        guard let root = root else {
+            return []
+        }
+        var cur = root
+        var child = root.children
+        stack.append(cur)
         
+        while cur != nil {
+            cur = stack.last!
+            stack.append(contentsOf: child.reversed())
+            child = cur.children
+        }
+        
+        while stack.count > 0 {
+            result.append(stack.removeLast().val)
+        }
+      
+        return result
     }
 }
