@@ -51,31 +51,31 @@ public struct Queue<T> {
         }
         return leftStack.popLast()
     }
+    public mutating func Empty() -> Bool {
+        return leftStack.isEmpty && rightStack.isEmpty
+    }
 }
 
-
-class Solution {
-    func postorder(_ root: Node?) -> [Int] {
-        var result = [Int]()
-        var stack = [Node]()
-       
-        guard let root = root else {
-            return []
-        }
-        var cur = root
-        var child = root.children
-        stack.append(cur)
-        
-        while cur != nil {
-            cur = stack.last!
-            stack.append(contentsOf: child.reversed())
-            child = cur.children
-        }
-        
-        while stack.count > 0 {
-            result.append(stack.removeLast().val)
-        }
-      
-        return result
+func postorder(_ root: Node?) -> [Int] {
+    var result = [Int]()
+    var queue = Queue<Int>()
+    
+    
+    guard let root = root else {
+        return []
     }
+    
+    queue.enqueue(root)
+    
+    while !queue.Empty() {
+        
+        var cur = queue.dequeue()
+        
+        var child = cur.children
+        for i in child.reversed() {
+            queue.enqueue(i.val)
+        }
+        
+    }
+    
 }
