@@ -56,26 +56,34 @@ public struct Queue<T> {
     }
 }
 
+//func postorder(_ root: Node?) -> [Int] {
+//    var result = [Int]()
+//    var queue = Queue<Int>()
+//
+//
+//    guard let root = root else {
+//        return []
+//    }
+//
+//    queue.enqueue(root)
+//
+//    while !queue.Empty() {
+//
+//        var cur = queue.dequeue()
+//
+//        var child = cur.children
+//        for i in child.reversed() {
+//            queue.enqueue(i.val)
+//        }
+//
+//    }
+//
+//}
+
 func postorder(_ root: Node?) -> [Int] {
     var result = [Int]()
-    var queue = Queue<Int>()
+    var queue = [Int]()
+    // custom
     
-    
-    guard let root = root else {
-        return []
-    }
-    
-    queue.enqueue(root)
-    
-    while !queue.Empty() {
-        
-        var cur = queue.dequeue()
-        
-        var child = cur.children
-        for i in child.reversed() {
-            queue.enqueue(i.val)
-        }
-        
-    }
     
 }
