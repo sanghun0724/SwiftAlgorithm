@@ -80,10 +80,22 @@ public struct Queue<T> {
 //
 //}
 
-func postorder(_ root: Node?) -> [Int] {
-    var result = [Int]()
-    var queue = [Int]()
-    // custom
-    
-    
-}
+//func postorder(_ root: Node?) -> [Int] {
+//    var result = [Int]()
+//    var queue = [Node]()
+//    // custom
+//    guard let root = root else {
+//        return []
+//    }
+//
+//    queue.append(root)
+//
+//    while queue.count > 0 {
+//        var cur = queue.removeFirst()
+//        result.append(cur.val)
+//        var child = cur.children
+//        queue += child.reversed()
+//    }
+//
+//    return result.reversed()
+//}
