@@ -80,25 +80,24 @@ public struct Queue<T> {
 //
 //}
 
-func postorder(_ root: Node?) -> [Int] {
-    guard let root = root else {
-        return []
-    }
- var stack = [Node]()
- var res = [Int]()
-    stack.append(root)
-    while !stack.isEmpty {
-        guard let element = stack.popLast() else {
-            return []
-        }
-        res.append(element.val)
-        
-        for child in element.children {
-            stack.append(child)
-        }
-    }
-    return res.reversed()
+
+struct Date {
+    var y:Int;
+    var m:Int;
+    var d:Int; //day
 }
-
-
+    func afterDate(x:Date,n:Int) {
+        var totalDay = x.d
+        var month = x.m
+        
+        let monthDayArray = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        
+        for index in stride(from: 0, to: month-1 ,by:1) {
+            totalDay += monthDayArray[index]
+            if totalDay >
+        }
+        
+        
+        
+}
 
