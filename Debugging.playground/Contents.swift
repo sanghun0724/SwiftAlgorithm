@@ -89,17 +89,21 @@ public struct Queue<T> {
         
         while queue.count > 0 {
             var target = queue.removeFirst()
+            res.append(target)
             
             for i in queue {
                 if abs(target - i) <= 1 {
                     res.append(i)
                 }
             }
-            res.count > check ? check = res.count : nil
+            if res.count > check && Set(res).count > 1 {
+                check = res.count
+            }
             res.removeAll()
         }
-        return check+1
+        
+        return check
     }
 
-findLHS([1,3,2,2,5,2,3,7])
+findLHS([1,1,1,1])
 
