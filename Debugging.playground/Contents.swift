@@ -81,23 +81,25 @@ public struct Queue<T> {
 //}
 
 
-struct Date {
-    var y:Int;
-    var m:Int;
-    var d:Int; //day
-}
-    func afterDate(x:Date,n:Int) {
-        var totalDay = x.d
-        var month = x.m
+
+    func findLHS(_ nums: [Int]) -> Int {
+        var queue = nums
+        var res = [Int]()
+        var check = 0
         
-        let monthDayArray = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-        
-        for index in stride(from: 0, to: month-1 ,by:1) {
-            totalDay += monthDayArray[index]
-            if totalDay >
+        while queue.count > 0 {
+            var target = queue.removeFirst()
+            
+            for i in queue {
+                if abs(target - i) <= 1 {
+                    res.append(i)
+                }
+            }
+            res.count > check ? check = res.count : nil
+            res.removeAll()
         }
-        
-        
-        
-}
+        return check+1
+    }
+
+findLHS([1,3,2,2,5,2,3,7])
 
