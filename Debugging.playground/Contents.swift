@@ -86,24 +86,36 @@ public struct Queue<T> {
         var queue = nums
         var res = [Int]()
         var check = 0
-        
-        while queue.count > 0 {
-            var target = queue.removeFirst()
-            res.append(target)
-            
-            for i in queue {
-                if abs(target - i) <= 1 {
-                    res.append(i)
-                }
-            }
-            if res.count > check && Set(res).count > 1 {
-                check = res.count
-            }
-            res.removeAll()
+        var biggerArr = [Int]()
+        var smallOne = [Int]()
+        if Set(queue).count <= 1 {
+            return 0
         }
         
+        
+        
+        while queue.count > 0 {
+            var value = queue.removeFirst()
+            res.append(value)
+            
+            for i in queue {
+                if i == value || value + 1 == i{
+                    biggerArr.append(i)
+                } else if i == value || value - 1 == i {
+                    smallOne.append(i)
+                }
+            }
+         
+            biggerArr.count > smallOne.count ? res.append(contentsOf: biggerArr) : res.append(contentsOf: smallOne)
+            
+            if check < res.count { check = res.count }
+            res.removeAll()
+            biggerArr.removeAll()
+            smallOne.removeAll()
+            
+        }
         return check
     }
 
-findLHS([1,1,1,1])
+findLHS([1,3,2,2,5,2,3,7])
 
