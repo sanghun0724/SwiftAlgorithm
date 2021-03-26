@@ -81,45 +81,10 @@ public struct Queue<T> {
 //}
 
 
-
     func findLHS(_ nums: [Int]) -> Int {
-        var queue = nums
-        var res = [Int]()
-        var check = 0
-        var biggerArr = [Int]()
-        var smallOne = [Int]()
-        var fuck = 0
-        if Set(queue).count <= 1 {
-            return 0
-        }
+        
     
-        while queue.count > 0 {
-            var value = queue.removeFirst()
-            res.append(value)
-            
-            for i in queue {
-                if i == value || value + 1 == i {
-                    biggerArr.append(i)
-                }; if i == value || value - 1 == i {
-                    smallOne.append(i)
-                }
-            }
-             
-            biggerArr.count > smallOne.count ? res.append(contentsOf: biggerArr) : res.append(contentsOf: smallOne)
-            fuck = res.count
-            if Set(res).count == 1 {fuck = 1}
-            else if check < fuck { check = fuck }
-            
-            res.removeAll()
-            fuck = 0
-            biggerArr.removeAll()
-            smallOne.removeAll()
-            
-        }
-        if check == 1 {
-            return 0
-        }
-        return check
+       
     }
 
 findLHS(
