@@ -81,12 +81,19 @@ public struct Queue<T> {
 //}
 
 
-    func findLHS(_ nums: [Int]) -> Int {
-        
-    
-       
+func findLHS(_ nums: [Int]) -> Int {
+        let c = nums.count
+        var result: Int = 0
+        if c < 2 { return result }
+        var buff: [Int: Int] = [:]
+        for num in nums {
+            let numCount = buff[num, default: 0] + 1
+            buff[num] = numCount
+    result = max(result, numCount + max(buff[num - 1, default: -numCount], buff[num + 1, default: -numCount]))
+        }
+        return result
     }
 
 findLHS(
-    [1,4,1,3,1,-14,1,-13])
+    [1,3,2,2,5,2,3,7])
 
