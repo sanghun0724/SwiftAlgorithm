@@ -82,7 +82,20 @@ public struct Queue<T> {
 
 
 func findLHS(_ nums: [Int]) -> Int {
+    var res = 0
+    var hash = [Int:Int]()
     
+    for num in nums {
+        hash[num,default: 0] += 1  // 값들이 key
+        
+        if let prevCount = hash[num-1] {
+            res = max(res, hash[num,default: 0] + prevCount) //num <- 같은거 있으면 같이 prevCount(밑에서 1차이나는 값들) 0, -1 모음집 값들
+        }
+        if let nextCount = hash[num+1] {
+            res = max(res,hash[num,default: 0] + nextCount)
+        }
+    }
+    return res 
 }
 
 findLHS(
