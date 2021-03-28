@@ -95,6 +95,11 @@ func findLHS(_ nums: [Int]) -> Int {
             res = max(res,hash[num,default: 0] + nextCount)
         }
     }
+    
+    
+    
+    
+    ///
     return res 
 }
 
