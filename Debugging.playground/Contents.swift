@@ -59,7 +59,6 @@ public struct Queue<T> {
 
 func findRestaurant(_ list1: [String], _ list2: [String]) -> [String] {
        
+   print("thread having affinity for a processor")
    
-    return [] 
-   print("hepp")
    }
