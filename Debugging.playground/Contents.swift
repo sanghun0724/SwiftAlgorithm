@@ -61,5 +61,5 @@ public struct Queue<T> {
 
 
 func findRestaurant(_ list1: [String], _ list2: [String]) -> [String] {
-       print("fucking i want swift language")
+       print("hello wrold baby!")
    }
