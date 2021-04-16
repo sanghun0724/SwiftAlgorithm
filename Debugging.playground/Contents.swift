@@ -60,6 +60,29 @@ public struct Queue<T> {
 
 
 
-func findRestaurant(_ list1: [String], _ list2: [String]) -> [String] {
-       print("hello wrold baby!")
-   }
+//func findRestaurant(_ list1: [String], _ list2: [String]) -> [String] {
+//       print("꺠달음을 얻었다.,.. 역시 멘토의 중요성!!!!!!!@@@@")
+//   }
+
+
+var arr2 = [[Int]](repeating: Array(repeating: 1,count: 8 ), count: 8)
+
+for i in 0..<arr2.count {
+    if i == 1 || i == 4 || i == 8 {
+        
+        for j in 0..<arr2.count {
+            print("2",terminator:"")
+        }
+        print()
+    }
+    if i == 2 || i == 3 {
+        
+        for j in 0..<arr2.count - 1  {
+            print(" ",terminator:"")
+            if j == 6 {
+                print("2",terminator:"")
+            }
+        }
+        print()
+    }
+}
