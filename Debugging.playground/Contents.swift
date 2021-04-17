@@ -65,24 +65,3 @@ public struct Queue<T> {
 //   }
 
 
-var arr2 = [[Int]](repeating: Array(repeating: 1,count: 8 ), count: 8)
-
-for i in 0..<arr2.count {
-    if i == 1 || i == 4 || i == 8 {
-        
-        for j in 0..<arr2.count {
-            print("2",terminator:"")
-        }
-        print()
-    }
-    if i == 2 || i == 3 {
-        
-        for j in 0..<arr2.count - 1  {
-            print(" ",terminator:"")
-            if j == 6 {
-                print("2",terminator:"")
-            }
-        }
-        print()
-    }
-}
