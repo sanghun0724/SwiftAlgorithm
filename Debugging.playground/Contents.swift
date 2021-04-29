@@ -56,9 +56,18 @@ public struct Queue<T> {
         return leftStack.isEmpty && rightStack.isEmpty
     }
 }
+class Solution {
+    func findRestaurant(_ list1: [String], _ list2: [String]) -> [String] {
+        
+    }
+}
 
-
-
+var a:Double = 4
+var b:Int = 3
+var c:Int = 2
+print(a)
+b += a+c
+print(type(of: c))
 
 
 
