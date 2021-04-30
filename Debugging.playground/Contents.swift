@@ -56,18 +56,20 @@ public struct Queue<T> {
         return leftStack.isEmpty && rightStack.isEmpty
     }
 }
-class Solution {
-    func findRestaurant(_ list1: [String], _ list2: [String]) -> [String] {
-        
+
+func findRestaurant(_ list1: [String], _ list2: [String]) -> [String] {
+    var hashTable:[String:Int] = [:]
+    var resultArr = [String]()
+    
+    for i in list2 {
+        if list1.contains(i) {
+            hashTable.updateValue(indexof, forKey: i)
     }
+        
+        
 }
 
-var a:Double = 4
-var b:Int = 3
-var c:Int = 2
-print(a)
-b += a+c
-print(type(of: c))
+
 
 
 
