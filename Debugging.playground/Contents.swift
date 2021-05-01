@@ -57,17 +57,7 @@ public struct Queue<T> {
     }
 }
 
-func findRestaurant(_ list1: [String], _ list2: [String]) -> [String] {
-    var hashTable:[String:Int] = [:]
-    var resultArr = [String]()
-    
-    for i in list2 {
-        if list1.contains(i) {
-            hashTable.updateValue(indexof, forKey: i)
-    }
-        
-        
-}
+
 
 
 
