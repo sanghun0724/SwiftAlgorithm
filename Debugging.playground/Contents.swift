@@ -57,6 +57,21 @@ public struct Queue<T> {
     }
 }
 
+func canPlaceFlowers(_ flowerbed: [Int], _ n: Int) -> Bool {
+    var flowerbed = flowerbed
+    var spaceFlower = 0
+    
+    for i in 0..<flowerbed.count {
+        let leftAvailable = (i == 0 || flowerbed[i-1] == 0)
+        let rightAvailable = (i == flowerbed.count - 1 || flowerbed[i+1] == 0)
+        if flowerbed[i] == 0 && leftAvailable && rightAvailable {
+            spaceFlower += 1
+            flowerbed[i] = 1
+        }
+    }
+    return spaceFlower >= n
+    
+    }
 
 
 
