@@ -57,11 +57,6 @@ public struct Queue<T> {
     }
 }
 
-class Solution {
-    func tree2str(_ t: TreeNode?) -> String {
-        
-    }
-}
 
 
 
