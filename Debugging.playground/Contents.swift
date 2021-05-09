@@ -56,8 +56,10 @@ public struct Queue<T> {
         return leftStack.isEmpty && rightStack.isEmpty
     }
 }
-
-
+func mergeTrees(_ root1: TreeNode?, _ root2: TreeNode?) -> TreeNode? {
+   var trr:TreeNode = TreeNode(<#T##val: Int##Int#>, <#T##left: TreeNode?##TreeNode?#>, <#T##right: TreeNode?##TreeNode?#>)
+    
+    }
 
 
 
