@@ -57,9 +57,7 @@ public struct Queue<T> {
     }
 }
 func mergeTrees(_ root1: TreeNode?, _ root2: TreeNode?) -> TreeNode? {
-    if root1 == nil {
-        return root2
-    }
+   
  
     
     }
