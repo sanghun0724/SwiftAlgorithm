@@ -57,5 +57,20 @@ public struct Queue<T> {
     }
 }
 
+SYSCALL_DEFINE1(print_number, int, num)
+{
+     //여기다 작성하는것이 맞나요?
+  printk("Write Your CODE");
+    
+  return 0;
+}
+
+SYSCALL_DEFINE0(ps)
+{
+    struct task_struct src;
+    
+    printk("Write Your CODE");
+    return 0;
+}
 
 
