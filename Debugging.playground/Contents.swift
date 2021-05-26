@@ -56,4 +56,8 @@ public struct Queue<T> {
         return leftStack.isEmpty && rightStack.isEmpty
     }
 }
-
+class Solution {
+    func maximumProduct(_ nums: [Int]) -> Int {
+        
+    }
+}
