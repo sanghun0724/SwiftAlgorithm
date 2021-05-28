@@ -56,8 +56,32 @@ public struct Queue<T> {
         return leftStack.isEmpty && rightStack.isEmpty
     }
 }
-class Solution {
-    func maximumProduct(_ nums: [Int]) -> Int {
-        
+//programmers 2 start
+
+func solution(_ progresses:[Int], _ speeds:[Int]) -> [Int] {
+    var result:[Int] = []
+    var queue:[Int] = []
+    var count = 0
+     //queue에 progresses넣고 완료되면 앞에서부터 체크하여 디큐
+    for i in 0..<progresses.count {
+        queue.append(progresses[i])
     }
+    while !queue.isEmpty {
+        for j in 0..<queue.count {
+     queue[j] += speeds[j]
+    }
+        for k in queue {
+            if queue.first! >= 100 {
+                queue.removeFirst()
+              count+=1
+          }
+        }
+        if count != 0 {
+            result.append(count)
+        }
+        count = 0
+    }
+    return result
 }
+
+solution([93,30,55], [1,30,5])
