@@ -59,28 +59,24 @@ public struct Queue<T> {
 //programmers 2 start
 
 func solution(_ progresses:[Int], _ speeds:[Int]) -> [Int] {
-    var result:[Int] = []
     var queue:[Int] = []
-    var count = 0
-     //queue에 progresses넣고 완료되면 앞에서부터 체크하여 디큐
-    for i in 0..<progresses.count {
-        queue.append(progresses[i])
+    var result:[Int] = []
+    
+    for i in progresses.indices {
+        queue.append((100 - progresses[i] - 1) / speeds[i] + 1)
     }
+    
     while !queue.isEmpty {
-        for j in 0..<queue.count {
-     queue[j] += speeds[j]
-    }
-        for k in queue {
-            if queue.first! >= 100 {
-                queue.removeFirst()
-              count+=1
-          }
+        var nowDelay = queue.first!
+        var count = 0
+        while !queue.isEmpty && queue.first! <= nowDelay {
+            count+1
+            queue.removeFirst()
         }
-        if count != 0 {
-            result.append(count)
-        }
-        count = 0
+        result.append(count)
     }
+    
+    
     return result
 }
 
