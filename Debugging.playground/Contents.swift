@@ -61,18 +61,20 @@ public struct Queue<T> {
 func solution(_ progresses:[Int], _ speeds:[Int]) -> [Int] {
     var queue:[Int] = []
     var result:[Int] = []
+    var cur = 0
     
     for i in progresses.indices {
         queue.append((100 - progresses[i] - 1) / speeds[i] + 1)
     }
     
-    while !queue.isEmpty {
-        var nowDelay = queue.first!
+    while cur < queue.count {
+        var nowDelay = queue[cur]
         var count = 0
-        while !queue.isEmpty && queue.first! <= nowDelay {
-            count+1
-            queue.removeFirst()
+        while cur < queue.count && queue.first! <= nowDelay {
+            count+=1
+            cur+=1
         }
+        //커서로 움직이기 O(1)
         result.append(count)
     }
     
