@@ -56,7 +56,14 @@ public struct Queue<T> {
         return leftStack.isEmpty && rightStack.isEmpty
     }
 }
-    func maximumProduct(_ nums: [Int]) -> Int {
+func maximumProduct(_ nums: [Int]) -> Int {
+   var result = 1
+   var nums2 = nums
+    for _ in 0...2 {
+        result *= nums2.max()!
+        nums2.remove(at: nums2.firstIndex(of: nums2.max()!)!)
+    }
+    return result
         
     }
 
