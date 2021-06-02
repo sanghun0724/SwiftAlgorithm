@@ -57,13 +57,18 @@ public struct Queue<T> {
     }
 }
 func maximumProduct(_ nums: [Int]) -> Int {
-   var result = 1
-   var nums2 = nums
-    for _ in 0...2 {
-        result *= nums2.max()!
-        nums2.remove(at: nums2.firstIndex(of: nums2.max()!)!)
+    let arr = nums.sorted()
+    var result = Int.min
+    for i in 0..<arr.count - 2 {
+        for j in 1..<arr.count - 1 {
+             for k in 2..<arr.count {
+                let product = arr[i] * arr[j] * arr[k]
+                if result < product {
+                    result = product
+                }
+            }
+        }
     }
     return result
-        
     }
 
