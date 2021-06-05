@@ -56,9 +56,6 @@ public struct Queue<T> {
         return leftStack.isEmpty && rightStack.isEmpty
     }
 }
-func manDelete() {
-    
-    
-}
+
 
 
