@@ -56,6 +56,4 @@ public struct Queue<T> {
         return leftStack.isEmpty && rightStack.isEmpty
     }
 }
-func averageOfLevels(_ root: TreeNode?) -> [Double] {
-      
-  }
+
