@@ -72,8 +72,3 @@ public struct Queue<T> {
  *     }
  * }
  */
-class Solution {
-    func averageOfLevels(_ root: TreeNode?) -> [Double] {
-        
-    }
-}
