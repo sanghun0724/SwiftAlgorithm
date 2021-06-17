@@ -57,4 +57,7 @@ public struct Queue<T> {
     }
 }
 
+func averageOfLevels(_ root: TreeNode?) -> [Double] {
+        
+    }
 
