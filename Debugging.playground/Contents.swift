@@ -88,6 +88,21 @@ func averageOfLevels(_ root: TreeNode?) -> [Double] {
             res.append(Double(sum)/Double(queue.count))
         }
     }
-    return res 
+    return res
+}
+
+
+
+func averageOfLevels2(_ root: TreeNode?) -> [Double] {
+    var nodes = [root].compactMap{ $0 } //컴팩트맵으로 nil제거나 옵셔널 바인딩 해줌
+    var result = [Double]()
+    
+    while nodes.count > 0 {
+        result.append(Double(nodes.map{ $0.val }.reduce(0,+)) / Double(nodes.count) )
+        nodes = nodes.flatMap{ [$0.left,$0.right].compactMap{$0}} //[A,B]형태의 배열 컴팩트맵 해주는거임}
+    }
+    return result
+    
+    
 }
 
