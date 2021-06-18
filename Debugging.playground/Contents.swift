@@ -58,6 +58,36 @@ public struct Queue<T> {
 }
 
 func averageOfLevels(_ root: TreeNode?) -> [Double] {
-        
+    guard let root = root else {
+        return [Double]()  //nil 반환을 이렇게
     }
+    
+    var res = [Double]()
+    var queue = [TreeNode]()
+    queue.append(root)
+    res.append(Double(root.val))
+    
+    while !queue.isEmpty {
+        var next = [TreeNode]()
+        
+        for parent in queue {
+            if let right = parent.right {
+                next.append(right)
+            }
+            if let left = parent.left {
+                next.append(left)
+            }
+        }
+    
+        queue = next // 트리의 끝에 도달하면 nil이니 큐가 비워지게 됨
+        if queue.count > 0 {
+            var sum = 0
+            for node in queue {
+                sum += node.val
+            }
+            res.append(Double(sum)/Double(queue.count))
+        }
+    }
+    return res 
+}
 
