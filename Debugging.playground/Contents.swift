@@ -106,3 +106,30 @@ func averageOfLevels2(_ root: TreeNode?) -> [Double] {
     
 }
 
+//DFS
+class Solution {
+    func averageOfLevels12(_ root: TreeNode?) -> [Double] {
+        var total:[Int] = []
+        var count:[Int] = []
+        helper(root, &total, &count, 0)
+        var res:[Double] = []
+        for i in 0..<total.count{
+            res.append(Double(total[i])/Double(count[i]))
+        }
+        return res
+    }
+    
+    func helper(_ root: TreeNode?, _ total: inout [Int], _ count: inout [Int], _ depth:Int){
+        guard let node = root else { return }
+        if total.count > depth{
+            total[depth] += node.val
+            count[depth] += 1
+        }else{
+            total.append(node.val)
+            count.append(1)
+        }
+        helper(node.left, &total, &count, depth+1)
+        helper(node.right, &total, &count, depth+1)
+    }
+}
+
