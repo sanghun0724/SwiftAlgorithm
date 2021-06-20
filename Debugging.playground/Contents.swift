@@ -58,5 +58,5 @@ public struct Queue<T> {
 }
 
 func maximumWealth(_ accounts: [[Int]]) -> Int {
-       
+    return accounts.flatMap{ $0.reduce(0,+) }.max() as! Int
    }
