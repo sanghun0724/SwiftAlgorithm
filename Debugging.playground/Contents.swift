@@ -57,34 +57,6 @@ public struct Queue<T> {
     }
 }
 
-//bfs
-func averageOfLevels(_ root: TreeNode?) -> [Double] {
-    var temp:[TreeNode?] = []
-    var result:[Double] = []
-    
-    temp.append(root)
-    result.append(Double(root!.val))
-    
-    while !temp.isEmpty {
-        var next:[TreeNode?] = []
-        
-        for parent in temp {
-            if let right = parent?.right {
-                next.append(right)
-            }
-            if let left = parent?.left {
-                next.append(left)
-            }
-        }
-        temp = next
-        if temp.count > 0 {
-            var sum = 0.0
-            for  i in temp {
-                sum += Double(i!.val)
-            }
-            result.append(sum/Double(temp.count))
-        }
-    }
-    return result
-    
-    }
+func maximumWealth(_ accounts: [[Int]]) -> Int {
+       
+   }
