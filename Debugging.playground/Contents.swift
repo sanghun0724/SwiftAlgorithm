@@ -57,6 +57,15 @@ public struct Queue<T> {
     }
 }
 
-func maximumWealth(_ accounts: [[Int]]) -> Int {
-    return accounts.flatMap{ $0.reduce(0,+) }.max() as! Int
-   }
+//func kidsWithCandies(_ candies: [Int], _ extraCandies: Int) -> [Bool] {
+//
+//
+//    }
+
+var num1:Int = 100;
+var num2:Int = 100;
+var num3:Int = 200;
+var num4:Int = 200;
+
+print(num1 === num2)
+print(num3 === num4)
