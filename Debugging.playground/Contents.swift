@@ -58,7 +58,17 @@ public struct Queue<T> {
 }
 
 func kidsWithCandies(_ candies: [Int], _ extraCandies: Int) -> [Bool] {
-
+    var result:[Bool] = []
+    let max = candies.max()
+    
+    for i in candies {
+        if (i + extraCandies) >= max! {
+            result.append(true)
+        } else {
+            result.append(false)
+        }
+    }
+    return result
 
     }
 
