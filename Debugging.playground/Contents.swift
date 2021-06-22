@@ -57,8 +57,7 @@ public struct Queue<T> {
     }
 }
 
-func kidsWithCandies(_ candies: [Int], _ extraCandies: Int) -> [Bool] {
-    let maxCandies = candies.reduce(0,max)
-    return candies.map{ $0 + extraCandies >= maxCandies}
-    }
+func numIdenticalPairs(_ nums: [Int]) -> Int {
+       
+   }
 
