@@ -3,17 +3,22 @@
    version = "3.0">
    <TimelineItems>
       <LoggerValueHistoryTimelineItem
-         documentLocation = "file:///Users/sangheon/Desktop/SwiftAlgorithm/Debugging.playground#CharacterRangeLen=1447&amp;CharacterRangeLoc=0&amp;EndingColumnNumber=0&amp;EndingLineNumber=63&amp;StartingColumnNumber=0&amp;StartingLineNumber=0&amp;Timestamp=646060243.939437"
+         documentLocation = "file:///Users/sangheon/Desktop/SwiftAlgorithm/Debugging.playground#CharacterRangeLen=1760&amp;CharacterRangeLoc=0&amp;EndingColumnNumber=0&amp;EndingLineNumber=75&amp;StartingColumnNumber=0&amp;StartingLineNumber=0&amp;Timestamp=646066354.667938"
          selectedRepresentationIndex = "0"
          shouldTrackSuperviewWidth = "NO">
       </LoggerValueHistoryTimelineItem>
       <LoggerValueHistoryTimelineItem
-         documentLocation = "file:///Users/sangheon/Desktop/SwiftAlgorithm/Debugging.playground#CharacterRangeLen=1447&amp;CharacterRangeLoc=0&amp;EndingColumnNumber=0&amp;EndingLineNumber=63&amp;StartingColumnNumber=0&amp;StartingLineNumber=0&amp;Timestamp=646060243.939751"
+         documentLocation = "file:///Users/sangheon/Desktop/SwiftAlgorithm/Debugging.playground#CharacterRangeLen=1760&amp;CharacterRangeLoc=0&amp;EndingColumnNumber=0&amp;EndingLineNumber=75&amp;StartingColumnNumber=0&amp;StartingLineNumber=0&amp;Timestamp=646066354.668198"
          selectedRepresentationIndex = "0"
          shouldTrackSuperviewWidth = "NO">
       </LoggerValueHistoryTimelineItem>
       <LoggerValueHistoryTimelineItem
-         documentLocation = "file:///Users/sangheon/Desktop/SwiftAlgorithm/Debugging.playground#CharacterRangeLen=1447&amp;CharacterRangeLoc=0&amp;EndingColumnNumber=0&amp;EndingLineNumber=63&amp;StartingColumnNumber=0&amp;StartingLineNumber=0&amp;Timestamp=646060243.9399379"
+         documentLocation = "file:///Users/sangheon/Desktop/SwiftAlgorithm/Debugging.playground#CharacterRangeLen=1760&amp;CharacterRangeLoc=0&amp;EndingColumnNumber=0&amp;EndingLineNumber=75&amp;StartingColumnNumber=0&amp;StartingLineNumber=0&amp;Timestamp=646066354.668318"
+         selectedRepresentationIndex = "0"
+         shouldTrackSuperviewWidth = "NO">
+      </LoggerValueHistoryTimelineItem>
+      <LoggerValueHistoryTimelineItem
+         documentLocation = "file:///Users/sangheon/Desktop/SwiftAlgorithm/Debugging.playground#CharacterRangeLen=16&amp;CharacterRangeLoc=1672&amp;EndingColumnNumber=0&amp;EndingLineNumber=69&amp;StartingColumnNumber=13&amp;StartingLineNumber=68&amp;Timestamp=646066354.668447"
          selectedRepresentationIndex = "0"
          shouldTrackSuperviewWidth = "NO">
       </LoggerValueHistoryTimelineItem>

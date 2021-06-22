@@ -57,7 +57,19 @@ public struct Queue<T> {
     }
 }
 
-func numIdenticalPairs(_ nums: [Int]) -> Int {
-       
-   }
 
+    func numIdenticalPairs(_ nums: [Int]) -> Int {
+        var frequency: [Int: Int] = [:]
+        var total = 0
+        for val in nums {
+            if let count = frequency[val] {
+                total += count
+            }
+            frequency[val, default: 0] += 1
+            print(frequency)
+        }
+        return total
+    }
+
+
+numIdenticalPairs([1,2,3,1,1,3])
