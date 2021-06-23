@@ -67,3 +67,8 @@ func smallerNumbersThanCurrent(_ nums: [Int]) -> [Int] {
     return resultArr
    
    }
+
+func smallerNumbersThanCurrent2(_ nums: [Int]) -> [Int] {
+       let dict = nums.sorted().enumerated().reduce(into: [Int: Int](), { $0[$1.1] = min($0[$1.1, default: Int.max], $1.0) })
+       return nums.map({ dict[$0, default: 0] })
+   }
