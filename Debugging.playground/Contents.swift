@@ -58,18 +58,12 @@ public struct Queue<T> {
 }
 
 
-    func numIdenticalPairs(_ nums: [Int]) -> Int {
-        var frequency: [Int: Int] = [:]
-        var total = 0
-        for val in nums {
-            if let count = frequency[val] {
-                total += count
-            }
-            frequency[val, default: 0] += 1
-            print(frequency)
-        }
-        return total
+func smallerNumbersThanCurrent(_ nums: [Int]) -> [Int] {
+ 
+    var resultArr:[Int] = []
+    for i in 0..<nums.count {
+        resultArr.append(nums.filter{ nums[i] > $0}.count)
     }
-
-
-numIdenticalPairs([1,2,3,1,1,3])
+    return resultArr
+   
+   }
