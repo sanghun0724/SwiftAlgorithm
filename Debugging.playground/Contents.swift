@@ -58,26 +58,18 @@ public struct Queue<T> {
 }
 
 
-func smallerNumbersThanCurrent(_ nums: [Int]) -> [Int] {
- 
-    var resultArr:[Int] = []
-    for i in 0..<nums.count {
-        resultArr.append(nums.filter{ nums[i] > $0}.count)
+func decompressRLElist(_ nums: [Int]) -> [Int] {
+    var result:[Int] = []
+    
+    for i in stride(from: 0, to: nums.count, by: 2){
+        
+        let someArr = Array(repeating: nums[i+1], count: nums[i])
+        
+        result.append(contentsOf: someArr)
     }
-    return resultArr
-   
+    
+    
+   return result
    }
 
-func smallerNumbersThanCurrent2(_ nums: [Int]) -> [Int] {
-       let dict = nums.sorted().enumerated().reduce(into: [Int: Int](), {
-        print($0)
-        print($1)
-        $0[$1.1] = min($0[$1.1, default: Int.max], $1.0)
-        //min[$1.1,default: Int.max] 는 쓴이유가 뭘까 무슨케이스 방지 ? 중복 ?
-       })
-     print(dict)
-       return nums.map({ dict[$0, default: 0] })
-   }
-smallerNumbersThanCurrent2([8,1,2,2,3])
-
-
+decompressRLElist([1,2,3,4])
