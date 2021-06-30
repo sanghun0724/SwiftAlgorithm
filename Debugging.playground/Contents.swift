@@ -57,19 +57,16 @@ public struct Queue<T> {
     }
 }
 
-
-func decompressRLElist(_ nums: [Int]) -> [Int] {
-    var result:[Int] = []
+func decode(_ encoded: [Int], _ first: Int) -> [Int] {
+    var resultArr:[Int] = []
+    resultArr.append(first)
     
-    for i in stride(from: 0, to: nums.count, by: 2){
+    for i in 0..<encoded.count {
+        let bitManipulation = encoded[i] ^ resultArr[i]
+        resultArr.append(bitManipulation)
         
-        let someArr = Array(repeating: nums[i+1], count: nums[i])
-        
-        result.append(contentsOf: someArr)
     }
+    return resultArr
     
-    
-   return result
    }
 
-decompressRLElist([1,2,3,4])
