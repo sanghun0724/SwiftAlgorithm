@@ -69,32 +69,21 @@ func decode(_ encoded: [Int], _ first: Int) -> [Int] {
     return resultArr
     
    }
-
+//multi-line
 func countMatches(_ items: [[String]], _ ruleKey: String, _ ruleValue: String) -> Int {
-    var resultCount = 0
-    
-    switch ruleKey {
-    case "type":
-        for i in items {
-            if i[0] == ruleValue {
-                resultCount+=1
-            }
-        }
-    case "color":
-        for i in items {
-            if i[1] == ruleValue {
-                resultCount+=1
-            }
-        }
-    case "name":
-        for i in items {
-            if i[2] == ruleValue {
-                resultCount+=1
-            }
-        }
-    default :
-        print("dd")
+    let ruleIndex = ruleKey == "type" ? 0 : (ruleKey == "color" ? 1 : 2)
+    var result = 0
+    for item in items where item[ruleIndex] == ruleValue { //where문 ㅅㅌㅊ
+        result+=1
     }
-
-    return resultCount
+    return result
+    }
+//one-line
+func countMatches2(_ items: [[String]], _ ruleKey: String, _ ruleValue: String) -> Int {
+    return items.reduce(into: (0,Int(ruleKey == "type" ? 0 : (ruleKey == "color" ? 1 : 2))), {
+        if ruleValue == $1[$0.1] { $0.0 += 1 }
+    }).0 //tuple
+}
+func countMatche3s(_ items: [[String]], _ ruleKey: String, _ ruleValue: String) -> Int {
+        return items.reduce(into: (Int(0), Int(ruleKey == "type" ? 0 : (ruleKey == "color" ? 1 : 2))), { if ruleValue == $1[$0.1] { $0.0 += 1 } }).0
     }
