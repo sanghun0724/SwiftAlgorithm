@@ -69,4 +69,32 @@ func decode(_ encoded: [Int], _ first: Int) -> [Int] {
     return resultArr
     
    }
-//CodingTest Day
+
+func countMatches(_ items: [[String]], _ ruleKey: String, _ ruleValue: String) -> Int {
+    var resultCount = 0
+    
+    switch ruleKey {
+    case "type":
+        for i in items {
+            if i[0] == ruleValue {
+                resultCount+=1
+            }
+        }
+    case "color":
+        for i in items {
+            if i[1] == ruleValue {
+                resultCount+=1
+            }
+        }
+    case "name":
+        for i in items {
+            if i[2] == ruleValue {
+                resultCount+=1
+            }
+        }
+    default :
+        print("dd")
+    }
+
+    return resultCount
+    }
