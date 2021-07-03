@@ -63,3 +63,28 @@ func maxProductDifference(_ nums: [Int]) -> Int {
        numArr.sort()
     return  numArr[numArr.count-1] * numArr[numArr.count-2] - numArr[0] * numArr[1]
    } //O(nlogn)
+
+func maxProductDifference2(_ nums: [Int]) -> Int {
+    var max = Int.min
+    var secondMax = Int.min
+    
+    var min = Int.max
+    var secondMin = Int.min
+    
+    for num in nums {
+        if num > max {
+            secondMax = max
+            max = num
+        } else if num > secondMax {
+                secondMax = num
+        }
+        if num < min {
+            secondMin = min
+            min = num
+        } else if num < secondMin {
+            secondMin = num
+        }
+    }
+    return max * secondMax - min * secondMin
+}
+// O (n) !! 
