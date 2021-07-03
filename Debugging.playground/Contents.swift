@@ -57,33 +57,9 @@ public struct Queue<T> {
     }
 }
 
-func decode(_ encoded: [Int], _ first: Int) -> [Int] {
-    var resultArr:[Int] = []
-    resultArr.append(first)
-    
-    for i in 0..<encoded.count {
-        let bitManipulation = encoded[i] ^ resultArr[i]
-        resultArr.append(bitManipulation)
-        
-    }
-    return resultArr
-    
-   }
-//multi-line
-func countMatches(_ items: [[String]], _ ruleKey: String, _ ruleValue: String) -> Int {
-    let ruleIndex = ruleKey == "type" ? 0 : (ruleKey == "color" ? 1 : 2)
-    var result = 0
-    for item in items where item[ruleIndex] == ruleValue { //where문 ㅅㅌㅊ
-        result+=1
-    }
-    return result
-    }
-//one-line
-func countMatches2(_ items: [[String]], _ ruleKey: String, _ ruleValue: String) -> Int {
-    return items.reduce(into: (0,Int(ruleKey == "type" ? 0 : (ruleKey == "color" ? 1 : 2))), {
-        if ruleValue == $1[$0.1] { $0.0 += 1 }
-    }).0 //tuple
-}
-func countMatche3s(_ items: [[String]], _ ruleKey: String, _ ruleValue: String) -> Int {
-        return items.reduce(into: (Int(0), Int(ruleKey == "type" ? 0 : (ruleKey == "color" ? 1 : 2))), { if ruleValue == $1[$0.1] { $0.0 += 1 } }).0
-    }
+
+func maxProductDifference(_ nums: [Int]) -> Int {
+       var numArr = nums
+       numArr.sort()
+    return  numArr[numArr.count-1] * numArr[numArr.count-2] - numArr[0] * numArr[1]
+   } //O(nlogn)
