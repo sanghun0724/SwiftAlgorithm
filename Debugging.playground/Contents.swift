@@ -88,3 +88,35 @@ func maxProductDifference2(_ nums: [Int]) -> Int {
     return max * secondMax - min * secondMin
 }
 // O (n) !! 
+
+
+func solution(_ win_lose:[Int]) -> Int{
+    var bestShot:[Int] = []
+    var best = 0
+    
+    for i in 0..<win_lose.count {
+        if win_lose[i] == 1 {
+            best+=1
+            bestShot.append(best)
+        } else if win_lose[i] == 0 {
+            best = 0
+        }
+    }
+    return bestShot.max()!
+    
+}
+
+//Chck if two String Arrays are Equivalent
+func arrayStringsAreEqual(_ word1: [String], _ word2: [String]) -> Bool {
+    let firstResult = word1.reduce(into:"") {
+        $0 += $1
+    }
+    let secondResult = word2.reduce(into:"") {
+        $0 += $1
+    }
+    
+    return firstResult == secondResult
+  }
+
+
+
