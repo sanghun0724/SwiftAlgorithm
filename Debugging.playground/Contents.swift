@@ -116,7 +116,9 @@ func arrayStringsAreEqual(_ word1: [String], _ word2: [String]) -> Bool {
     }
     
     return firstResult == secondResult
-  }
+  } // O(n)
 
-
+func arrayStringsAreEqual2(_ word1: [String], _ word2: [String]) -> Bool {
+    return word1.reduce("",+) == word2.reduce("",+)
+} // it can omit return keyword and replace $0 + $1 -> + 
 
