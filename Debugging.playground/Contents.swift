@@ -73,4 +73,22 @@ func sumOddLengthSubarrays(_ arr: [Int]) -> Int {
     return sum
 } //o(n*n) bad ..
 
-
+ // O(N)
+func sumOddLengthSubarrays2(_ arr: [Int]) -> Int {
+   var result = 0
+    var length = arr.count
+    
+    for i in 0..<length {
+        var start = length - i
+        var end = i + 1
+        var total = start * end
+        var odd = total / 2
+        if odd % 2 == 1 {
+            odd+=1
+        }
+        
+        result+=arr[i]*i
+    }
+    
+    return result
+}
