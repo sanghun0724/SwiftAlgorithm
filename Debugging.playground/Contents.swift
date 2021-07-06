@@ -77,4 +77,14 @@ func countConsistentStrings(_ allowed: String, _ words: [String]) -> Int {
     
     } // O(N*N)
 
+//가독성
+class Soultion {
+    func countConsistentString2(_ allowed: String, _ words:[String]) -> Int {
+        let allowedSet = Set<Character>(allowed)
+        return words
+            .map{ Set<Character>($0)}
+            .filter{ allowedSet.isSuperset(of: $0)}
+            .count
+    }
+}
 
