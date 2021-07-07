@@ -59,26 +59,13 @@ import Foundation
 
 //Count Good Triplets
 func countGoodTriplets(_ arr: [Int], _ a: Int, _ b: Int, _ c: Int) -> Int {
-    var flagDict:[String:Bool] = ["first":false,"second":false,"third":false]
-    var resultCount = 0
-    
-    for i in 0..<arr.count-2 {
-        for j in i+1..<arr.count-1 {
-            for k in j+1..<arr.count {
-                flagDict.keys.forEach{ flagDict[$0] = false }
-                
-                if abs(arr[i] - arr[j]) <= a { flagDict["first"] = true}
-                if abs(arr[j] - arr[k]) <= b { flagDict["second"] = true }
-                if abs(arr[i] - arr[k]) <= c  { flagDict["third"] = true }
-                   
-                if flagDict.allSatisfy({ $1 == true }) == true {
-                    resultCount+=1}
-             
+    var result = 0
+    for i in stride(from: 0, to: arr.count-2, by: 1) {
+        for j in stride(from: i+1, to: arr.count-1 , by: 1) where abs(arr[i] - arr[j]) <= a {
+            for k in stride(from: j+1, to: arr.count-1, by: 1) where abs(arr[j] - arr[k]) <= b && abs(arr[i] - arr[k]) <= c {
+                result+=1
             }
-         }
-      
-     }
-
-    return resultCount
-  }
-countGoodTriplets([3,0,1,1,9,7], 7, 2, 3)
+        }
+    }
+    return result
+}
