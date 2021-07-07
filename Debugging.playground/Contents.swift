@@ -57,34 +57,28 @@ import Foundation
 //    }
 //}
 
-//Count the Number of Consitent Strings
-
-func countConsistentStrings(_ allowed: String, _ words: [String]) -> Int {
-    var result = 0
-   
+//Count Good Triplets
+func countGoodTriplets(_ arr: [Int], _ a: Int, _ b: Int, _ c: Int) -> Int {
+    var flagDict:[String:Bool] = ["first":false,"second":false,"third":false]
+    var resultCount = 0
     
-    for i in words {
-        var flag = true
-        for j in i {
-            if !allowed.contains(j) {
-                flag = false
+    for i in 0..<arr.count-2 {
+        for j in i+1..<arr.count-1 {
+            for k in j+1..<arr.count {
+                flagDict.keys.forEach{ flagDict[$0] = false }
+                
+                if abs(arr[i] - arr[j]) <= a { flagDict["first"] = true}
+                if abs(arr[j] - arr[k]) <= b { flagDict["second"] = true }
+                if abs(arr[i] - arr[k]) <= c  { flagDict["third"] = true }
+                   
+                if flagDict.allSatisfy({ $1 == true }) == true {
+                    resultCount+=1}
+             
             }
-        }
-        if flag == true { result+=1}
-    }
-    
-    return result
-    
-    } // O(N*N)
+         }
+      
+     }
 
-//가독성
-class Soultion {
-    func countConsistentString2(_ allowed: String, _ words:[String]) -> Int {
-        let allowedSet = Set<Character>(allowed)
-        return words
-            .map{ Set<Character>($0)}
-            .filter{ allowedSet.isSuperset(of: $0)}
-            .count
-    }
-}
-
+    return resultCount
+  }
+countGoodTriplets([3,0,1,1,9,7], 7, 2, 3)
