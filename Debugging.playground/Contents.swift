@@ -56,16 +56,16 @@ import Foundation
 //        return leftStack.isEmpty && rightStack.isEmpty
 //    }
 //}
-
-//Count Good Triplets
-func countGoodTriplets(_ arr: [Int], _ a: Int, _ b: Int, _ c: Int) -> Int {
-    var result = 0
-    for i in stride(from: 0, to: arr.count-2, by: 1) {
-        for j in stride(from: i+1, to: arr.count-1 , by: 1) where abs(arr[i] - arr[j]) <= a {
-            for k in stride(from: j+1, to: arr.count-1, by: 1) where abs(arr[j] - arr[k]) <= b && abs(arr[i] - arr[k]) <= c {
-                result+=1
-            }
-        }
+//Truncate Sentence
+func truncateSentence(_ s: String, _ k: Int) -> String {
+    let arr = s.components(separatedBy: " ")
+    var result = ""
+    for i in 0..<k {
+        result+=arr[i]
+        result+=" "
     }
+    
+    result.removeLast()
     return result
-}
+   }
+ truncateSentence("Hello how are you Contestant", 4)
