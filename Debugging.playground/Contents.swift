@@ -58,14 +58,6 @@ import Foundation
 //}
 //Truncate Sentence
 func truncateSentence(_ s: String, _ k: Int) -> String {
-    let arr = s.components(separatedBy: " ")
-    var result = ""
-    for i in 0..<k {
-        result+=arr[i]
-        result+=" "
-    }
-    
-    result.removeLast()
-    return result
+    return String(s.split(separator: " ").prefix(k).reduce("") {"\($0) \($1)" }.dropFirst())
    }
  truncateSentence("Hello how are you Contestant", 4)
