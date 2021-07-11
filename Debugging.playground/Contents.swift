@@ -57,7 +57,17 @@ import Foundation
 //    }
 //}
 //Truncate Sentence
-func truncateSentence(_ s: String, _ k: Int) -> String {
-    return String(s.split(separator: " ").prefix(k).reduce("") {"\($0) \($1)" }.dropFirst())
-   }
- truncateSentence("Hello how are you Contestant", 4)
+func minTimeToVisitAllPoints(_ points: [[Int]]) -> Int {
+    var cur = points[0]
+    var timeVisiting = 0
+    
+    for i in 1..<points.count {
+      var cur2 = points[i]
+      var distanceX = abs(cur[0] - cur2[0])
+      var distanceY = abs(cur[1] - cur2[1])
+      cur = cur2
+      timeVisiting = max(distanceX, distanceY)
+    }
+    return timeVisiting
+}
+minTimeToVisitAllPoints([[1,2],[3,3],[2,2],[-7,7]])
