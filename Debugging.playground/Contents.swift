@@ -90,6 +90,60 @@ func flipAndInvertImage(_ image: [[Int]]) -> [[Int]] {
     }
 flipAndInvertImage([[1,1,0],[1,0,1],[0,0,0]])
 // 나는 바보였던건가..!!
-func flipAndInvertImage2(_ image: [[Int]]) -> [[Int]] {
-    return image.map{$0.map{1-$0}.reversed()}
+
+func flipAndInvertImage1(_ image: [[Int]]) -> [[Int]] {
+    return image.map({$0.map({1-$0}).reversed()})
 }
+
+
+func flipAndInvertImage2(_ image: [[Int]]) -> [[Int]] {
+    return image.map{$0.map{1-$0}.reversed()}   //느림
+            //() 추가로 빠름
+}
+
+func processTime(closure: () -> ()){
+    let start = CFAbsoluteTimeGetCurrent()
+    closure()
+    let processTime = CFAbsoluteTimeGetCurrent() - start
+    print("경과 시간: \(processTime)")
+
+}
+var test:[[Int]] = []
+for i in 0...100 {
+    test.append([1,1,0,1,1])
+}
+
+processTime {
+    test.map{$0.map{1-$0}.reversed()}
+    
+}
+processTime {
+    test.map({$0.map({1-$0}).reversed()})
+}
+
+
+
+
+@inlinable
+  public func map<T>(
+    _ transform: (Element) throws -> T
+  ) rethrows -> [T] {
+    // TODO: swift-3-indexing-model - review the following
+    let n = self.count
+    if n == 0 {
+      return []
+    }
+​
+    var result = ContiguousArray<T>()
+    result.reserveCapacity(n)
+​
+    var i = self.startIndex
+​
+    for _ in 0..<n {
+      result.append(try transform(self[i]))
+      formIndex(after: &i)
+    }
+​
+    _expectEnd(of: self, is: i)
+    return Array(result)
+  }
