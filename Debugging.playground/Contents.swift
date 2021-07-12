@@ -89,3 +89,7 @@ func flipAndInvertImage(_ image: [[Int]]) -> [[Int]] {
     return reversedArr
     }
 flipAndInvertImage([[1,1,0],[1,0,1],[0,0,0]])
+// 나는 바보였던건가..!!
+func flipAndInvertImage2(_ image: [[Int]]) -> [[Int]] {
+    return image.map{$0.map{1-$0}.reversed()}
+}
