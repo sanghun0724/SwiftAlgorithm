@@ -56,25 +56,13 @@ import Foundation
 //        return leftStack.isEmpty && rightStack.isEmpty
 //    }
 //}
-//Truncate Sentence
-func uniqueMorseRepresentations(_ words: [String]) -> Int {
-    var generatedMorse:[String] = []
-    let morseCodes = [".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."]
-    let alphabets = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
-    let fullStacks = Dictionary(uniqueKeysWithValues: zip(alphabets, morseCodes))
-    for i in words {
-     
-        let morse = i.reduce(into:""){
-           $0 += fullStacks[String($1)]!
-          
-        }
-        generatedMorse.append(morse)
+//Find the Highes Altitude
+func largestAltitude(_ gain: [Int]) -> Int {
+    var altitiudes:[Int] = [0]
+    var tracker = 0
+    gain.forEach { (Int) in
+        tracker+=Int
+        altitiudes.append(tracker)
     }
-    let set = Set(generatedMorse)
-
-    
-    return set.count
-}
-uniqueMorseRepresentations(
-    ["gin", "zen", "gig", "msg"])
-
+    return altitiudes.max()!
+    }
