@@ -57,17 +57,24 @@ import Foundation
 //    }
 //}
 //Truncate Sentence
-func minTimeToVisitAllPoints(_ points: [[Int]]) -> Int {
-    var cur = points[0]
-    var timeVisiting = 0
-    
-    for i in 1..<points.count {
-      var cur2 = points[i]
-      var distanceX = abs(cur[0] - cur2[0])
-      var distanceY = abs(cur[1] - cur2[1])
-      cur = cur2
-      timeVisiting = max(distanceX, distanceY)
+func uniqueMorseRepresentations(_ words: [String]) -> Int {
+    var generatedMorse:[String] = []
+    let morseCodes = [".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."]
+    let alphabets = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
+    let fullStacks = Dictionary(uniqueKeysWithValues: zip(alphabets, morseCodes))
+    for i in words {
+     
+        let morse = i.reduce(into:""){
+           $0 += fullStacks[String($1)]!
+          
+        }
+        generatedMorse.append(morse)
     }
-    return timeVisiting
+    let set = Set(generatedMorse)
+
+    
+    return set.count
 }
-minTimeToVisitAllPoints([[1,2],[3,3],[2,2],[-7,7]])
+uniqueMorseRepresentations(
+    ["gin", "zen", "gig", "msg"])
+
