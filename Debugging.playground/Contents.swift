@@ -56,13 +56,8 @@ import Foundation
 //        return leftStack.isEmpty && rightStack.isEmpty
 //    }
 //}
-//Find the Highes Altitude
-func largestAltitude(_ gain: [Int]) -> Int {
-    var altitiudes:[Int] = [0]
-    var tracker = 0
-    gain.forEach { (Int) in
-        tracker+=Int
-        altitiudes.append(tracker)
-    }
-    return altitiudes.max()!
-    }
+//Find the Highes Altitude (one liner)
+
+func largestAltitude2(_ gain: [Int]) -> Int {
+    return gain.reduce(into:(Int(0),Int(0)),{$0.0 = $1; $0.1 = max($0.0,$0.1) }).1
+}
