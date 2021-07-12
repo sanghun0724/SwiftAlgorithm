@@ -56,8 +56,36 @@ import Foundation
 //        return leftStack.isEmpty && rightStack.isEmpty
 //    }
 //}
-//Find the Highes Altitude (one liner)
 
-func largestAltitude2(_ gain: [Int]) -> Int {
-    return gain.reduce(into:(Int(0),Int(0)),{$0.0 = $1; $0.1 = max($0.0,$0.1) }).1
-}
+//Filipping an image
+func flipAndInvertImage(_ image: [[Int]]) -> [[Int]] {
+    var flipedArr:[[Int]] = []
+    //1.filp
+    for i in image {
+        var flip = i
+        for j in 0..<i.count/2 {
+           flip.swapAt(j, i.count - 1 - j)
+    
+        }
+        flipedArr.append(flip)
+    }
+  
+    var reversedArr:[[Int]] = []
+    //reversed
+    for i in flipedArr {
+        var reversed = i
+        for j in 0..<i.count {
+            if reversed[j] == 0 {
+                reversed[j] = 1
+            } else {
+                reversed[j] = 0
+            }
+        }
+        reversedArr.append(reversed)
+    }
+    
+    
+    
+    return reversedArr
+    }
+flipAndInvertImage([[1,1,0],[1,0,1],[0,0,0]])
