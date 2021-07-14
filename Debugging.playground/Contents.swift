@@ -58,12 +58,14 @@ import Foundation
 //}
 // Cells with Odd Values in a Matrix
 
-    func oddCells(_ n: Int, _ m: Int, _ indices: [[Int]]) -> Int {
-        var result: [[Int]] = Array(repeating: Array(repeating: 0, count: m), count: n)
-        for index in indices {
-            for i in 0..<m { result[index[0]][i] += 1 }
-            for i in 0..<n { result[i][index[1]] += 1 }
-        }
-        return result.reduce(into: Int(0), { $0 += $1.reduce(into: Int(0), { $0 += $1 % 2 == 1 ? 1 : 0 }) })
-    }
+func countGoodRectangles(_ rectangles: [[Int]]) -> Int {
+  let arr = rectangles.map {
+        return min($0[0], $0[1])
+  }
+   
+    let max = arr.max()
+    
+   return arr.filter{ $0 == max }.count
+   }
 
+countGoodRectangles([[5,8],[3,9],[5,12],[16,5]])
