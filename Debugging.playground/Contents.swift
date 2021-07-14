@@ -56,16 +56,13 @@ import Foundation
 //        return leftStack.isEmpty && rightStack.isEmpty
 //    }
 //}
-// Cells with Odd Values in a Matrix
 
-func countGoodRectangles(_ rectangles: [[Int]]) -> Int {
-  let arr = rectangles.map {
-        return min($0[0], $0[1])
-  }
-   
-    let max = arr.max()
+
+func findNumbers(_ nums: [Int]) -> Int {
+    return nums.filter{
+      let arr = Array(String($0))
+       return arr.count % 2 == 0
+    }.count
     
-   return arr.filter{ $0 == max }.count
-   }
-
-countGoodRectangles([[5,8],[3,9],[5,12],[16,5]])
+    }
+findNumbers([12,345,2,6,7896])
