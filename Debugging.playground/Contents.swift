@@ -56,13 +56,19 @@ import Foundation
 //        return leftStack.isEmpty && rightStack.isEmpty
 //    }
 //}
+//Minimum Operation to make the Array Increasing
 
-
-func findNumbers(_ nums: [Int]) -> Int {
-    return nums.filter{
-      let arr = Array(String($0))
-       return arr.count % 2 == 0
-    }.count
+func minOperations(_ nums: [Int]) -> Int {
+    var arr = nums
+    var res = 0
     
+    for i in 0..<arr.count - 1  {
+        while  arr[i+1] <= arr[i] {
+            arr[i+1]+=1
+            print(arr[i+1])
+            res+=1
+        }
     }
-findNumbers([12,345,2,6,7896])
+    return res
+  }
+minOperations([1,5,2,4,1])
