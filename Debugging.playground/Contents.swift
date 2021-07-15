@@ -56,15 +56,39 @@ import Foundation
 //        return leftStack.isEmpty && rightStack.isEmpty
 //    }
 //}
-//Minimum Operation to make the Array Increasing
 
-func minOperations(_ nums: [Int]) -> Int {
-   var nums = nums, res = 0
-    for i in 0..<(nums.count - 1) where nums[i] >= nums[i + 1] {
-        let inc = nums[i] + 1 - nums[i + 1]
-        res += inc
-        nums[i+1] += inc
+//Sum of All subset XOR Totals
+//func subsetXORSum(_ nums: [Int]) -> Int {
+//    var res = 0
+//    var arrSize = 1
+//
+//    while arrSize <= nums.count {
+//
+//        for i in 0..<nums.count - arrSize + 1{
+//            var subSet = nums[i..<i+arrSize]
+//            print(subSet)
+//            let first = subSet.first! ^ subSet.first!
+//            var subRes = subSet.reduce(first,^)
+//            print(subRes)
+//           res+=subRes
+//        }
+//        arrSize+=1
+//    }
+//    return res
+//    }
+//
+//subsetXORSum([5,1,6])
+func subsetXORSum(_ nums: [Int]) -> Int {
+    var res: [[Int]] = [[]] // count = 1, coz outer array is initialized with empty [] inner array.
+    var sum: Int = 0
+
+    // Find all the subset of an array
+    for num in nums {
+        for subset in res {
+            res.append(subset + [num]) // adding current num to all the subarray of res.
+            sum += res.last!.reduce(0) { $0 ^ $1 }
+        }
     }
-    return res
-  }
-minOperations([1,5,2,4,1])
+
+    return sum
+}
