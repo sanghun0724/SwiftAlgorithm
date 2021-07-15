@@ -56,17 +56,9 @@ import Foundation
 //        return leftStack.isEmpty && rightStack.isEmpty
 //    }
 //}
-
-//subsetXORSum([5,1,6])
-func subsetXORSum(_ nums: [Int]) -> Int {
-    var res:[[Int]] = [[]]
-    var result = 0
-    
-    for num in nums {
-        for subSet in res {
-            res.append(subSet + [num])
-            result+=res.last!.reduce(0,^)
-        }
-    }
-    return result
+// Maximum Product of Two Elements in an Array
+func maxProduct(_ nums: [Int]) -> Int {
+       var nums = nums
+       nums.sort()
+    return (nums.last! - 1) * (nums[nums.count-2] - 1)
 }
