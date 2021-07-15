@@ -59,15 +59,11 @@ import Foundation
 //Minimum Operation to make the Array Increasing
 
 func minOperations(_ nums: [Int]) -> Int {
-    var arr = nums
-    var res = 0
-    
-    for i in 0..<arr.count - 1  {
-        while  arr[i+1] <= arr[i] {
-            arr[i+1]+=1
-            print(arr[i+1])
-            res+=1
-        }
+   var nums = nums, res = 0
+    for i in 0..<(nums.count - 1) where nums[i] >= nums[i + 1] {
+        let inc = nums[i] + 1 - nums[i + 1]
+        res += inc
+        nums[i+1] += inc
     }
     return res
   }
