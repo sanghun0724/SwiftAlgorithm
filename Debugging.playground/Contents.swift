@@ -57,38 +57,16 @@ import Foundation
 //    }
 //}
 
-//Sum of All subset XOR Totals
-//func subsetXORSum(_ nums: [Int]) -> Int {
-//    var res = 0
-//    var arrSize = 1
-//
-//    while arrSize <= nums.count {
-//
-//        for i in 0..<nums.count - arrSize + 1{
-//            var subSet = nums[i..<i+arrSize]
-//            print(subSet)
-//            let first = subSet.first! ^ subSet.first!
-//            var subRes = subSet.reduce(first,^)
-//            print(subRes)
-//           res+=subRes
-//        }
-//        arrSize+=1
-//    }
-//    return res
-//    }
-//
 //subsetXORSum([5,1,6])
 func subsetXORSum(_ nums: [Int]) -> Int {
-    var res: [[Int]] = [[]] // count = 1, coz outer array is initialized with empty [] inner array.
-    var sum: Int = 0
-
-    // Find all the subset of an array
+    var res:[[Int]] = [[]]
+    var result = 0
+    
     for num in nums {
-        for subset in res {
-            res.append(subset + [num]) // adding current num to all the subarray of res.
-            sum += res.last!.reduce(0) { $0 ^ $1 }
+        for subSet in res {
+            res.append(subSet + [num])
+            result+=res.last!.reduce(0,^)
         }
     }
-
-    return sum
+    return result
 }
