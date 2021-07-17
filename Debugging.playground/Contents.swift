@@ -56,26 +56,10 @@ import Foundation
 //        return leftStack.isEmpty && rightStack.isEmpty
 //    }
 //}
-//Find N Unique Integers Sum up to Zero
-func sumZero(_ n: Int) -> [Int] {
-    if n == 3 { return [-1,0,1]}
-     var resultArr = Array(repeating: 0, count: n)
-    for i in 0..<resultArr.count/2 {
-        resultArr[i] = -i - 1
+//Count Negative Numbers in a Sorted Matrix
+func countNegatives(_ grid: [[Int]]) -> Int {
+    return grid.reduce(into:0){
+       $0+=$1.filter{$0<0}.count
     }
-    for j in resultArr.count/2..<resultArr.count {
-        if j == resultArr.count/2 {
-            if n % 2 == 1 {
-                continue;
-            }
-        }
-        if n % 2 == 1 {
-            resultArr[j] = j - ( resultArr.count/2)
-        } else {
-            resultArr[j] = j - ( resultArr.count/2 - 1)
-        }
-        
-    }
-    return resultArr
+    
    }
-sumZero(4)
