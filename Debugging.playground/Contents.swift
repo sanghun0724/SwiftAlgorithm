@@ -56,16 +56,15 @@ import Foundation
 //        return leftStack.isEmpty && rightStack.isEmpty
 //    }
 //}
-// Sort Array By Parity
-func sortArrayByParity(_ nums: [Int]) -> [Int] {
-     var A = nums
-     var lastEven = 0
-    for i in 0..<A.count {
-        if A[i] % 2 == 0 {
-            A.swapAt(i, lastEven)
-            lastEven+=1
-        }
+func repeatedNTimes(_ nums: [Int]) -> Int {
+    let repeatedCount = nums.count / 2
+    var myDict:[Int:Int] = [:]
+    
+    for i in nums {
+        myDict[i,default: 0]+=1
     }
-    return A
+    print(myDict)
+    return myDict.filter{$0.value == repeatedCount}.keys.first!
+    
     }
-
+repeatedNTimes([1,2,3,3])
