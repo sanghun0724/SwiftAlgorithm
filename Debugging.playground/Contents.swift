@@ -57,14 +57,11 @@ import Foundation
 //    }
 //}
 func repeatedNTimes(_ nums: [Int]) -> Int {
-    let repeatedCount = nums.count / 2
-    var myDict:[Int:Int] = [:]
-    
-    for i in nums {
-        myDict[i,default: 0]+=1
+    var counts = Set<Int>()
+    for a in nums  {
+        if counts.contains(a) { return a}
+        counts.insert(a)
     }
-    print(myDict)
-    return myDict.filter{$0.value == repeatedCount}.keys.first!
-    
+    return 0
     }
 repeatedNTimes([1,2,3,3])
