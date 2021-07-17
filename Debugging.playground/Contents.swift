@@ -56,10 +56,14 @@ import Foundation
 //        return leftStack.isEmpty && rightStack.isEmpty
 //    }
 //}
-//Count Negative Numbers in a Sorted Matrix
-func countNegatives(_ grid: [[Int]]) -> Int {
-    return grid.reduce(into:0){
-       $0+=$1.filter{$0<0}.count
+// Sort Array By Parity
+func sortArrayByParity(_ nums: [Int]) -> [Int] {
+    let even = nums.filter {
+        $0 % 2 == 0
     }
-    
-   }
+    let odd = nums.filter {
+        $0 % 2 == 1
+    }
+    return even + odd
+    }
+
