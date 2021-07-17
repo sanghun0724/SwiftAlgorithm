@@ -56,20 +56,26 @@ import Foundation
 //        return leftStack.isEmpty && rightStack.isEmpty
 //    }
 //}
-// Maximum Product of Two Elements in an Array
-//Number of Students Doing Homework at a Given Time
-//엄청느림...
-// -> 빠르게  - > startTime < queryTime < endTime
-func busyStudent(_ startTime: [Int], _ endTime: [Int], _ queryTime: Int) -> Int {
-    var timeArr:[[Int]] = []
-    
-    for i in 0..<startTime.count {
-        timeArr.append(Array(startTime[i]...endTime[i]))
+//Find N Unique Integers Sum up to Zero
+func sumZero(_ n: Int) -> [Int] {
+    if n == 3 { return [-1,0,1]}
+     var resultArr = Array(repeating: 0, count: n)
+    for i in 0..<resultArr.count/2 {
+        resultArr[i] = -i - 1
     }
-    
-    return timeArr.filter{
-        $0.contains(queryTime)
-    }.count
-    
-}
-
+    for j in resultArr.count/2..<resultArr.count {
+        if j == resultArr.count/2 {
+            if n % 2 == 1 {
+                continue;
+            }
+        }
+        if n % 2 == 1 {
+            resultArr[j] = j - ( resultArr.count/2)
+        } else {
+            resultArr[j] = j - ( resultArr.count/2 - 1)
+        }
+        
+    }
+    return resultArr
+   }
+sumZero(4)
