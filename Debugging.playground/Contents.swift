@@ -58,12 +58,14 @@ import Foundation
 //}
 // Sort Array By Parity
 func sortArrayByParity(_ nums: [Int]) -> [Int] {
-    let even = nums.filter {
-        $0 % 2 == 0
+     var A = nums
+     var lastEven = 0
+    for i in 0..<A.count {
+        if A[i] % 2 == 0 {
+            A.swapAt(i, lastEven)
+            lastEven+=1
+        }
     }
-    let odd = nums.filter {
-        $0 % 2 == 1
-    }
-    return even + odd
+    return A
     }
 
