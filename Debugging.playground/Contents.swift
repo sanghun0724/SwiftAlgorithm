@@ -57,26 +57,20 @@ import Foundation
 //    }
 //}
 func finalPrices(_ prices: [Int]) -> [Int] {
-    var res:[Int] = []
-    var flag = false
+    var c = prices
     
     for i in 0..<prices.count {
         for j in i+1..<prices.count {
             if prices[j] <= prices[i] {
                 let discount = prices[i] - prices[j]
-                res.append(discount)
-                flag = true
+                c[i] = discount
+                
                 break
-            } else {
-                flag = false
             }
-        }
-        if flag == false || i == prices.count - 1  {
-            res.append(prices[i])
         }
     }
     
-    return res
+    return c
    }
 
 finalPrices( [8,7,4,2,8,1,7,7,10,1])
