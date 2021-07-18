@@ -56,12 +56,27 @@ import Foundation
 //        return leftStack.isEmpty && rightStack.isEmpty
 //    }
 //}
-func repeatedNTimes(_ nums: [Int]) -> Int {
-    var counts = Set<Int>()
-    for a in nums  {
-        if counts.contains(a) { return a}
-        counts.insert(a)
+func finalPrices(_ prices: [Int]) -> [Int] {
+    var res:[Int] = []
+    var flag = false
+    
+    for i in 0..<prices.count {
+        for j in i+1..<prices.count {
+            if prices[j] <= prices[i] {
+                let discount = prices[i] - prices[j]
+                res.append(discount)
+                flag = true
+                break
+            } else {
+                flag = false
+            }
+        }
+        if flag == false || i == prices.count - 1  {
+            res.append(prices[i])
+        }
     }
-    return 0
-    }
-repeatedNTimes([1,2,3,3])
+    
+    return res
+   }
+
+finalPrices( [8,7,4,2,8,1,7,7,10,1])
