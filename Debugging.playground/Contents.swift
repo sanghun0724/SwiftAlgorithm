@@ -57,13 +57,7 @@ import Foundation
 //    }
 //}
 func heightChecker(_ heights: [Int]) -> Int {
-    var sortedHeights = heights.sorted()
-    var res = 0
-    
-    for i in 0..<heights.count {
-        if heights[i] != sortedHeights[i] {
-            res+=1
-        }
+    return heights.sorted().enumerated().reduce(0) {
+        $0 + ($1.element != heights[$1.offset] ? 1 : 0)
     }
-    return res
  }
