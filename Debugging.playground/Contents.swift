@@ -56,21 +56,14 @@ import Foundation
 //        return leftStack.isEmpty && rightStack.isEmpty
 //    }
 //}
-func finalPrices(_ prices: [Int]) -> [Int] {
-    var c = prices
+func heightChecker(_ heights: [Int]) -> Int {
+    var sortedHeights = heights.sorted()
+    var res = 0
     
-    for i in 0..<prices.count {
-        for j in i+1..<prices.count {
-            if prices[j] <= prices[i] {
-                let discount = prices[i] - prices[j]
-                c[i] = discount
-                
-                break
-            }
+    for i in 0..<heights.count {
+        if heights[i] != sortedHeights[i] {
+            res+=1
         }
     }
-    
-    return c
-   }
-
-finalPrices( [8,7,4,2,8,1,7,7,10,1])
+    return res
+ }
