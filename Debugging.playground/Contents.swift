@@ -56,8 +56,27 @@ import Foundation
 //        return leftStack.isEmpty && rightStack.isEmpty
 //    }
 //}
-func heightChecker(_ heights: [Int]) -> Int {
-    return heights.sorted().enumerated().reduce(0) {
-        $0 + ($1.element != heights[$1.offset] ? 1 : 0)
+//Maximum Units on a Truck
+func maximumUnits(_ boxTypes: [[Int]], _ truckSize: Int) -> Int {
+    var Size = truckSize
+    var dic:[Int:Int] = [:]
+    var res = 0
+        
+    for i in 0..<boxTypes.count {
+       dic[i] = boxTypes[i][1]
     }
- }
+    let sortedDic = dic.sorted{$0.1>$1.1}
+    
+    for (i,v) in sortedDic {
+       var unit = boxTypes[i][0]
+        if Size < unit {
+            unit = Size
+            res += unit * v
+            break
+        }
+       res += unit * v
+        Size -= unit
+    }
+    return res
+    }
+maximumUnits([[5,10],[2,5],[4,7],[3,9]], 10)
