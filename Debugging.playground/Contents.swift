@@ -57,26 +57,15 @@ import Foundation
 //    }
 //}
 //Maximum Units on a Truck
-func maximumUnits(_ boxTypes: [[Int]], _ truckSize: Int) -> Int {
-    var Size = truckSize
-    var dic:[Int:Int] = [:]
-    var res = 0
-        
-    for i in 0..<boxTypes.count {
-       dic[i] = boxTypes[i][1]
-    }
-    let sortedDic = dic.sorted{$0.1>$1.1}
+func timeFormatted(totalMillis: Int) -> String {
+    let millis:Int = totalMillis % 1000 / 100 // we want only 1 digit
+    let totalSeconds:Int = totalMillis / 1000
     
-    for (i,v) in sortedDic {
-       var unit = boxTypes[i][0]
-        if Size < unit {
-            unit = Size
-            res += unit * v
-            break
-        }
-       res += unit * v
-        Size -= unit
-    }
-    return res
-    }
-maximumUnits([[5,10],[2,5],[4,7],[3,9]], 10)
+    let seconds:Int = totalSeconds % 60
+    let minutes:Int = (totalSeconds / 60)
+    
+    return String(format: "%02d:%02d.%d", minutes,seconds,millis)
+}
+
+timeFormatted(totalMillis: Int(5.2431 * 1000))
+
