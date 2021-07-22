@@ -56,16 +56,24 @@ import Foundation
 //        return leftStack.isEmpty && rightStack.isEmpty
 //    }
 //}
-//Maximum Units on a Truck
-func timeFormatted(totalMillis: Int) -> String {
-    let millis:Int = totalMillis % 1000 / 100 // we want only 1 digit
-    let totalSeconds:Int = totalMillis / 1000
+func strStr(_ haystack: String, _ needle: String) -> Int {
+    if needle.isEmpty {
+        return -1
+    }
+    var start = 0
+    var end = haystack.count - 1
     
-    let seconds:Int = totalSeconds % 60
-    let minutes:Int = (totalSeconds / 60)
-    
-    return String(format: "%02d:%02d.%d", minutes,seconds,millis)
+    while end < haystack.count {
+        let startIndex = haystack.index(haystack.startIndex, offsetBy: start)
+        let endIndex = haystack.index(haystack.startIndex, offsetBy: end)
+        
+        let subString = String(haystack[startIndex...endIndex])
+        if needle == subString {
+            return start
+        }
+        start+=1
+        end+=1
+    }
+    return -1
 }
-
-timeFormatted(totalMillis: Int(5.2431 * 1000))
-
+strStr("a", "b")
