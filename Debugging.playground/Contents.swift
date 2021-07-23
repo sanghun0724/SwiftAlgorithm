@@ -56,24 +56,37 @@ import Foundation
 //        return leftStack.isEmpty && rightStack.isEmpty
 //    }
 //}
-func strStr(_ haystack: String, _ needle: String) -> Int {
-    if needle.isEmpty {
-        return -1
-    }
-    var start = 0
-    var end = haystack.count - 1
+class Solution {
+    func longestCommonPrefix(_ strs: [String]) -> String {
     
-    while end < haystack.count {
-        let startIndex = haystack.index(haystack.startIndex, offsetBy: start)
-        let endIndex = haystack.index(haystack.startIndex, offsetBy: end)
-        
-        let subString = String(haystack[startIndex...endIndex])
-        if needle == subString {
-            return start
+   if strs.count == 0 { return "" }
+    
+    let shortestWord = strs.min{$0.count < $1.count}!
+    var longestPrefix = shortestWord
+    
+        for str in strs {
+            
+            while !str.hasPrefix(longestPrefix), longestPrefix.count > 0 {
+                longestPrefix.removeLast()
+            }
+            
+            if longestPrefix.count == 0 { return longestPrefix }
         }
-        start+=1
-        end+=1
-    }
-    return -1
+    
+    return longestPrefix
 }
-strStr("a", "b")
+}
+
+func reverseString(s: inout [Character]) {
+    var start = 0
+    var end = s.count - 1
+    while start < end {
+        var empty:Character?
+        empty = s[start]
+        s[start] = s[end]
+        s[end] = empty!
+        start+=1
+        end-=1
+    }
+}
+reverseString(s:&["h","e","l","l","o"])
