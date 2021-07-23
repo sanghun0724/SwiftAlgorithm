@@ -56,37 +56,25 @@ import Foundation
 //        return leftStack.isEmpty && rightStack.isEmpty
 //    }
 //}
-class Solution {
-    func longestCommonPrefix(_ strs: [String]) -> String {
-    
-   if strs.count == 0 { return "" }
-    
-    let shortestWord = strs.min{$0.count < $1.count}!
-    var longestPrefix = shortestWord
-    
-        for str in strs {
-            
-            while !str.hasPrefix(longestPrefix), longestPrefix.count > 0 {
-                longestPrefix.removeLast()
-            }
-            
-            if longestPrefix.count == 0 { return longestPrefix }
-        }
-    
-    return longestPrefix
-}
-}
-
-func reverseString(s: inout [Character]) {
+//Input Array is sorted
+func twoSum(_ numbers: [Int], _ target: Int) -> [Int] {
     var start = 0
-    var end = s.count - 1
+    var end  = numbers.count - 1
+    var ans:[Int] = []
+    
     while start < end {
-        var empty:Character?
-        empty = s[start]
-        s[start] = s[end]
-        s[end] = empty!
-        start+=1
-        end-=1
+        let sum = numbers[start] + numbers[end]
+        if sum == target {
+            ans.append(start + 1)
+            ans.append(end + 1)
+            return ans
+        } else if sum > target {
+            end-=1
+        } else {
+            start+=1
+        }
     }
-}
-reverseString(s:&["h","e","l","l","o"])
+    return ans
+    
+    }
+twoSum([2,7,11,15], 9)
