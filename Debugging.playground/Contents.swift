@@ -2,6 +2,7 @@
 
 
 import Foundation
+import UIKit
 
 //  public class TreeNode {
 //      public var val: Int
@@ -56,25 +57,23 @@ import Foundation
 //        return leftStack.isEmpty && rightStack.isEmpty
 //    }
 //}
-//Input Array is sorted
-func twoSum(_ numbers: [Int], _ target: Int) -> [Int] {
-    var start = 0
-    var end  = numbers.count - 1
-    var ans:[Int] = []
+
+
+func minSubArrayLen(_ target: Int, _ nums: [Int]) -> Int {
+    let size = nums.count
+    var ans = Int.max
+    var left = 0
+    var sum = 0
     
-    while start < end {
-        let sum = numbers[start] + numbers[end]
-        if sum == target {
-            ans.append(start + 1)
-            ans.append(end + 1)
-            return ans
-        } else if sum > target {
-            end-=1
-        } else {
-            start+=1
+    for i in 0..<size {
+        sum += nums[i] //누적값 배열 채워나가는거
+        while sum >= target {
+            let result = i + 1 - left //true니까 길이값
+            ans = min(ans,result) //그전의 result값이랑 비교하고 저장
+            sum -= nums[left]//left값 뺴고 옮기기
+            left += 1
         }
     }
-    return ans
-    
+    return 2
+
     }
-twoSum([2,7,11,15], 9)
