@@ -58,22 +58,19 @@ import UIKit
 //    }
 //}
 
-
-func minSubArrayLen(_ target: Int, _ nums: [Int]) -> Int {
-    let size = nums.count
-    var ans = Int.max
-    var left = 0
-    var sum = 0
+func rotate(_ nums: inout [Int], _ k: Int) {
+    var temp:Int
+    var previous:Int
+    var count = nums.count
     
-    for i in 0..<size {
-        sum += nums[i] //누적값 배열 채워나가는거
-        while sum >= target {
-            let result = i + 1 - left //true니까 길이값
-            ans = min(ans,result) //그전의 result값이랑 비교하고 저장
-            sum -= nums[left]//left값 뺴고 옮기기
-            left += 1
+    for i in 0...k {
+        previous = nums[nums.count-1]
+        for j in 0..<nums.count {
+            temp = nums[j]
+            nums[j] = previous
+            previous = temp
         }
     }
-    return 2
-
-    }
+   }
+var num = [1,2,3,4,5,6,7]
+rotate(&num, 3)
