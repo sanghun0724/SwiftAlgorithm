@@ -59,18 +59,12 @@ import UIKit
 //}
 
 func rotate(_ nums: inout [Int], _ k: Int) {
-    var temp:Int
-    var previous:Int
-    var count = nums.count
-    
-    for i in 0...k {
-        previous = nums[nums.count-1]
-        for j in 0..<nums.count {
-            temp = nums[j]
-            nums[j] = previous
-            previous = temp
-        }
+    if k < 1 || nums.isEmpty {
+        return
     }
+    
+    let k = k % nums.count
+    nums = Array(nums[(nums.count - k)..<nums.count] + nums[0...nums.count - k])
    }
 var num = [1,2,3,4,5,6,7]
 rotate(&num, 3)
