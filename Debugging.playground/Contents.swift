@@ -58,13 +58,26 @@ import UIKit
 //    }
 //}
 
-func rotate(_ nums: inout [Int], _ k: Int) {
-    if k < 1 || nums.isEmpty {
-        return
+    func getRow(rowIndex: Int) -> [Int] {
+        var ans:[[Int]] = []
+        for i in 1...rowIndex+1 { //행 길이
+            ans.append(Array(repeating: 1, count: i))
+        }
+       
+        
+        for i in 0..<ans.count {
+            for j in 0..<ans[i].count {
+                if j != 0 && j != ans[i].count-1 { //양옆에 1제외 하고 //지렸따리!!
+                    ans[i][j] = ans[i-1][j-1] + ans[i-1][j]
+                }
+                
+            }
+        }
+        return ans[rowIndex]
     }
-    
-    let k = k % nums.count
-    nums = Array(nums[(nums.count - k)..<nums.count] + nums[0...nums.count - k])
-   }
-var num = [1,2,3,4,5,6,7]
-rotate(&num, 3)
+
+getRow(rowIndex: 3)
+
+
+
+
