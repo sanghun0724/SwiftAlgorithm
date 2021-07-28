@@ -58,25 +58,16 @@ import UIKit
 //    }
 //}
 
-    func getRow(rowIndex: Int) -> [Int] {
-        var ans:[[Int]] = []
-        for i in 1...rowIndex+1 { //행 길이
-            ans.append(Array(repeating: 1, count: i))
-        }
-       
-        
-        for i in 0..<ans.count {
-            for j in 0..<ans[i].count {
-                if j != 0 && j != ans[i].count-1 { //양옆에 1제외 하고 //지렸따리!!
-                    ans[i][j] = ans[i-1][j-1] + ans[i-1][j]
-                }
-                
-            }
-        }
-        return ans[rowIndex]
-    }
+func reverseWords(_ s: String) -> String {
+    return String(s.reversed()).components(separatedBy: " ").map{ String($0.reversed()) }.filter { $0 != "" }.joined(separator: " ")
+   }
+reverseWords("the sky is   blue")
 
-getRow(rowIndex: 3)
+
+
+
+
+
 
 
 
