@@ -58,12 +58,13 @@ import UIKit
 //    }
 //}
 
-func reverseWords(_ s: String) -> String {
-    return String(s.reversed()).components(separatedBy: " ").map{ String($0.reversed()) }.filter { $0 != "" }.joined(separator: " ")
-   }
-reverseWords("the sky is   blue")
+func removeDuplicates(_ nums: inout [Int]) -> Int {
+    nums = Set(nums).map{Int($0)}.sorted()
+    return nums.count
+    }
 
-
+var a = [1,1,2]
+removeDuplicates(&a)
 
 
 
