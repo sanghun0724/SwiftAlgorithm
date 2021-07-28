@@ -58,15 +58,20 @@ import UIKit
 //    }
 //}
 
-func removeDuplicates(_ nums: inout [Int]) -> Int {
-    nums = Set(nums).map{Int($0)}.sorted()
-    return nums.count
+func pivotIndex(_ nums: [Int]) -> Int {
+    var left = 0
+    var right = nums.reduce(0,+)
+    
+    for i in 0..<nums.count {
+        right-=nums[i]
+        if right == left {
+            return i
+        }
+        left+=nums[i]
     }
-
-var a = [1,1,2]
-removeDuplicates(&a)
-
-
+    return -1
+}
+pivotIndex([-1,-1,0,1,1,0])
 
 
 
