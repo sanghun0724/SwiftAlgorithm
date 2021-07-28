@@ -58,23 +58,17 @@ import UIKit
 //    }
 //}
 
-func pivotIndex(_ nums: [Int]) -> Int {
-    var left = 0
-    var right = nums.reduce(0,+)
-    
-    for i in 0..<nums.count {
-        right-=nums[i]
-        if right == left {
-            return i
-        }
-        left+=nums[i]
+func dominantIndex(_ nums: [Int]) -> Int {
+    if nums.count == 0 {
+        return -1
     }
-    return -1
-}
-pivotIndex([-1,-1,0,1,1,0])
+    let max = nums.max()
+    let maxIndex = Int(nums.firstIndex(of: max!)!)
+    
+   return nums.filter{ ($0*2) > max! }.count == 1 ? maxIndex : -1
+    
+    }
 
-
-
-
-
+dominantIndex([3,6,1,0]
+)
 
