@@ -57,39 +57,20 @@ import UIKit
 //        return leftStack.isEmpty && rightStack.isEmpty
 //    }
 //}
-func spiralOrder(_ matrix: [[Int]]) -> [Int] {
-    var res = [Int]()
-    var top = 0
-    var left = 0
-    var right = matrix[0].count-1
-    var bottom = matrix.count-1
-    var directiron = 0
+func generate(_ numRows: Int) -> [[Int]] {
+     var res = [[Int]]()
+    for i in 1...numRows {
+      res+=[Array(repeating: 1, count: i)]
+    }
     
-    while left<=right && top<=bottom {
-        if directiron == 0 {
-            for i in top...right {
-                res.append(matrix[top][i])
+    for i in 0..<numRows {
+        for j in 0...i {
+            if j != 0 && j != i {
+                res[i][j] = res[i-1][j-1] + res[i-1][j]
             }
-            top+=1
-        } else if directiron == 1 {
-            for i in top...bottom {
-                res.append(matrix[i][right])
-            }
-            right-=1
-        } else if directiron == 2 {
-            for i in stride(from: right, through: left, by: -1) {
-                res.append(matrix[bottom][i])
-            }
-            bottom-=1
-        } else {
-            for i in stride(from: bottom, through: top, by: -1){
-                res.append(matrix[i][left])
-            }
-            left+=1
-            
         }
-        directiron = (directiron+1) % 4
     }
     return res
-    }
-spiralOrder([[1,2,3],[4,5,6],[7,8,9]])
+   }
+
+generate(5)
