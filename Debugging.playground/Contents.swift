@@ -57,18 +57,57 @@ import UIKit
 //        return leftStack.isEmpty && rightStack.isEmpty
 //    }
 //}
+//func findDiagonalOrder(_ mat: [[Int]]) -> [Int] {
+//    let row = mat.count,col = mat[0].count
+//    var res:[Int] = []
+//    var arrMap = [Int:[Int]]()
+//
+//    for i in 0..<mat.count {
+//        for j in 0..<mat[0].count {
+//            arrMap[i+j, default:[]].append(mat[i][j])
+//        }
+//    }
+//
+//    for i in 0...(row+col-2) {
+//        guard let arr = arrMap[i] else { continue }
+//        if i % 2 == 0 {
+//            res+=Array(arr.reversed())
+//        } else {
+//            res+=arr
+//        }
+//    }
+//
+//    return res
+//    }
+//
+//findDiagonalOrder([[1,2,3],[4,5,6],[7,8,9]])
 
-func dominantIndex(_ nums: [Int]) -> Int {
-    if nums.count == 0 {
-        return -1
-    }
-    let max = nums.max()
-    let maxIndex = Int(nums.firstIndex(of: max!)!)
+
+
+
+
+
+
+
+
+func findDiagonalOrder(_ mat: [[Int]]) -> [Int] {
+    var dict:[Int:[Int]] = [:]
+    let col = mat[0].count,row = mat.count
+    var res:[Int] = []
     
-   return nums.filter{ ($0*2) > max! }.count == 1 ? maxIndex : -1
-    
+    for i in 0..<row {
+        for j in 0..<col {
+            dict[i+j,default: []].append(mat[i][j])
+        }
     }
-
-dominantIndex([3,6,1,0]
-)
-
+    
+    for i in 0...(row+col-2) {
+        guard let dict = dict[i] else {continue}
+        if i % 2 == 0 {
+            res+=Array(dict.reversed())
+        } else {
+           res+=dict
+        }
+    }
+    return res
+}
