@@ -57,57 +57,39 @@ import UIKit
 //        return leftStack.isEmpty && rightStack.isEmpty
 //    }
 //}
-//func findDiagonalOrder(_ mat: [[Int]]) -> [Int] {
-//    let row = mat.count,col = mat[0].count
-//    var res:[Int] = []
-//    var arrMap = [Int:[Int]]()
-//
-//    for i in 0..<mat.count {
-//        for j in 0..<mat[0].count {
-//            arrMap[i+j, default:[]].append(mat[i][j])
-//        }
-//    }
-//
-//    for i in 0...(row+col-2) {
-//        guard let arr = arrMap[i] else { continue }
-//        if i % 2 == 0 {
-//            res+=Array(arr.reversed())
-//        } else {
-//            res+=arr
-//        }
-//    }
-//
-//    return res
-//    }
-//
-//findDiagonalOrder([[1,2,3],[4,5,6],[7,8,9]])
-
-
-
-
-
-
-
-
-
-func findDiagonalOrder(_ mat: [[Int]]) -> [Int] {
-    var dict:[Int:[Int]] = [:]
-    let col = mat[0].count,row = mat.count
-    var res:[Int] = []
+func spiralOrder(_ matrix: [[Int]]) -> [Int] {
+    var res = [Int]()
+    var top = 0
+    var left = 0
+    var right = matrix[0].count-1
+    var bottom = matrix.count-1
+    var directiron = 0
     
-    for i in 0..<row {
-        for j in 0..<col {
-            dict[i+j,default: []].append(mat[i][j])
-        }
-    }
-    
-    for i in 0...(row+col-2) {
-        guard let dict = dict[i] else {continue}
-        if i % 2 == 0 {
-            res+=Array(dict.reversed())
+    while left<=right && top<=bottom {
+        if directiron == 0 {
+            for i in top...right {
+                res.append(matrix[top][i])
+            }
+            top+=1
+        } else if directiron == 1 {
+            for i in top...bottom {
+                res.append(matrix[i][right])
+            }
+            right-=1
+        } else if directiron == 2 {
+            for i in stride(from: right, through: left, by: -1) {
+                res.append(matrix[bottom][i])
+            }
+            bottom-=1
         } else {
-           res+=dict
+            for i in bottom...top {
+                res.append(matrix[i][left])
+            }
+            left+=1
+            
         }
+        directiron = (directiron+1) % 4
     }
     return res
-}
+    }
+spiralOrder([[1,2,3],[4,5,6],[7,8,9]])
