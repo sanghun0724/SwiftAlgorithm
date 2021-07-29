@@ -82,7 +82,7 @@ func spiralOrder(_ matrix: [[Int]]) -> [Int] {
             }
             bottom-=1
         } else {
-            for i in bottom...top {
+            for i in stride(from: bottom, through: top, by: -1){
                 res.append(matrix[i][left])
             }
             left+=1
