@@ -57,20 +57,22 @@ import UIKit
 //        return leftStack.isEmpty && rightStack.isEmpty
 //    }
 //}
-func generate(_ numRows: Int) -> [[Int]] {
-     var res = [[Int]]()
-    for i in 1...numRows {
-      res+=[Array(repeating: 1, count: i)]
-    }
-    
-    for i in 0..<numRows {
-        for j in 0...i {
-            if j != 0 && j != i {
-                res[i][j] = res[i-1][j-1] + res[i-1][j]
-            }
+func plusOne(_ digits: [Int]) -> [Int] {
+    var result = digits
+    for i in (0..<digits.count).reversed() {
+        if result[i] != 9 {
+            result[i] = result[i] + 1
+            return result
+        } else {
+            result[i] = 0
         }
     }
-    return res
-   }
+    if result.first == 0 {
+        result.insert(1, at: 0)
+    }
+    
+    return result
+}
+plusOne([9,9,9,9])
 
-generate(5)
+
