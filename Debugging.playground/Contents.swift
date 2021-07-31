@@ -110,21 +110,31 @@ public class ListNode {
   }
 
 
-func hasCycle(_ head: ListNode?) -> Bool {
-    if head == nil {
-        return false
-    }
 
+func detectCycle(_ head: ListNode?) -> ListNode? {
     var slow = head
     var fast = head
     
-    while fast?.next != nil && fast?.next?.next != nil {
+    while fast != nil {
         slow = slow?.next
         fast = fast?.next?.next
         if slow === fast {
-            return true
+            break
         }
     }
-    
-    return false
-}
+    if fast == nil { return nil }
+    slow = head
+    while slow !== fast  {
+        slow = slow?.next
+        fast = fast?.next
+    }
+    return slow
+    }
+//Floyd’s Cycle Detection Algorithm
+//Linked List Cycle II
+//Floyd's Cycle?  -> 속도가 다른 두개의 포인터를 루프에 진입시켜 진행시키다 보면
+// 순환일 경우 결국 같은 노드를 가르키게 된다는 심플한 개념
+//순환점을 찾는  방법? -> 알고리즘 확장시키면댐 HOW??
+//( 두개의 포인터가 만나게 되는 노드와 순환노드와의 거리 ) == ( head와 순환 노드와의 거리)
+// > slowPointer을 head에 두고 fastPoiner은 만나게되는 노드에 두고
+//동시에 한칸씩 진행시키다보면 다시 만나게 되는 지점이 순환노드가 되는것
