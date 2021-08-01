@@ -110,24 +110,16 @@ public class ListNode {
   }
 
 
-// Two pointers approach
-    func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
-        var dummy = ListNode(0)
-        dummy.next = head
-        var left = dummy
-        var right = head
-        var n = n
-        
-        while n > 0 && right != nil {
-            right = right?.next
-            n-=1
-        }
-        
-        while right != nil {
-            left = left.next!
-            right = right?.next
-        }
-        //delete
-        left.next = left.next?.next
-        return dummy.next
+func reverseList(_ head: ListNode?) -> ListNode? {
+    if head == nil { return nil }
+    var prev:ListNode? = nil
+    var cur = head
+    
+    while cur != nil {
+        let next = cur?.next
+        cur?.next = prev
+        prev = cur
+        cur = next
+    }
+    return prev
 }
