@@ -110,16 +110,18 @@ public class ListNode {
   }
 
 
-func reverseList(_ head: ListNode?) -> ListNode? {
-    if head == nil { return nil }
-    var prev:ListNode? = nil
+func removeElements(_ head: ListNode?, _ val: Int) -> ListNode? {
     var cur = head
-    
-    while cur != nil {
-        let next = cur?.next
-        cur?.next = prev
-        prev = cur
-        cur = next
+    if head == nil {
+        return nil
     }
-    return prev
+    
+    while cur?.next != nil {
+        if cur?.next?.val == val {
+            cur?.next = cur?.next?.next
+        } else {
+            cur = cur?.next
+        }
+    }
+    return head?.val == val ? head?.next : head!
 }
