@@ -110,30 +110,24 @@ public class ListNode {
   }
 
 
-
-func getIntersectionNode(_ headA: ListNode?, _ headB: ListNode?) -> ListNode? {
-    if headA == nil && headB == nil {
-        return nil
-    }
-    
-    var pointer1 = headA
-    var pointer2 = headB
-    
-    while pointer2 !== pointer1 {
-        pointer1 = pointer1?.next
-        pointer2 = pointer2?.next
+// Two pointers approach
+    func removeNthFromEnd(_ head: ListNode?, _ n: Int) -> ListNode? {
+        var dummy = ListNode(0)
+        dummy.next = head
+        var left = dummy
+        var right = head
+        var n = n
         
-        if pointer1 === pointer2 {
-            return pointer2
+        while n > 0 && right != nil {
+            right = right?.next
+            n-=1
         }
         
-        if pointer1 == nil {
-            pointer1 = headB
+        while right != nil {
+            left = left.next!
+            right = right?.next
         }
-        if pointer2 == nil {
-            pointer2 = headA
-        }
-    }
-    return pointer2
-    
+        //delete
+        left.next = left.next?.next
+        return dummy.next
 }
