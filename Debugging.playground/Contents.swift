@@ -108,22 +108,19 @@ public class ListNode {
          self.next = nil
       }
   }
-
-func oddEvenList(_ head: ListNode?) -> ListNode? {
-    if head == nil {
-        return nil
+func isPalindrome(_ head: ListNode?) -> Bool {
+    var list = [Int]()
+    var curr = head
+    while curr != nil {
+        list.append(curr?.val)
+        curr = curr?.next
     }
-    var odd = head
-    var even = head?.next
-    var evenHead = even
+    var (i,j) = (0,list.count-1)
     
-    while even?.next != nil {
-        odd?.next = even?.next
-        odd = even?.next
-        even?.next = odd?.next
-        even = odd?.next
+    while (i,j) {
+        guard list[i] == list [j] else {return false}
+        i += 1
+        j -= 1
     }
-    odd?.next = evenHead
-    
-    return odd
-    }
+    return true
+}
