@@ -109,19 +109,21 @@ public class ListNode {
       }
   }
 
-
-func removeElements(_ head: ListNode?, _ val: Int) -> ListNode? {
-    var cur = head
+func oddEvenList(_ head: ListNode?) -> ListNode? {
     if head == nil {
         return nil
     }
+    var odd = head
+    var even = head?.next
+    var evenHead = even
     
-    while cur?.next != nil {
-        if cur?.next?.val == val {
-            cur?.next = cur?.next?.next
-        } else {
-            cur = cur?.next
-        }
+    while even?.next != nil {
+        odd?.next = even?.next
+        odd = even?.next
+        even?.next = odd?.next
+        even = odd?.next
     }
-    return head?.val == val ? head?.next : head!
-}
+    odd?.next = evenHead
+    
+    return odd
+    }
