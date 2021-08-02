@@ -100,48 +100,40 @@ import UIKit
 //        }
 //    }
 //}
-public class ListNode {
-      public var val: Int
+ public class ListNode {
+     public var val: Int
      public var next: ListNode?
-      public init(_ val: Int) {
-         self.val = val
-         self.next = nil
-      }
-  }
+     public init() { self.val = 0; self.next = nil; }
+     public init(_ val: Int) { self.val = val; self.next = nil; }
+     public init(_ val: Int, _ next: ListNode?) { self.val = val; self.next = next; }
+ }
 
-    func isPalindrome(_ head: ListNode?) -> Bool {
-        var fast = head
-        var slow = head
-        
-        while fast != nil && fast?.next != nil {
-            fast = fast?.next?.next
-            slow = slow?.next
-        }
-//        if fast != nil {
-//            slow =slow?.next
-//        }
-        slow = reverse(head: slow!)
-        fast = head
-        
-        while slow != nil {
-            if fast?.val != slow?.val{
-                return false
-            }
-            slow = slow?.next
-            fast = fast?.next
-        }
-        return true
-}
 
-fileprivate func reverse(head:ListNode?) -> ListNode? {
-    var cur = head
-    var prev:ListNode? = nil
+   func mergeTwoLists(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
+    var l1 = l1
+    var l2 = l2
+    var dummy = ListNode()
+    var head = dummy
     
-    while cur != nil {
-        let nextNode = cur?.next
-        cur?.next = prev
-        prev = cur
-        cur = nextNode
+    
+    while l1 !== nil && l2 !== nil {
+        if l1!.val > l2!.val {
+            dummy.next = l2
+            l2 = l2?.next
+        } else {
+            dummy.next = l1
+            l1 = l1?.next
+        }
+        dummy = dummy.next!
     }
-    return prev
-}
+    
+    if l1 !== nil {
+        dummy.next = l1
+    } else {
+        dummy.next = l2
+    }
+    
+    return head.next
+
+   }
+
