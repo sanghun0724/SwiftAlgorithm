@@ -108,19 +108,40 @@ public class ListNode {
          self.next = nil
       }
   }
-func isPalindrome(_ head: ListNode?) -> Bool {
-    var list = [Int]()
-    var curr = head
-    while curr != nil {
-        list.append(curr?.val)
-        curr = curr?.next
-    }
-    var (i,j) = (0,list.count-1)
+
+    func isPalindrome(_ head: ListNode?) -> Bool {
+        var fast = head
+        var slow = head
+        
+        while fast != nil && fast?.next != nil {
+            fast = fast?.next?.next
+            slow = slow?.next
+        }
+//        if fast != nil {
+//            slow =slow?.next
+//        }
+        slow = reverse(head: slow!)
+        fast = head
+        
+        while slow != nil {
+            if fast?.val != slow?.val{
+                return false
+            }
+            slow = slow?.next
+            fast = fast?.next
+        }
+        return true
+}
+
+fileprivate func reverse(head:ListNode?) -> ListNode? {
+    var cur = head
+    var prev:ListNode? = nil
     
-    while (i,j) {
-        guard list[i] == list [j] else {return false}
-        i += 1
-        j -= 1
+    while cur != nil {
+        let nextNode = cur?.next
+        cur?.next = prev
+        prev = cur
+        cur = nextNode
     }
-    return true
+    return prev
 }
