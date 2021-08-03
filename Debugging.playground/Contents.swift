@@ -109,31 +109,25 @@ import UIKit
  }
 
 
-   func mergeTwoLists(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
+func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
     var l1 = l1
     var l2 = l2
     var dummy = ListNode()
-    var head = dummy
+    let head = dummy
     
-    
-    while l1 !== nil && l2 !== nil {
-        if l1!.val > l2!.val {
-            dummy.next = l2
-            l2 = l2?.next
-        } else {
-            dummy.next = l1
-            l1 = l1?.next
-        }
+    var count = 0
+    while l1 != nil || l2 != nil || count > 0 {
+        let firstValue = l1?.val ?? 0
+        let secondValue = l2?.val ?? 0
+        var sum = firstValue + secondValue + count
+        
+        let value = sum % 10
+        count = sum / 10
+        dummy.next = ListNode(value)
+        
+        l1 = l1?.next
+        l2 = l2?.next
         dummy = dummy.next!
     }
-    
-    if l1 !== nil {
-        dummy.next = l1
-    } else {
-        dummy.next = l2
-    }
-    
     return head.next
-
-   }
-
+}
