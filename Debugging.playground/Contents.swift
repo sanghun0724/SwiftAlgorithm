@@ -109,25 +109,52 @@ import UIKit
  }
 
 
-func addTwoNumbers(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
-    var l1 = l1
-    var l2 = l2
-    var dummy = ListNode()
-    let head = dummy
-    
-    var count = 0
-    while l1 != nil || l2 != nil || count > 0 {
-        let firstValue = l1?.val ?? 0
-        let secondValue = l2?.val ?? 0
-        var sum = firstValue + secondValue + count
+
+  public class Node {
+      public var val: Int
+      public var prev: Node?
+      public var next: Node?
+      public var child: Node?
+      public init(_ val: Int) {
+          self.val = val
+          self.prev = nil
+          self.next = nil
+          self.child  = nil
+      }
+  }
+
+
+    func flatten(_ head: Node?) -> Node? {
+        if head == nil {
+            return head
+        }
         
-        let value = sum % 10
-        count = sum / 10
-        dummy.next = ListNode(value)
+        var node = head
         
-        l1 = l1?.next
-        l2 = l2?.next
-        dummy = dummy.next!
+        while node != nil {
+            if node?.child == nil {
+                node = node?.next
+                continue
+            }
+            
+            //if it has child
+            var temp = node?.child
+            
+            while temp?.next != nil {
+                temp = temp?.next
+            }
+            
+            temp?.next = node?.next
+            
+            if node?.next != nil { node?.next?.prev = temp }
+            
+            node?.next = node?.child
+            node?.child?.prev = temp
+            node?.child = nil
+        }
+        
+        return head
     }
-    return head.next
-}
+
+
+
