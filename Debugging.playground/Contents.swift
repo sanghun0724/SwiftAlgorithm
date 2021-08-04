@@ -149,7 +149,7 @@ import UIKit
             if node?.next != nil { node?.next?.prev = temp }
             
             node?.next = node?.child
-            node?.child?.prev = temp
+            node?.child?.prev = node
             node?.child = nil
         }
         
