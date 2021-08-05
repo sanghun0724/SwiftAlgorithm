@@ -100,61 +100,46 @@ import UIKit
 //        }
 //    }
 //}
- public class ListNode {
-     public var val: Int
-     public var next: ListNode?
-     public init() { self.val = 0; self.next = nil; }
-     public init(_ val: Int) { self.val = val; self.next = nil; }
-     public init(_ val: Int, _ next: ListNode?) { self.val = val; self.next = next; }
- }
 
 
 
-  public class Node {
-      public var val: Int
-      public var prev: Node?
-      public var next: Node?
-      public var child: Node?
-      public init(_ val: Int) {
-          self.val = val
-          self.prev = nil
-          self.next = nil
-          self.child  = nil
-      }
-  }
+public class ListNode {
+    public var val: Int
+    public var next: ListNode?
+    public init() { self.val = 0; self.next = nil; }
+    public init(_ val: Int) { self.val = val; self.next = nil; }
+    public init(_ val: Int, _ next: ListNode?) { self.val = val; self.next = next; }
+}
 
-
-    func flatten(_ head: Node?) -> Node? {
-        if head == nil {
-            return head
-        }
-        
-        var node = head
-        
-        while node != nil {
-            if node?.child == nil {
-                node = node?.next
-                continue
-            }
-            
-            //if it has child
-            var temp = node?.child
-            
-            while temp?.next != nil {
-                temp = temp?.next
-            }
-            
-            temp?.next = node?.next
-            
-            if node?.next != nil { node?.next?.prev = temp }
-            
-            node?.next = node?.child
-            node?.child?.prev = node
-            node?.child = nil
-        }
-        
-        return head
+func rotateRight(_ head: ListNode?, _ k: Int) -> ListNode? {
+    if head == nil {  return nil }
+    
+    var node = head
+    var count = 0
+    var tail:ListNode?
+    
+    while node != nil {
+        tail = node
+        node = node?.next
+        count+=1
     }
-
-
+    
+    let k = k % count
+    if k == 0 { return head }
+    
+    node = head
+    
+    var slice = count - k
+    var prev:ListNode?
+    while slice > 0 {
+        prev = node
+        node = node?.next
+        slice-=1
+    }
+    
+    prev?.next = nil
+    tail?.next = head
+    
+    return node
+    }
 
