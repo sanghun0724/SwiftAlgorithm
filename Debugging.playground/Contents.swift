@@ -100,46 +100,140 @@ import UIKit
 //        }
 //    }
 //}
-
-
-
-public class ListNode {
-    public var val: Int
-    public var next: ListNode?
-    public init() { self.val = 0; self.next = nil; }
-    public init(_ val: Int) { self.val = val; self.next = nil; }
-    public init(_ val: Int, _ next: ListNode?) { self.val = val; self.next = next; }
+class MyCircularQueue {
+    private var values:[Int]
+    private var capacity:Int
+    private var head:Int
+    private var tail:Int
+    
+    init(_ k: Int) {
+       values = [Int](repeating: -1, count: k)
+        capacity = 0
+        head = -1
+        tail = -1
+    }
+    
+    func enQueue(_ value: Int) -> Bool {
+        guard !isFull() else { return false }
+        tail = nextIndex(value:tail)
+        values[tail] = value
+        
+        if isEmpty() {
+            head = tail
+        }
+        
+        capacity += 1
+        return true
+    }
+    
+    func deQueue() -> Bool {
+        guard !isEmpty() else { return false }
+        head = nextIndex(value: head)
+        capacity -= 1
+        return true
+    }
+    
+    func Front() -> Int {
+        guard !isEmpty() else { return -1}
+        return values[head]
+    }
+    
+    func Rear() -> Int {
+        guard !isEmpty() else { return -1}
+        return values[tail]
+    }
+    
+    func isEmpty() -> Bool {
+        return capacity == 0
+    }
+    
+    func isFull() -> Bool {
+        return capacity >= values.count
+    }
+    
+    //circular하게 인덱스 지정위해서 ..
+    private func nextIndex(value:Int) -> Int {
+        if value >= (values.count - 1) {
+            return 0
+        }
+        return value + 1
+    }
 }
 
-func rotateRight(_ head: ListNode?, _ k: Int) -> ListNode? {
-    if head == nil {  return nil }
-    
-    var node = head
-    var count = 0
-    var tail:ListNode?
-    
-    while node != nil {
-        tail = node
-        node = node?.next
-        count+=1
-    }
-    
-    let k = k % count
-    if k == 0 { return head }
-    
-    node = head
-    
-    var slice = count - k
-    var prev:ListNode?
-    while slice > 0 {
-        prev = node
-        node = node?.next
-        slice-=1
-    }
-    
-    prev?.next = nil
-    tail?.next = head
-    
-    return node
-    }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class MyCircularQueue2 {
+    private var values:[Int]
+    private var capacity:Int
+    private var head:Int
+    private var tail:Int
+    
+    init(_ k: Int) {
+        self.values = [Int](repeating: 0, count: k)
+        self.capacity = 0
+        self.head = -1
+        self.tail = -1
+    }
+    
+    func enQueue(_ value: Int) -> Bool {
+        guard !isFull() else { return false }
+        tail = nextIndex(value: tail)
+        values[tail] = value
+        
+        if isEmpty() {
+            head = tail
+        }
+        
+        capacity+=1
+        
+        return true
+    }
+    
+    func deQueue() -> Bool {
+        guard !isEmpty() else { return false }
+        head = nextIndex(value: head)
+        capacity-=1
+        return true
+    }
+    
+    func Front() -> Int {
+        guard !isEmpty() else { return -1 }
+        return values[head]
+    }
+    
+    func Rear() -> Int {
+        guard !isEmpty() else { return -1 }
+        return values[tail]
+    }
+    
+    func isEmpty() -> Bool {
+        return capacity == 0
+    }
+    
+    func isFull() -> Bool {
+        return capacity >= values.count
+    }
+    
+    private func nextIndex(value:Int) -> Int {
+        if value >= values.count - 1 {
+            return 0
+        }
+        return value + 1
+    }
+}
