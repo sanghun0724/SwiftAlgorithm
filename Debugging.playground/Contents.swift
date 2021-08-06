@@ -100,140 +100,37 @@ import UIKit
 //        }
 //    }
 //}
-class MyCircularQueue {
-    private var values:[Int]
-    private var capacity:Int
-    private var head:Int
-    private var tail:Int
-    
-    init(_ k: Int) {
-       values = [Int](repeating: -1, count: k)
-        capacity = 0
-        head = -1
-        tail = -1
+func numIslands(_ grid: [[Character]]) -> Int {
+    if grid.count == 0 || grid == nil {
+        return 0
     }
     
-    func enQueue(_ value: Int) -> Bool {
-        guard !isFull() else { return false }
-        tail = nextIndex(value:tail)
-        values[tail] = value
-        
-        if isEmpty() {
-            head = tail
+    
+    var grid = grid
+    var numberOfIslands = 0
+    
+    for i in 0..<grid.count {
+        for j in 0..<grid[0].count {
+            if grid[i][j] == "1" {
+                numberOfIslands += getIslands(&grid,i,j)
+            }
         }
-        
-        capacity += 1
-        return true
     }
-    
-    func deQueue() -> Bool {
-        guard !isEmpty() else { return false }
-        head = nextIndex(value: head)
-        capacity -= 1
-        return true
-    }
-    
-    func Front() -> Int {
-        guard !isEmpty() else { return -1}
-        return values[head]
-    }
-    
-    func Rear() -> Int {
-        guard !isEmpty() else { return -1}
-        return values[tail]
-    }
-    
-    func isEmpty() -> Bool {
-        return capacity == 0
-    }
-    
-    func isFull() -> Bool {
-        return capacity >= values.count
-    }
-    
-    //circular하게 인덱스 지정위해서 ..
-    private func nextIndex(value:Int) -> Int {
-        if value >= (values.count - 1) {
-            return 0
-        }
-        return value + 1
-    }
+    return numberOfIslands
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class MyCircularQueue2 {
-    private var values:[Int]
-    private var capacity:Int
-    private var head:Int
-    private var tail:Int
-    
-    init(_ k: Int) {
-        self.values = [Int](repeating: 0, count: k)
-        self.capacity = 0
-        self.head = -1
-        self.tail = -1
+func getIslands(_ grid:inout [[Character]],_ i:Int,_ j:Int) -> Int {
+    if i < 0 || i >= grid.count || j < 0 || j >= grid[0].count
+        || grid[i][j] == "0" {
+        return 0
     }
     
-    func enQueue(_ value: Int) -> Bool {
-        guard !isFull() else { return false }
-        tail = nextIndex(value: tail)
-        values[tail] = value
-        
-        if isEmpty() {
-            head = tail
-        }
-        
-        capacity+=1
-        
-        return true
-    }
+    grid[i][j] = "0"
+
+    getIslands(&grid, i-1, j)
+    getIslands(&grid, i+1, j)
+    getIslands(&grid, i, j-1)
+    getIslands(&grid, i, j+1)
     
-    func deQueue() -> Bool {
-        guard !isEmpty() else { return false }
-        head = nextIndex(value: head)
-        capacity-=1
-        return true
-    }
-    
-    func Front() -> Int {
-        guard !isEmpty() else { return -1 }
-        return values[head]
-    }
-    
-    func Rear() -> Int {
-        guard !isEmpty() else { return -1 }
-        return values[tail]
-    }
-    
-    func isEmpty() -> Bool {
-        return capacity == 0
-    }
-    
-    func isFull() -> Bool {
-        return capacity >= values.count
-    }
-    
-    private func nextIndex(value:Int) -> Int {
-        if value >= values.count - 1 {
-            return 0
-        }
-        return value + 1
-    }
+    return -1
 }
