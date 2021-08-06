@@ -100,37 +100,43 @@ import UIKit
 //        }
 //    }
 //}
-func numIslands(_ grid: [[Character]]) -> Int {
-    if grid.count == 0 || grid == nil {
-        return 0
-    }
+func openLock(_ deadends: [String], _ target: String) -> Int {
+    var deadends = Set(deadends.map{Array($0).map{Int(String($0))}})
+    var target = Array(target).map{Int(String($0))}
+    var count = 0
+    var queue = [[Int]]()
+    var visited = Set<[Int]>()
     
-    
-    var grid = grid
-    var numberOfIslands = 0
-    
-    for i in 0..<grid.count {
-        for j in 0..<grid[0].count {
-            if grid[i][j] == "1" {
-                numberOfIslands += getIslands(&grid,i,j)
+    queue.append([0,0,0,0])
+    visited.insert([0,0,0,0])
+    while !queue.isEmpty {
+        var nextQueue = [[Int]]()
+        for val in queue {
+            if val == target { return count }
+            if deadends.contains(val) { continue }
+        
+            
+            for i in 0...3 {
+                var upVal = val
+                upVal[i] = (upVal[i] + 1) % 10
+           
+                
+                var downVal = val
+                downVal[i] = (downVal[i] - 1 + 10) % 10
+       
+                if !visited.contains(upVal) {
+                    nextQueue.append(upVal)
+                    visited.insert(upVal)
+                }
+                if !visited.contains(downVal) {
+                    nextQueue.append(downVal)
+                    visited.insert(downVal)
+                }
             }
         }
+        queue = nextQueue
+        count+=1
     }
-    return numberOfIslands
-}
-
-func getIslands(_ grid:inout [[Character]],_ i:Int,_ j:Int) -> Int {
-    if i < 0 || i >= grid.count || j < 0 || j >= grid[0].count
-        || grid[i][j] == "0" {
-        return 0
-    }
-    
-    grid[i][j] = "0"
-
-    getIslands(&grid, i-1, j)
-    getIslands(&grid, i+1, j)
-    getIslands(&grid, i, j-1)
-    getIslands(&grid, i, j+1)
-    
     return -1
+
 }
