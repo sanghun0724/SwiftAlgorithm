@@ -100,43 +100,40 @@ import UIKit
 //        }
 //    }
 //}
-func openLock(_ deadends: [String], _ target: String) -> Int {
-    var deadends = Set(deadends.map{Array($0).map{Int(String($0))}})
-    var target = Array(target).map{Int(String($0))}
-    var count = 0
-    var queue = [[Int]]()
-    var visited = Set<[Int]>()
+func numSquares(_ n: Int) -> Int {
+    var squeres = [Int]()
+    for i in 1...n {
+        let squere = i * i
+        if squere > n {
+            break
+        } else {
+            squeres.append(squere)
+        }
+    }
     
-    queue.append([0,0,0,0])
-    visited.insert([0,0,0,0])
-    while !queue.isEmpty {
-        var nextQueue = [[Int]]()
-        for val in queue {
-            if val == target { return count }
-            if deadends.contains(val) { continue }
-        
-            
-            for i in 0...3 {
-                var upVal = val
-                upVal[i] = (upVal[i] + 1) % 10
-           
-                
-                var downVal = val
-                downVal[i] = (downVal[i] - 1 + 10) % 10
-       
-                if !visited.contains(upVal) {
-                    nextQueue.append(upVal)
-                    visited.insert(upVal)
+    if let last = squeres.last, last == n {
+        return 1
+    }
+    
+    var totalCount = 1
+    var queues = [n]
+    
+    while !queues.isEmpty {
+        var nextQueue = [Int]()
+        for queue in queues {
+            for squere in squeres {
+                if queue == squere {
+                    return totalCount
                 }
-                if !visited.contains(downVal) {
-                    nextQueue.append(downVal)
-                    visited.insert(downVal)
+                if queue < squere {
+                    continue
                 }
+                nextQueue.append(queue - squere)
             }
         }
-        queue = nextQueue
-        count+=1
+        queues = nextQueue
+        totalCount+=1
     }
+    
     return -1
-
 }
