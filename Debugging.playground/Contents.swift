@@ -101,41 +101,38 @@ import UIKit
 //    }
 //}
 
-//farward
-func dailyTemperatures(_ temperatures: [Int]) -> [Int] {
-    var res = Array(repeating: 0, count: temperatures.count)
+func evalRPN(_ tokens: [String]) -> Int {
     var stack = [Int]()
     
-    for (index,value) in temperatures.enumerated() {
-        while !stack.isEmpty && temperatures[stack.last!] < value {
-            let past = stack.popLast()
-            res[past!] = index - past!
-        }
-        stack.append(index)
-    }
-    
-    return res
-  }
-
-//backward
-
-func dailyTemperatures2(_ temperatures: [Int]) -> [Int] {
-    var res = Array(repeating: 0, count: temperatures.count)
-    var stack = [Int]()
-    
-    for i in stride(from: temperatures.count-1, through: 0, by: -1) {
-        while !stack.isEmpty  {
-            let past = stack.last!
-            if temperatures[i] < temperatures[past] {
-                res[i] = i - past
-                break
-            } else {
-                stack.popLast()!
+    for i in tokens {
+        switch i {
+        case "+":
+            if stack.count >= 2 {
+                let first = Int(stack.popLast()!)
+                let second = Int(stack.popLast()!)
+                stack.append(second+first)
             }
+        case "-":
+            if stack.count >= 2 {
+                let first = Int(stack.popLast()!)
+                let second = Int(stack.popLast()!)
+                stack.append(second-first)
+            }
+        case "/":
+            if stack.count >= 2 {
+                let first = Int(stack.popLast()!)
+                let second = Int(stack.popLast()!)
+                stack.append(second/first)
+            }
+        case "*":
+            if stack.count >= 2 {
+                let first = Int(stack.popLast()!)
+                let second = Int(stack.popLast()!)
+                stack.append(second*first)
+            }
+        default:
+            stack.append(Int(i)!)
         }
-        stack.append(i)
     }
-    
-    return res
-    
-}
+    return stack.first!
+   }
