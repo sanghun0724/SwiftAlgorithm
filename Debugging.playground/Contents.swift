@@ -100,40 +100,42 @@ import UIKit
 //        }
 //    }
 //}
-func numSquares(_ n: Int) -> Int {
-    var squeres = [Int]()
-    for i in 1...n {
-        let squere = i * i
-        if squere > n {
-            break
-        } else {
-            squeres.append(squere)
+
+//farward
+func dailyTemperatures(_ temperatures: [Int]) -> [Int] {
+    var res = Array(repeating: 0, count: temperatures.count)
+    var stack = [Int]()
+    
+    for (index,value) in temperatures.enumerated() {
+        while !stack.isEmpty && temperatures[stack.last!] < value {
+            let past = stack.popLast()
+            res[past!] = index - past!
         }
+        stack.append(index)
     }
     
-    if let last = squeres.last, last == n {
-        return 1
-    }
+    return res
+  }
+
+//backward
+
+func dailyTemperatures2(_ temperatures: [Int]) -> [Int] {
+    var res = Array(repeating: 0, count: temperatures.count)
+    var stack = [Int]()
     
-    var totalCount = 1
-    var queues = [n]
-    
-    while !queues.isEmpty {
-        var nextQueue = [Int]()
-        for queue in queues {
-            for squere in squeres {
-                if queue == squere {
-                    return totalCount
-                }
-                if queue < squere {
-                    continue
-                }
-                nextQueue.append(queue - squere)
+    for i in stride(from: temperatures.count-1, through: 0, by: -1) {
+        while !stack.isEmpty  {
+            let past = stack.last!
+            if temperatures[i] < temperatures[past] {
+                res[i] = i - past
+                break
+            } else {
+                stack.popLast()!
             }
         }
-        queues = nextQueue
-        totalCount+=1
+        stack.append(i)
     }
     
-    return -1
+    return res
+    
 }
