@@ -101,38 +101,32 @@ import UIKit
 //    }
 //}
 
-func evalRPN(_ tokens: [String]) -> Int {
-    var stack = [Int]()
+func BFS(_ row: Int, _ col: Int, _ grid: inout [[Character]]) {
+        var queue = [(row,col)]
+        grid[row][col] == "0" //set visited
     
-    for i in tokens {
-        switch i {
-        case "+":
-            if stack.count >= 2 {
-                let first = Int(stack.popLast()!)
-                let second = Int(stack.popLast()!)
-                stack.append(second+first)
-            }
-        case "-":
-            if stack.count >= 2 {
-                let first = Int(stack.popLast()!)
-                let second = Int(stack.popLast()!)
-                stack.append(second-first)
-            }
-        case "/":
-            if stack.count >= 2 {
-                let first = Int(stack.popLast()!)
-                let second = Int(stack.popLast()!)
-                stack.append(second/first)
-            }
-        case "*":
-            if stack.count >= 2 {
-                let first = Int(stack.popLast()!)
-                let second = Int(stack.popLast()!)
-                stack.append(second*first)
-            }
-        default:
-            stack.append(Int(i)!)
+    
+    while !queue.isEmpty {
+        let current = queue.removeFirst()
+        let (curRow,curCol) = current
+        
+        if curRow-1 >= 0,grid[curRow-1][curCol] == "1" {
+            queue.append((curRow-1,curCol))
+            grid[curRow-1][curCol] == "0"
         }
+        if curRow+1 >= grid.count,grid[curRow+1][curCol] == "1" {
+            queue.append((curRow+1,curCol))
+            grid[curRow-1][curCol] == "0"
+        }
+        if curCol-1 >= 0,grid[curRow][curCol-1] == "1" {
+            queue.append((curRow,curCol))
+            grid[curRow][curCol] == "0"
+        }
+        if curCol+1 >= grid[0].count,grid[curRow][curCol+1] == "1" {
+            queue.append((curRow,curCol+1))
+            grid[curRow][curCol+1] == "0"
+        }
+        
     }
-    return stack.first!
    }
+
