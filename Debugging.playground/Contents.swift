@@ -101,32 +101,41 @@ import UIKit
 //    }
 //}
 
-func BFS(_ row: Int, _ col: Int, _ grid: inout [[Character]]) {
-        var queue = [(row,col)]
-        grid[row][col] == "0" //set visited
-    
-    
-    while !queue.isEmpty {
-        let current = queue.removeFirst()
-        let (curRow,curCol) = current
-        
-        if curRow-1 >= 0,grid[curRow-1][curCol] == "1" {
-            queue.append((curRow-1,curCol))
-            grid[curRow-1][curCol] == "0"
-        }
-        if curRow+1 >= grid.count,grid[curRow+1][curCol] == "1" {
-            queue.append((curRow+1,curCol))
-            grid[curRow-1][curCol] == "0"
-        }
-        if curCol-1 >= 0,grid[curRow][curCol-1] == "1" {
-            queue.append((curRow,curCol))
-            grid[curRow][curCol] == "0"
-        }
-        if curCol+1 >= grid[0].count,grid[curRow][curCol+1] == "1" {
-            queue.append((curRow,curCol+1))
-            grid[curRow][curCol+1] == "0"
-        }
-        
-    }
-   }
 
+ public class Node {
+      public var val: Int
+      public var neighbors: [Node?]
+      public init(_ val: Int) {
+          self.val = val
+          self.neighbors = []
+      }
+  }
+
+
+class Solution {
+    func cloneGraph(_ node: Node?) -> Node? {
+        var map = [Int:Node]()
+        return DFS(node,&map)
+    }
+    
+    private func DFS(_ node: Node?,_ map: inout [Int:Node]) -> Node? {
+        if node == nil {
+            return nil
+        }
+        
+        if map.keys.contains(node!.val) {
+            return map[node!.val]
+        }
+        
+        var clone = Node(node!.val)
+        map[node!.val] = clone
+        
+        for neighbor in node!.neighbors {
+            if let node = DFS(neighbor,&map) {
+                clone.neighbors.append(node)
+            }
+        }
+        
+        return clone
+    }
+}
