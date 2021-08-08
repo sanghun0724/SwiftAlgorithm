@@ -114,28 +114,24 @@ import UIKit
 
 class Solution {
     func cloneGraph(_ node: Node?) -> Node? {
+        guard let node = node else { return nil }
+        var queue = [node]
         var map = [Int:Node]()
-        return DFS(node,&map)
-    }
-    
-    private func DFS(_ node: Node?,_ map: inout [Int:Node]) -> Node? {
-        if node == nil {
-            return nil
-        }
         
-        if map.keys.contains(node!.val) {
-            return map[node!.val]
-        }
+        let newNode = Node(node.val)
+        map[node.val] = newNode
         
-        var clone = Node(node!.val)
-        map[node!.val] = clone
-        
-        for neighbor in node!.neighbors {
-            if let node = DFS(neighbor,&map) {
-                clone.neighbors.append(node)
+        while !queue.isEmpty {
+            let val = queue.removeFirst()
+            for neighbor in val.neighbors {
+                if !map.keys.contains(neighbor!.val) {
+                    map[neighbor!.val] = Node(neighbor!.val)
+                    queue.append(neighbor!)
+                }
+                map[val.val]!.neighbors.append(map[neighbor!.val]!)
             }
-        }
-        
-        return clone
     }
+        return newNode
 }
+
+
