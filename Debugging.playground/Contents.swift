@@ -102,20 +102,44 @@ import UIKit
 //}
 class Solution {
     func inorderTraversal(_ root: TreeNode?) -> [Int] {
-        if root == nil { return [] }
-        var arr = [Int]()
-        inorder(root, &arr)
-        return arr
-        
-    }
-    func inorder(_ root : TreeNode?,_ arr:inout [Int]) {
-        if root == nil {
-            return
+        if root == nil {return []}
+      var stack = [TreeNode]()
+      var visit = [TreeNode]()
+      
+        stack.append(root!)
+
+        while !stack.isEmpty {
+            let cur = stack.popLast()
+            if !visit.contains((cur?.left)!) {
+                
+            }
+            if !visit.contains(where: (cur?.right!)!) {
+                
+            }
+            
         }
-        
-        inorder(root?.left, &arr)
-        arr.append(root!.val)
-        inorder(root?.right, &arr)
         
     }
 }
+
+func inorderTraversal2(_ root: TreeNode?) -> [Int] {
+        guard let root = root else {
+            return [Int]()
+        }
+        var stack = [TreeNode?]()
+        stack.append(root)
+        var returnArray = [Int]()
+        var current : TreeNode? = root
+        while stack.isEmpty == false {
+            while current?.left != nil {
+                stack.append(current?.left)
+                current = current?.left
+            }
+            if let pop = stack.removeLast() { //여기서 nil거르니 right nil 값 넣어줘도 됨 
+                returnArray.append(pop.val)
+                stack.append(pop.right)
+                current = pop.right
+            }
+        }
+        return returnArray
+    }
