@@ -100,44 +100,27 @@ import UIKit
 //        }
 //    }
 //}
+var i:Int = 0
 
-func decodeString(_ s: String) -> String {
-   var result = ""
-   var stringStack = [String]()
-   var countingStack = [Int]()
-   let str = Array(s)
-   var i = 0
-    while str.count > i {
-        
-        if str[i] == "[" {
-            stringStack.append(result)
-            result = ""
-            i+=1
-        }
-        if str[i] == "]" {
-            
-            if var temp = stringStack.popLast() , let count = countingStack.popLast() {
-                for _ in 1...count {
-                    temp += result
-                }
-                result = temp
-            }
-            i+=1
-            
-        }
-        if str[i].isNumber {
-            var num = 0
-            while str[i] >= "0",str[i] <= "9" {
-                num = num * 10 + Int(String(str[i]))!
-                i+=1
-            }
-            countingStack.append(num)
-           
-        }
-        else {
-            result.append(str[i])
-            i+=1
-        }
+
+func floodFill(_ image: [[Int]], _ sr: Int, _ sc: Int, _ newColor: Int) -> [[Int]] {
+     i = image[sr][sc]
+    var image = image
+    bfs(sr, sc, &image, newColor)
+    return image
+       
+   }
+func bfs(_ row:Int,_ col:Int, _ image: inout [[Int]],_ newColor:Int) {
+    if row < 0  || col < 0 || row >= image.count || col >= image[0].count
+        || image[row][col] == newColor || image[row][col] != i {
+        return
     }
-    return result
+    image[row][col] = newColor
+    
+    bfs(row+1, col, &image, newColor)
+    bfs(row-1, col, &image, newColor)
+    bfs(row, col-1, &image, newColor)
+    bfs(row, col+1, &image, newColor)
+    
+    
 }
