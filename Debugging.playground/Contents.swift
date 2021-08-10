@@ -100,46 +100,44 @@ import UIKit
 //        }
 //    }
 //}
-class Solution {
-    func inorderTraversal(_ root: TreeNode?) -> [Int] {
-        if root == nil {return []}
-      var stack = [TreeNode]()
-      var visit = [TreeNode]()
-      
-        stack.append(root!)
 
-        while !stack.isEmpty {
-            let cur = stack.popLast()
-            if !visit.contains((cur?.left)!) {
-                
+func decodeString(_ s: String) -> String {
+   var result = ""
+   var stringStack = [String]()
+   var countingStack = [Int]()
+   let str = Array(s)
+   var i = 0
+    while str.count > i {
+        
+        if str[i] == "[" {
+            stringStack.append(result)
+            result = ""
+            i+=1
+        }
+        if str[i] == "]" {
+            
+            if var temp = stringStack.popLast() , let count = countingStack.popLast() {
+                for _ in 1...count {
+                    temp += result
+                }
+                result = temp
             }
-            if !visit.contains(where: (cur?.right!)!) {
-                
-            }
+            i+=1
             
         }
-        
+        if str[i].isNumber {
+            var num = 0
+            while str[i] >= "0",str[i] <= "9" {
+                num = num * 10 + Int(String(str[i]))!
+                i+=1
+            }
+            countingStack.append(num)
+           
+        }
+        else {
+            result.append(str[i])
+            i+=1
+        }
     }
+    return result
 }
-
-func inorderTraversal2(_ root: TreeNode?) -> [Int] {
-        guard let root = root else {
-            return [Int]()
-        }
-        var stack = [TreeNode?]()
-        stack.append(root)
-        var returnArray = [Int]()
-        var current : TreeNode? = root
-        while stack.isEmpty == false {
-            while current?.left != nil {
-                stack.append(current?.left)
-                current = current?.left
-            }
-            if let pop = stack.removeLast() { //여기서 nil거르니 right nil 값 넣어줘도 됨 
-                returnArray.append(pop.val)
-                stack.append(pop.right)
-                current = pop.right
-            }
-        }
-        return returnArray
-    }
