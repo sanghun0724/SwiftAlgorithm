@@ -100,27 +100,42 @@ import UIKit
 //        }
 //    }
 //}
-var i:Int = 0
 
 
+
+//BFS
 func floodFill(_ image: [[Int]], _ sr: Int, _ sc: Int, _ newColor: Int) -> [[Int]] {
-     i = image[sr][sc]
+    var queue = [(sr,sc)]
     var image = image
-    bfs(sr, sc, &image, newColor)
-    return image
-       
-   }
-func bfs(_ row:Int,_ col:Int, _ image: inout [[Int]],_ newColor:Int) {
-    if row < 0  || col < 0 || row >= image.count || col >= image[0].count
-        || image[row][col] == newColor || image[row][col] != i {
-        return
+    let basicColor = image[sr][sc]
+    image[sr][sc] = newColor
+    
+    while !queue.isEmpty {
+        let cur = queue.removeFirst()
+        let (row,col) = cur
+        
+        if row-1 >= 0 , image[row-1][col] != newColor , image[row-1][col] == basicColor {
+            queue.append((row-1,col))
+            image[row-1][col] = newColor
+        }
+        if row+1 < image.count , image[row+1][col] != newColor, image[row+1][col] == basicColor {
+            queue.append((row+1,col))
+            image[row+1][col] = newColor
+        }
+        if col-1 >= 0 , image[row][col-1] != newColor , image[row][col-1] == basicColor {
+            queue.append((row,col-1))
+            image[row][col-1] = newColor
+        }
+        if col+1 < image[0].count , image[row][col+1] != newColor , image[row][col+1] == basicColor {
+            queue.append((row,col+1))
+            image[row][col+1] = newColor
+        }
     }
-    image[row][col] = newColor
-    
-    bfs(row+1, col, &image, newColor)
-    bfs(row-1, col, &image, newColor)
-    bfs(row, col-1, &image, newColor)
-    bfs(row, col+1, &image, newColor)
-    
-    
+    return image
 }
+
+
+
+
+
+
