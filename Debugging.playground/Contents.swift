@@ -101,41 +101,39 @@ import UIKit
 //    }
 //}
 
-
-
-//BFS
-func floodFill(_ image: [[Int]], _ sr: Int, _ sc: Int, _ newColor: Int) -> [[Int]] {
-    var queue = [(sr,sc)]
-    var image = image
-    let basicColor = image[sr][sc]
-    image[sr][sc] = newColor
+func updateMatrix(_ matrix: [[Int]]) -> [[Int]] {
+    let height = matrix.count
+    let width = matrix[0].count
     
+    var queue = [(Int,Int)]()
+    var result = Array(repeating: Array(repeating: 0, count: matrix[0].count), count: matrix.count)
+    
+    for row in 0..<height {
+        for col in 0..<width {
+            if matrix[row][col] == 0 {
+                queue.append((row,col))
+            } else {
+                result[row][col] = Int.max
+            }
+        }
+    }
+    
+    let direction = [(-1,0),(1,0),(0,-1),(0,1)]
     while !queue.isEmpty {
         let cur = queue.removeFirst()
         let (row,col) = cur
         
-        if row-1 >= 0 , image[row-1][col] != newColor , image[row-1][col] == basicColor {
-            queue.append((row-1,col))
-            image[row-1][col] = newColor
-        }
-        if row+1 < image.count , image[row+1][col] != newColor, image[row+1][col] == basicColor {
-            queue.append((row+1,col))
-            image[row+1][col] = newColor
-        }
-        if col-1 >= 0 , image[row][col-1] != newColor , image[row][col-1] == basicColor {
-            queue.append((row,col-1))
-            image[row][col-1] = newColor
-        }
-        if col+1 < image[0].count , image[row][col+1] != newColor , image[row][col+1] == basicColor {
-            queue.append((row,col+1))
-            image[row][col+1] = newColor
+        for dir in direction {
+            let rowDir = row + dir.0
+            let colDir = col + dir.1
+            
+            if rowDir < 0 || colDir < 0 || rowDir >= height || colDir >= width {  continue  }
+            if result[rowDir][colDir] == Int.max {
+                result[rowDir][colDir] = result[row][col] + 1 //핵심
+                queue.append((rowDir,colDir))
+            }
         }
     }
-    return image
+    
+    return result
 }
-
-
-
-
-
-
