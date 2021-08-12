@@ -100,40 +100,39 @@ import UIKit
 //        }
 //    }
 //}
-
-func updateMatrix(_ matrix: [[Int]]) -> [[Int]] {
-    let height = matrix.count
-    let width = matrix[0].count
-    
-    var queue = [(Int,Int)]()
-    var result = Array(repeating: Array(repeating: 0, count: matrix[0].count), count: matrix.count)
-    
-    for row in 0..<height {
-        for col in 0..<width {
-            if matrix[row][col] == 0 {
-                queue.append((row,col))
-            } else {
-                result[row][col] = Int.max
-            }
-        }
+func canVisitAllRooms(_ rooms: [[Int]]) -> Bool {
+    if rooms.count == 0 {
+        return false
+    }
+    if rooms.count == 1 {
+        return true
     }
     
-    let direction = [(-1,0),(1,0),(0,-1),(0,1)]
+    var queue = [Int]()
+    var visited = Set<Int>()
+    for i in rooms[0] {
+        queue.append(i)
+        visited.insert(i)
+    }
+    
     while !queue.isEmpty {
-        let cur = queue.removeFirst()
-        let (row,col) = cur
+        var keys = queue.removeFirst()
         
-        for dir in direction {
-            let rowDir = row + dir.0
-            let colDir = col + dir.1
-            
-            if rowDir < 0 || colDir < 0 || rowDir >= height || colDir >= width {  continue  }
-            if result[rowDir][colDir] == Int.max {
-                result[rowDir][colDir] = result[row][col] + 1 //핵심
-                queue.append((rowDir,colDir))
+        for key in rooms[keys] {
+            if !visited.contains(key) {
+                queue.append(key)
+                visited.insert(key)
             }
         }
     }
     
-    return result
+    for i in 1..<rooms.count {
+        
+        if !visited.contains(i) {
+            return false
+        }
+    }
+    return true
+    
 }
+canVisitAllRooms([[1,3],[1,4],[2,3,4,1],[],[4,3,2]])
