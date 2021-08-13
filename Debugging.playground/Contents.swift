@@ -100,39 +100,100 @@ import UIKit
 //        }
 //    }
 //}
-func canVisitAllRooms(_ rooms: [[Int]]) -> Bool {
-    if rooms.count == 0 {
-        return false
-    }
-    if rooms.count == 1 {
-        return true
+class MyHashSet {
+    var hashTable: [Node?]
+    var size: Int
+    var loadFactor: Double
+    
+    init() {
+        hashTable = Array(repeating: nil, count: 16)
+        size = 0
+        loadFactor = 0.75
     }
     
-    var queue = [Int]()
-    var visited = Set<Int>()
-    for i in rooms[0] {
-        queue.append(i)
-        visited.insert(i)
+    func add(_ key:Int) {
+        var index = abs(key.hashValue) % hashTable.count
+        if hashTable[index] == nil {
+            hashTable[index] = Node(key)
+            size+=1
+        } else {
+            var cur = hashTable[index]
+            var pre = Node(-1)
+            while cur != nil {
+                if cur!.key == key {
+                    return
+                }
+                cur = cur!.next
+                pre = pre.next! //해당 인덱스  ---링크 끝까지로 이동
+            }
+            pre.next = Node(key) //connected
+            size += 1
+        }
+        if Double(size) / Double(hashTable.count) >= loadFactor {
+            reload()
+        }
     }
     
-    while !queue.isEmpty {
-        var keys = queue.removeFirst()
-        
-        for key in rooms[keys] {
-            if !visited.contains(key) {
-                queue.append(key)
-                visited.insert(key)
+    func remove(_ key:Int) {
+        var index = abs(key.hashValue) % hashTable.count
+        if hashTable[index] != nil {
+            var cur = hashTable[index]
+            var pre = Node(-1)
+            pre.next = cur
+            var dummy = pre
+            while cur != nil {
+                if cur!.key == key {
+                    pre.next = pre.next?.next
+                    size -= 1
+                    hashTable[index] = dummy.next
+                    return
+                }
+                cur = cur!.next
+                pre = pre.next!
             }
         }
     }
-    
-    for i in 1..<rooms.count {
-        
-        if !visited.contains(i) {
+   
+    func contains(_ key:Int) -> Bool {
+        var index = abs(key.hashValue) % hashTable.count
+        if hashTable[index] != nil {
+            var cur = hashTable[index]
+            
+            while cur != nil {
+                if cur!.key == key {
+                    return true
+                }
+                cur = cur!.next
+            }
+            return false
+        } else {
             return false
         }
     }
-    return true
     
+    func reload() {
+        var temp = hashTable
+        hashTable = Array(repeating: nil , count: hashTable.count * 2)
+        size = 0
+        for node in temp {
+            var node = node
+            while node != nil {
+                add(node!.key)
+                node = node!.next
+            } //Refill
+        }
+    }
+    
+    
+    
+    class Node {
+        var key:Int
+        var next:Node?
+        init(_ key:Int) {
+            self.key = key
+        }
+    }
+
 }
-canVisitAllRooms([[1,3],[1,4],[2,3,4,1],[],[4,3,2]])
+
+
