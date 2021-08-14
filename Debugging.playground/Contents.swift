@@ -1,126 +1,29 @@
 
-import UIKit
-
-  public class TreeNode {
-      public var val: Int
-      public var left: TreeNode?
-      public var right: TreeNode?
-      public init() { self.val = 0; self.left = nil; self.right = nil; }
-      public init(_ val: Int) { self.val = val; self.left = nil; self.right = nil; }
-      public init(_ val: Int, _ left: TreeNode?, _ right: TreeNode?) {
-          self.val = val
-         self.left = left
-         self.right = right
-      }
- }
-//
-//  public class ListNode {
-//      public var val: Int
-//      public var next: ListNode?
-//      public init(_ val: Int) {
-//          self.val = val
-//          self.next = nil
-//      }
-//  }
-//
-//public class Node {
-//     public var val: Int
-//     public var children: [Node]
-//     public init(_ val: Int) {
-//        self.val = val
-//         self.children  = []
-//     }
-// }
-//
-//public struct Queue<T> {
-//    private var leftStack:[T] = [] //dequeue
-//    private var rightStack:[T] = [] //enqueueu
-//
-//    public init() {}
-//
-//    public mutating func enqueue(_ element:T) -> Bool  {
-//        rightStack.append(element)
-//        return true
-//    }
-//
-//    public mutating func dequeue() -> T? {
-//        if leftStack.isEmpty {
-//            leftStack = rightStack.reversed()
-//            rightStack.removeAll()
-//        }
-//        return leftStack.popLast()
-//    }
-//    public mutating func Empty() -> Bool {
-//        return leftStack.isEmpty && rightStack.isEmpty
-//    }
-//}
+import Foundation
 
 
-//protocol ContentPresentable {
-//    var frame:CGRect { get set }
-//    var canPresentContent:Bool { get }
-//}
-//
-//extension ContentPresentable {
-//    var canPresentContent:Bool {
-//        return true
-//    }
-//}
-//
-//extension UIImageView:ContentPresentable {}
-//extension AVPlayerLayer:ContentPresentable {}
-//
-//
-//protocol MediaContainer {
-//    var media:ContentPresentable { get }
-//    var content:Content? { get  set }
-//    var videoLayer:AVPlayerLayer { get }
-//    var mediaImageView:UIImageView { get }
-//
-//    func contentChanged()
-//}
-//
-//struct Content {
-//    enum MediaType {
-//        case image,video
-//    }
-//    var type:Content.MediaType
-//}
-//
-//extension MediaContainer {
-//    func contentChanged() {
-//        //Update View
-//    }
-//    var media:ContentPresentable {
-//        switch content!.type {
-//        case .image:
-//            return mediaImageView
-//        case .video:
-//            return videoLayer
-//        }
-//    }
-//}
-class MyHashMap {
-   var values = [Int?]()
+func isHappy(_ n: Int) -> Bool {
+    var input = n
+    var seen = Set<Int>()
     
-    func put(_ key:Int,_ value: Int) {
-        if key >= values.count {
-            values += Array(repeating: nil, count: key + 1 - values.count)
+    while input != 1 {
+        if seen.contains(input) {
+            return false
         }
-        values[key] = value
+        seen.insert(input)
+        input = getnext(input)
+    }
+    return true 
+    }
+func getnext(_ n: Int) -> Int {
+    var sum = 0
+    var input = n
+    
+    while input > 0 {
+        let remainder = input % 10
+        sum += remainder * remainder
+        input /= 10
     }
     
-    func get(_ key:Int) -> Int {
-        if key >= values.count { return -1 }
-        guard let value = value[key] else { return }
-        return value
-    }
-    
-    func remove(_ key:Int) {
-        if key >= values.count { return }
-        values[key] = nil
-        
-    }
+    return sum
 }
-
-
