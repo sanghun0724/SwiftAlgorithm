@@ -1,29 +1,22 @@
 
-import UIKit
+import Foundation
 
 
-
-
-func firstUniqChar(_ s: String) -> Int {
-    var hashMap = [Character:Int]()
-    var s = Array(s)
-    let sCount = s.count
-    for i in 0..<sCount {
-        if let redundant = hashMap[s[i]] {
-            hashMap[s[i]] = redundant+1
-        } else {
-            hashMap[s[i]] = 1
-        }
-    }
-    var first = Int.max
-    for (char,count) in hashMap {
-        if count == 1 {
-            if first > s.firstIndex(of: char)!  {
-                first = s.firstIndex(of: char )!
-            }
-        }
-    }
+func intersect(_ nums1: [Int], _ nums2: [Int]) -> [Int] {
+    var dict = [Int:Int]()
     
-    return  first != Int.max ? first : -1 
-   }
-firstUniqChar("12345")
+    for num in nums1 {
+        dict[num,default: 0] += 1
+    }
+    var res = [Int]()
+    
+    for num in nums2 {
+        guard let count = dict[num],count > 0  else { continue }
+        res.append(num)
+        dict[num]!-=1
+    }
+    return res 
+    }
+
+
+
