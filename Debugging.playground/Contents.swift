@@ -2,15 +2,15 @@
 import Foundation
 
 
-func containsNearbyDuplicate(_ nums: [Int], _ k: Int) -> Bool {
-    var dict = [Int:Int]()
+func groupAnagrams(_ strs: [String]) -> [[String]] {
+    var dict = [String:[String]]()
+    var arr = [String]()
     
-    for i in 0..<nums.count {
-        if let found = dict[nums[i]],i - found <= k  {
-            return true
-        } else {
-            dict[nums[i]] = i
-        }
+    for i in strs {
+        var s = String(i.sorted())
+        dict[s ,default:[]].append(i)
     }
-    return false
+    let c = dict.values
+    
+    return Array(c)
     }
