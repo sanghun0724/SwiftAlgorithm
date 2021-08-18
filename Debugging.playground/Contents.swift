@@ -1,35 +1,21 @@
 
 import Foundation
 
-  public class TreeNode {
-      public var val: Int
-      public var left: TreeNode?
-      public var right: TreeNode?
-      public init() { self.val = 0; self.left = nil; self.right = nil; }
-      public init(_ val: Int) { self.val = val; self.left = nil; self.right = nil; }
-      public init(_ val: Int, _ left: TreeNode?, _ right: TreeNode?) {
-          self.val = val
-          self.left = left
-          self.right = right
-      }
-  }
-
-
-func findDuplicateSubtrees(_ root: TreeNode?) -> [TreeNode?] {
-    var dict = [String:Int]()
-    var res = [TreeNode?]()
-    getSubNode(root, &dict, &res)
-    return res
-}
-func getSubNode(_ cur:TreeNode?,_ dict: inout [String:Int],_ res: inout [TreeNode?]) -> String {
-    guard let cur = cur else { return "#"}
-    
-    let serial = String(cur.val) + "-" + getSubNode(cur.left, &dict, &res) + "-" + getSubNode(cur.right, &dict, &res)
-    dict[serial,default: 0] += 1
-    if dict[serial]! == 2 {
-        res.append(cur)
+func numJewelsInStones(_ jewels: String, _ stones: String) -> Int {
+    var count = 0
+    let arrJewels = Array(jewels)
+    var dictJewels = [Character:Int]()
+    for i in 0..<arrJewels.count {
+        dictJewels[arrJewels[i],default:0] += 1
+    }
+     
+    let arrStones = Array(stones)
+    for i in 0..<arrStones.count {
+        dictJewels[arrStones[i],default: Int.min] += 1
+        if dictJewels[arrStones[i]]! >= 2 {
+            count+=1
+        }
     }
     
-    
-    return serial
-}
+    return count
+    }
