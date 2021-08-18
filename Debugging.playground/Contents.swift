@@ -3,43 +3,24 @@ import Foundation
 
 
 func isValidSudoku(_ board: [[Character]]) -> Bool {
-    var dictRow = [Int:Int]()
-    var dictCol = [Int:Int]()
-    var dictRec = [Int:Int]()
-
-    
-    for row in 0...8 {
-        for col in 0...8 {
-            if board[row][col] == "." {
-                dictRow[row,default: 0] += 1
-            }
-            if board[col][row] == "." {
-                dictCol[col,default: 0] += 1
-            }
-        }
-    }
-    var count = 0
-    for i in stride(from: 0, through: 6, by: 3) {
-        print(i)
-        for row in i..<i+3 {
-            for col in i..<i+3 {
-                if board[row][col] == "." {
-                    dictRec[count,default: 0] += 1
+    var rowsCheck = [[Int: Int]](repeating: [Int : Int](), count: 9)
+            var colsCheck = [[Int: Int]](repeating: [Int : Int](), count: 9)
+            var boxCheck = [[Int: Int]](repeating: [Int : Int](), count: 9)
+            
+            for r in 0...8 {
+                for c in 0...8 {
+                    if board[r][c] == "." { continue }
+                    let num = Int(String(board[r][c]))!
+                    rowsCheck[r][num, default: 0] += 1
+                    colsCheck[c][num, default: 0] += 1
+                    let box = (r / 3) * 3 + (c / 3)
+                    boxCheck[box][num, default: 0] += 1
+                    
+                    if rowsCheck[r][num]! > 1 || colsCheck[c][num]! > 1 || boxCheck[box][num]! > 1 {
+                        return false
+                    }
                 }
             }
-        }
+            
+            return true
     }
-    print(dictRec)
-    
-    return true
-    }
-
-isValidSudoku([["5","3",".",".","7",".",".",".","."]
-               ,["6",".",".","1","9","5",".",".","."]
-               ,[".","9","8",".",".",".",".","6","."]
-               ,["8",".",".",".","6",".",".",".","3"]
-               ,["4",".",".","8",".","3",".",".","1"]
-               ,["7",".",".",".","2",".",".",".","6"]
-               ,[".","6",".",".",".",".","2","8","."]
-               ,[".",".",".","4","1","9",".",".","5"]
-               ,[".",".",".",".","8",".",".","7","9"]])
