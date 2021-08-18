@@ -1,26 +1,35 @@
 
 import Foundation
 
+  public class TreeNode {
+      public var val: Int
+      public var left: TreeNode?
+      public var right: TreeNode?
+      public init() { self.val = 0; self.left = nil; self.right = nil; }
+      public init(_ val: Int) { self.val = val; self.left = nil; self.right = nil; }
+      public init(_ val: Int, _ left: TreeNode?, _ right: TreeNode?) {
+          self.val = val
+          self.left = left
+          self.right = right
+      }
+  }
 
-func isValidSudoku(_ board: [[Character]]) -> Bool {
-    var rowsCheck = [[Int: Int]](repeating: [Int : Int](), count: 9)
-            var colsCheck = [[Int: Int]](repeating: [Int : Int](), count: 9)
-            var boxCheck = [[Int: Int]](repeating: [Int : Int](), count: 9)
-            
-            for r in 0...8 {
-                for c in 0...8 {
-                    if board[r][c] == "." { continue }
-                    let num = Int(String(board[r][c]))!
-                    rowsCheck[r][num, default: 0] += 1
-                    colsCheck[c][num, default: 0] += 1
-                    let box = (r / 3) * 3 + (c / 3)
-                    boxCheck[box][num, default: 0] += 1
-                    
-                    if rowsCheck[r][num]! > 1 || colsCheck[c][num]! > 1 || boxCheck[box][num]! > 1 {
-                        return false
-                    }
-                }
-            }
-            
-            return true
+
+func findDuplicateSubtrees(_ root: TreeNode?) -> [TreeNode?] {
+    var dict = [String:Int]()
+    var res = [TreeNode?]()
+    getSubNode(root, &dict, &res)
+    return res
+}
+func getSubNode(_ cur:TreeNode?,_ dict: inout [String:Int],_ res: inout [TreeNode?]) -> String {
+    guard let cur = cur else { return "#"}
+    
+    let serial = String(cur.val) + "-" + getSubNode(cur.left, &dict, &res) + "-" + getSubNode(cur.right, &dict, &res)
+    dict[serial,default: 0] += 1
+    if dict[serial]! == 2 {
+        res.append(cur)
     }
+    
+    
+    return serial
+}
