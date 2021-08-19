@@ -1,28 +1,24 @@
-
 import Foundation
 
-func lengthOfLongestSubstring(_ s: String) -> Int {
-    if s == "" {
-         return 0
-    }
-    if s.count == 1 {
-        return 1
-    }
-    
-    var temp = [Character]()
+func fourSumCount(_ nums1: [Int], _ nums2: [Int], _ nums3: [Int], _ nums4: [Int]) -> Int {
+    var dict = [Int:Int]()
     var res = 0
-    var arrS = Array(s)
-    temp.append(arrS[0])
-    var maxLength = 0
-    
-    for i in 1..<arrS.count {
-        
-        if let index = temp.firstIndex(of: arrS[i]) {
-            temp.removeFirst(index+1)
+    for i in nums1.indices {
+        for j in nums2.indices {
+            let sum = nums1[i] + nums2[j]
+            dict[sum,default: 0] += 1
         }
-        temp.append(arrS[i])
-        maxLength = max(maxLength, temp.count)
     }
-      return maxLength
-   }
-lengthOfLongestSubstring("dvdf")
+
+    for i in nums3.indices {
+        for j in nums4.indices {
+            let component = -(nums3[i] + nums4[j])
+            if let same = dict[component] {
+                res += same
+            }
+        }
+    }
+
+    return res
+    }
+
