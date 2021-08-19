@@ -1,21 +1,28 @@
 
 import Foundation
 
-func numJewelsInStones(_ jewels: String, _ stones: String) -> Int {
-    var count = 0
-    let arrJewels = Array(jewels)
-    var dictJewels = [Character:Int]()
-    for i in 0..<arrJewels.count {
-        dictJewels[arrJewels[i],default:0] += 1
+func lengthOfLongestSubstring(_ s: String) -> Int {
+    if s == "" {
+         return 0
     }
-     
-    let arrStones = Array(stones)
-    for i in 0..<arrStones.count {
-        dictJewels[arrStones[i],default: Int.min] += 1
-        if dictJewels[arrStones[i]]! >= 2 {
-            count+=1
-        }
+    if s.count == 1 {
+        return 1
     }
     
-    return count
+    var temp = [Character]()
+    var res = 0
+    var arrS = Array(s)
+    temp.append(arrS[0])
+    var maxLength = 0
+    
+    for i in 1..<arrS.count {
+        
+        if let index = temp.firstIndex(of: arrS[i]) {
+            temp.removeFirst(index+1)
+        }
+        temp.append(arrS[i])
+        maxLength = max(maxLength, temp.count)
     }
+      return maxLength
+   }
+lengthOfLongestSubstring("dvdf")
