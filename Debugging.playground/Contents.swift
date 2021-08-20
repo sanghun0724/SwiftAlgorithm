@@ -12,21 +12,17 @@ public class TreeNode {
          self.right = right
      }
  }
-
-func preorderTraversal(_ root: TreeNode?) -> [Int] {
-      var res = [Int]()
-    getNode(root, &res)
+func postorderTraversal(_ root: TreeNode?) -> [Int] {
+       var res = [Int]()
+        getNode(root,&res)
     return res
-    
-  }
+   }
 func getNode(_ root:TreeNode?,_ res: inout [Int]) {
     if root == nil {
         return
     }
     
-    res.append(root!.val)
-    
     getNode(root?.left, &res)
     getNode(root?.right, &res)
-    
+    res.append(root!.val)
 }
