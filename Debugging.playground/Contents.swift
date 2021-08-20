@@ -12,26 +12,14 @@ public class TreeNode {
          self.right = right
      }
  }
-     var count = 0
-     var target = 0
+     
 func hasPathSum(_ root: TreeNode?, _ targetSum: Int) -> Bool {
-    if root == nil {
-         return false
+    guard let root = root else {
+        return false
     }
-    return addSum(root, 0, target: targetSum)
+    
+    if root.left == nil && root.right == nil {
+        return root.val == targetSum
     }
-func addSum(_ root:TreeNode?,_ value:Int,target:Int) -> Bool {
-    let val = root!.val + value
-    if root?.right == nil && root?.left == nil {
-        return  val == target
-    } else if root?.right != nil && root?.left != nil {
-        
-       return  addSum(root?.left, val, target: target) ||
-        addSum(root?.right, val, target: target)
-    } else if root?.right != nil {
-       return  addSum(root?.right, val, target: target)
-    } else {
-      return  addSum(root?.left, val, target: target)
-    }
-    return false
+    return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right, targetSum - root.val)
 }
