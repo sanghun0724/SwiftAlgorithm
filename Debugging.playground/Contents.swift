@@ -12,24 +12,15 @@ public class TreeNode {
          self.right = right
      }
  }
-func levelOrder(_ root: TreeNode?) -> [[Int]] {
-    guard root != nil else { return [] }
-    var result:[[Int]] = []
+func maxDepth(_ root: TreeNode?) -> Int {
+     return bottomUp(node: root)
+ }
+ func bottomUp(node:TreeNode?) -> Int {
+     guard let node = node else {
+         return 0
+ }
+    let leftDepth = bottomUp(node: node.left)
+    let rightDepth = bottomUp(node: node.right)
     
-    var queue:[TreeNode?] = []
-    queue.append(root)
-    
-    while !queue.isEmpty {
-        var count = queue.count
-        var temp  = [Int]()
-        while count > 0 {
-            var cur = queue.removeFirst()
-            temp.append(cur!.val)
-            count-=1
-            if let left = cur?.left { queue.append(left) }
-            if let right = cur?.right { queue.append(right) }
-        }
-        result.append(temp)
-    }
-    return result
-   }
+    return max(leftDepth,rightDepth) + 1
+ }
