@@ -1,41 +1,32 @@
 import Foundation
 
-class RandomizedSet {
-    var hashSet = [Int]()
-    /** Initialize your data structure here. */
-    init() {
-        hashSet = []
-    }
-    
-    /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
-    func insert(_ val: Int) -> Bool {
-        if hashSet.contains(val) {
-            return false
-        }
-            hashSet.append(val)
+public class TreeNode {
+     public var val: Int
+     public var left: TreeNode?
+     public var right: TreeNode?
+     public init() { self.val = 0; self.left = nil; self.right = nil; }
+     public init(_ val: Int) { self.val = val; self.left = nil; self.right = nil; }
+     public init(_ val: Int, _ left: TreeNode?, _ right: TreeNode?) {
+         self.val = val
+         self.left = left
+         self.right = right
+     }
+ }
 
-        return true
+func preorderTraversal(_ root: TreeNode?) -> [Int] {
+      var res = [Int]()
+    getNode(root, &res)
+    return res
+    
+  }
+func getNode(_ root:TreeNode?,_ res: inout [Int]) {
+    if root == nil {
+        return
     }
     
-    /** Removes a value from the set. Returns true if the set contained the specified element. */
-    func remove(_ val: Int) -> Bool {
-        if hashSet.contains(val) {
-            for i in 0..<hashSet.count {
-                if hashSet[i] == val {
-                    hashSet.remove(at: i)
-                    return true 
-                }
-            }
-            
-        }
-        return false
-    }
+    res.append(root!.val)
     
-    /** Get a random element from the set. */
-    func getRandom() -> Int {
-        if hashSet == nil {
-            return 0
-        }
-        return hashSet.randomElement()!
-    }
+    getNode(root?.left, &res)
+    getNode(root?.right, &res)
+    
 }
