@@ -12,15 +12,26 @@ public class TreeNode {
          self.right = right
      }
  }
-func maxDepth(_ root: TreeNode?) -> Int {
-     return bottomUp(node: root)
- }
- func bottomUp(node:TreeNode?) -> Int {
-     guard let node = node else {
-         return 0
- }
-    let leftDepth = bottomUp(node: node.left)
-    let rightDepth = bottomUp(node: node.right)
-    
-    return max(leftDepth,rightDepth) + 1
- }
+     var count = 0
+     var target = 0
+func hasPathSum(_ root: TreeNode?, _ targetSum: Int) -> Bool {
+    if root == nil {
+         return false
+    }
+    return addSum(root, 0, target: targetSum)
+    }
+func addSum(_ root:TreeNode?,_ value:Int,target:Int) -> Bool {
+    let val = root!.val + value
+    if root?.right == nil && root?.left == nil {
+        return  val == target
+    } else if root?.right != nil && root?.left != nil {
+        
+       return  addSum(root?.left, val, target: target) ||
+        addSum(root?.right, val, target: target)
+    } else if root?.right != nil {
+       return  addSum(root?.right, val, target: target)
+    } else {
+      return  addSum(root?.left, val, target: target)
+    }
+    return false
+}
