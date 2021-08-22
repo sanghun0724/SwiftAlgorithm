@@ -12,29 +12,15 @@ public class TreeNode {
     }
 }
 
-class Codec {
-    func serialize(_ root: TreeNode?) -> String {
-        if root == nil { return "X,"}
-        
-        let left = serialize(root?.left)
-        let right = serialize(root?.right)
-        
-        return String(root!.val) + "," + left + right
-    }
-    func deserialize(_ data: String) -> TreeNode? {
-        var dataArr = data.components(separatedBy: ",")
-        
-        return helper(&dataArr)
-    }
-    func helper(_ data: inout [String]) -> TreeNode? {
-        let val = data.removeFirst()
-        guard let valInt = Int(val) else {
-            return nil
-        }
-        let node = TreeNode(valInt)
-        node.left = helper(&data) //left 먼저니깐
-        node.right = helper(&data)
-        
-        return node
-    }
+
+
+func reverseString(_ s: inout [Character]) {
+    let count = s.count
+    
+    helper(&s, 0,count / 2 , count - 1)
+}
+func helper(_ s: inout [Character],_ cur:Int,_ mid:Int,_ last:Int) {
+    if cur == mid { return }
+    s.swapAt(cur, last - cur)
+    helper(&s, cur+1, mid, last)
 }
