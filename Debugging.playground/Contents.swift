@@ -12,18 +12,29 @@ public class TreeNode {
     }
 }
 
-
-func lowestCommonAncestor(_ root: TreeNode?, _ p: TreeNode?, _ q: TreeNode?) -> TreeNode? {
-    if root == nil { return nil }
-    if root?.val == p?.val || root?.val == q?.val {
-        return root
+class Codec {
+    func serialize(_ root: TreeNode?) -> String {
+        if root == nil { return "X,"}
+        
+        let left = serialize(root?.left)
+        let right = serialize(root?.right)
+        
+        return String(root!.val) + "," + left + right
     }
-    
-    let left = lowestCommonAncestor(root?.left, p, q)
-    let right = lowestCommonAncestor(root?.right, p, q)
-    
-    if left == nil { return right }
-    if right == nil { return left }
-    
-    return root
-   }
+    func deserialize(_ data: String) -> TreeNode? {
+        var dataArr = data.components(separatedBy: ",")
+        
+        return helper(&dataArr)
+    }
+    func helper(_ data: inout [String]) -> TreeNode? {
+        let val = data.removeFirst()
+        guard let valInt = Int(val) else {
+            return nil
+        }
+        let node = TreeNode(valInt)
+        node.left = helper(&data) //left 먼저니깐
+        node.right = helper(&data)
+        
+        return node
+    }
+}
