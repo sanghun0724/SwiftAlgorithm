@@ -20,19 +20,17 @@ public class TreeNode {
         self.right = right
     }
 }
-
-func getRow(_ rowIndex: Int) -> [Int] {
-    
-   return helper([1,1], rowIndex, 1)
-}
-func helper(_ prev:[Int],_ rowIndex:Int,_ start:Int) -> [Int] {
-    if rowIndex == start {
-        return prev
+var hashMap = [Int:Int]()
+func fib(_ n: Int) -> Int {
+    if let value = hashMap[n]  {
+        return value
     }
-    var ans = Array(repeating: 1, count: prev.count+1)
-    //start+1
-    for i in 1..<ans.count-1 {
-        ans[i] = prev[i-1] + prev[i]
+    var val = 0
+    if n < 2 {
+        val = n
+    } else {
+       val = fib(n-1) + fib(n-2)
     }
-    return helper(ans, rowIndex, start+1)
-}
+    hashMap[n] = val
+    return val
+    }
