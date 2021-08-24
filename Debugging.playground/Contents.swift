@@ -20,17 +20,17 @@ public class TreeNode {
         self.right = right
     }
 }
-var hashMap = [Int:Int]()
-func fib(_ n: Int) -> Int {
-    if let value = hashMap[n]  {
-        return value
+func myPow(_ x: Double, _ n: Int) -> Double {
+    if n == 0 {
+        return 1
     }
-    var val = 0
-    if n < 2 {
-        val = n
+    if n < 0 {
+        return 1/myPow(x, -n)
+    } else if n % 2 == 0 {
+        let half = myPow(x, n/2)
+        return half * half
     } else {
-       val = fib(n-1) + fib(n-2)
+        return x * myPow(x, n-1)
     }
-    hashMap[n] = val
-    return val
     }
+
