@@ -20,17 +20,28 @@ public class TreeNode {
         self.right = right
     }
 }
-func myPow(_ x: Double, _ n: Int) -> Double {
-    if n == 0 {
-        return 1
+func mergeTwoLists(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
+   return recursion(l1, l2, nil)
+    
+    
+}
+func recursion(_ node1:ListNode?,_ node2:ListNode?,_ result:ListNode?) -> ListNode? {
+    guard node1 != nil || node2 != nil else {
+        return nil
     }
-    if n < 0 {
-        return 1/myPow(x, -n)
-    } else if n % 2 == 0 {
-        let half = myPow(x, n/2)
-        return half * half
+   
+    var val1 = node1?.val ?? Int.max
+    var val2 = node2?.val ?? Int.max
+    
+    var result:ListNode
+    
+    if val1 > val2 {
+        result = ListNode(val2)
+        result.next = recursion(node1,node2?.next,result.next)
     } else {
-        return x * myPow(x, n-1)
+        result = ListNode(val1)
+        result.next = recursion(node1?.next, node2,result.next)
     }
-    }
+    return result
+}
 
