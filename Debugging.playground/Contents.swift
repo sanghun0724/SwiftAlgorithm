@@ -20,28 +20,17 @@ public class TreeNode {
         self.right = right
     }
 }
-func mergeTwoLists(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
-   return recursion(l1, l2, nil)
-    
-    
-}
-func recursion(_ node1:ListNode?,_ node2:ListNode?,_ result:ListNode?) -> ListNode? {
-    guard node1 != nil || node2 != nil else {
-        return nil
-    }
-   
-    var val1 = node1?.val ?? Int.max
-    var val2 = node2?.val ?? Int.max
-    
-    var result:ListNode
-    
-    if val1 > val2 {
-        result = ListNode(val2)
-        result.next = recursion(node1,node2?.next,result.next)
-    } else {
-        result = ListNode(val1)
-        result.next = recursion(node1?.next, node2,result.next)
-    }
-    return result
-}
 
+func kthGrammar(_ n: Int, _ k: Int) -> Int {
+    if n == 1 {
+        return 0
+    }
+    var parent = kthGrammar(n-1, Int(ceil(Double(k/2))))
+    var iskOdd = k % 2 == 1
+    
+    if parent == 1 {
+        return iskOdd ? 1 : 0
+    } else {
+        return iskOdd ? 0 : 1
+    }
+   }
