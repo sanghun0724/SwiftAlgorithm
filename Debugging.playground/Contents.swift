@@ -21,16 +21,42 @@ public class TreeNode {
     }
 }
 
-func kthGrammar(_ n: Int, _ k: Int) -> Int {
-    if n == 1 {
-        return 0
+class Solution {
+    func generateTrees(_ n: Int) -> [TreeNode?] {
+        if n <= 0 {
+            return []
+        }
+        
+       return generateSubtrees(1, n)
     }
-    var parent = kthGrammar(n-1, Int(ceil(Double(k/2))))
-    var iskOdd = k % 2 == 1
     
-    if parent == 1 {
-        return iskOdd ? 1 : 0
-    } else {
-        return iskOdd ? 0 : 1
-    }
-   }
+    private func generateSubtrees(_ start: Int, _ end: Int) -> [TreeNode?] {
+        if start > end {
+            return [nil]
+        }
+        if start == end {
+            return [TreeNode(start)]
+        }
+        
+        var result = [TreeNode?]()
+        var left = [TreeNode?]()
+        var right = [TreeNode?]()
+        
+        for i in start...end {
+            left = generateSubtrees(start, i-1)
+            right = generateSubtrees(i+1, end)
+            
+            for l in left {
+                for r in right {
+                    var res = TreeNode(i)
+                    res.left = l
+                    res.right = r
+                    result.append(res)
+                }
+            }
+        }
+        return result
+        
+}
+}
+
