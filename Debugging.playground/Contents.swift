@@ -20,43 +20,23 @@ public class TreeNode {
         self.right = right
     }
 }
-
-class Solution {
-    func generateTrees(_ n: Int) -> [TreeNode?] {
-        if n <= 0 {
-            return []
-        }
-        
-       return generateSubtrees(1, n)
+func isValidBST(_ root: TreeNode?) -> Bool {
+    return isValidBST(root, false, false, 0,0)
+}
+func isValidBST(_ root: TreeNode?,_ lowerBoundExisted:Bool,_ upperBoundExisted:Bool,_ lowerBound:Int, _ upperBound:Int) -> Bool {
+    if root == nil {
+        return true
     }
     
-    private func generateSubtrees(_ start: Int, _ end: Int) -> [TreeNode?] {
-        if start > end {
-            return [nil]
-        }
-        if start == end {
-            return [TreeNode(start)]
-        }
-        
-        var result = [TreeNode?]()
-        var left = [TreeNode?]()
-        var right = [TreeNode?]()
-        
-        for i in start...end {
-            left = generateSubtrees(start, i-1)
-            right = generateSubtrees(i+1, end)
-            
-            for l in left {
-                for r in right {
-                    var res = TreeNode(i)
-                    res.left = l
-                    res.right = r
-                    result.append(res)
-                }
-            }
-        }
-        return result
-        
-}
-}
+    if lowerBoundExisted && lowerBound >= root!.val {
+        return false
+    }
+    if upperBoundExisted && upperBound <= root!.val {
+        return false
+    }
 
+    
+    
+    return isValidBST(root?.left, lowerBoundExisted, true, lowerBound, root!.val)
+        && isValidBST(root?.right, true, upperBoundExisted, root!.val, upperBound)
+}
