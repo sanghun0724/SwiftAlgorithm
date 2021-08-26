@@ -20,23 +20,19 @@ public class TreeNode {
         self.right = right
     }
 }
-func isValidBST(_ root: TreeNode?) -> Bool {
-    return isValidBST(root, false, false, 0,0)
+func searchMatrix(_ matrix: [[Int]], _ target: Int) -> Bool {
+    return helper(matrix, 0, matrix[0].count-1,target)
 }
-func isValidBST(_ root: TreeNode?,_ lowerBoundExisted:Bool,_ upperBoundExisted:Bool,_ lowerBound:Int, _ upperBound:Int) -> Bool {
-    if root == nil {
+func helper(_ matrix:[[Int]],_ row:Int,_ col:Int,_ target:Int)-> Bool {
+    if row >= matrix.count || col < 0 {
+        return false
+    }
+    if matrix[row][col] == target {
         return true
     }
-    
-    if lowerBoundExisted && lowerBound >= root!.val {
-        return false
+    if matrix[row][col] > target {
+        return helper(matrix, row+1, col, target)
+    } else {
+        return helper(matrix, row, col-1, target)
     }
-    if upperBoundExisted && upperBound <= root!.val {
-        return false
-    }
-
-    
-    
-    return isValidBST(root?.left, lowerBoundExisted, true, lowerBound, root!.val)
-        && isValidBST(root?.right, true, upperBoundExisted, root!.val, upperBound)
 }
