@@ -1,38 +1,37 @@
 import Foundation
 
 
-public class ListNode {
-    public var val: Int
-    public var next: ListNode?
-    public init() { self.val = 0; self.next = nil; }
-    public init(_ val: Int) { self.val = val; self.next = nil; }
-    public init(_ val: Int, _ next: ListNode?) { self.val = val; self.next = next; }
-}
-public class TreeNode {
-    public var val: Int
-    public var left: TreeNode?
-    public var right: TreeNode?
-    public init() { self.val = 0; self.left = nil; self.right = nil; }
-    public init(_ val: Int) { self.val = val; self.left = nil; self.right = nil; }
-    public init(_ val: Int, _ left: TreeNode?, _ right: TreeNode?) {
-        self.val = val
-        self.left = left
-        self.right = right
+
+func minPathSum(_ grid: [[Int]]) -> Int {
+        var dict: [[Int]: Int] = [:]
+        return calculate(grid, 0, 0, &dict)
     }
-}
-func searchMatrix(_ matrix: [[Int]], _ target: Int) -> Bool {
-    return helper(matrix, 0, matrix[0].count-1,target)
-}
-func helper(_ matrix:[[Int]],_ row:Int,_ col:Int,_ target:Int)-> Bool {
-    if row >= matrix.count || col < 0 {
-        return false
+
+func calculate(_ grid: [[Int]], _ i: Int, _ j: Int, _ dict: inout [[Int]: Int]) -> Int {
+      guard i < grid.count, j < grid[i].count else { return Int.max }
+      if i == grid.count-1, j == grid[i].count-1 { return grid[i][j] }
+      
+      if dict[[i, j]] != nil {
+          return dict[[i, j]]!
+      }
+      
+      dict[[i, j]] = grid[i][j] + min(calculate(grid, i+1, j, &dict), calculate(grid, i, j+1, &dict))
+      print(dict[[i,j]])
+      return dict[[i, j]]!
+  }
+minPathSum([[1,3,1],[1,5,1],[4,2,1]])
+func minPathSum4(_ grid: [[Int]]) -> Int {
+    var dp = [Int](repeating: Int.max, count: grid.first?.count ?? 0)
+    dp[0] = 0
+    
+    for row in grid {
+        for j in 0..<row.count {
+            if j == 0 {
+                dp[j] += row[j]
+            } else {
+                dp[j] = min(dp[j],dp[j-1]) + row[j]
+            }
+        }
     }
-    if matrix[row][col] == target {
-        return true
-    }
-    if matrix[row][col] > target {
-        return helper(matrix, row+1, col, target)
-    } else {
-        return helper(matrix, row, col-1, target)
-    }
+    return dp.last!
 }
