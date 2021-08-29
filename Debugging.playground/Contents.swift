@@ -2,18 +2,15 @@ import Foundation
 
 
 func minCostClimbingStairs(_ cost: [Int]) -> Int {
-    var dict1 = [Int:Int]()
-    return min(helper(cost, 0, &dict1),helper(cost, 1,&dict1 ))
+        var size = cost.count
+        var dp = Array(repeating: 0, count: size)
+        dp[0] = cost[0]
+        dp[1] = cost[1]
+        
+        for i in 2..<size
+        {
+            dp[i] += min(cost[i] + dp[i-1],  cost[i] + dp[i-2])
+        }
+        
+        return min(dp[size-1],dp[size-2])
     }
-func helper(_ cost:[Int],_ index:Int,_ dict: inout [Int:Int]) -> Int {
-    if index == cost.count-1 { return cost[cost.count-1]}
-    if index == cost.count-2 { return cost[cost.count-2]}
-    
-    if dict[index] != nil {
-        return dict[index]!
-    }
-    
-    dict[index] = cost[index] + min(helper(cost, index+1, &dict), helper(cost, index+2, &dict))
-    
-    return dict[index]!
-}
