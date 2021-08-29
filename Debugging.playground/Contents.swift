@@ -1,26 +1,16 @@
 import Foundation
 
-func minFallingPathSum(_ matrix: [[Int]]) -> Int {
-    var dp = [Int](repeating: Int.max, count: matrix.first?.count ?? 0)
-        
-    for row in 0..<matrix.count {
-        if row == 0 {
-            dp = matrix.first!
-            continue;
-        }
-        var res = [Int](repeating: Int.max, count: matrix.first?.count ?? 0)
-        for col in 0..<matrix[0].count {
-            if col == 0 {
-                res[col] = min(dp[col],dp[col+1]) + matrix[row][col]
-            } else if col == matrix[0].count-1 {
-                res[col] = min(dp[col],dp[col-1]) + matrix[row][col]
-                dp = res
-            } else {
-                res[col] = min(dp[col-1],dp[col],dp[col+1]) + matrix[row][col]
+class Solution {
+    func minFallingPathSum(_ matrix: [[Int]]) -> Int {
+        var dp = matrix
+        let n = matrix.count
+        for row in 1..<n {
+            for col in 0..<n {
+                dp[row][col] += min(dp[row-1][col], dp[row-1][max(0, col-1)], dp[row-1][min(n-1, col+1)])
+                    //MAX와 MIN 을 사용하여 각 끝의 Bound를 정해주고 안나가게함!! 굳 더 간결
             }
         }
-       
+        return dp[n-1].min()!
     }
-    return dp.min()!
 }
-minFallingPathSum([[-19,57],[-40,-5]])
+
