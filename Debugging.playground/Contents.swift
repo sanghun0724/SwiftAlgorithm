@@ -1,37 +1,19 @@
 import Foundation
 
 
-
-func minPathSum(_ grid: [[Int]]) -> Int {
-        var dict: [[Int]: Int] = [:]
-        return calculate(grid, 0, 0, &dict)
+func minCostClimbingStairs(_ cost: [Int]) -> Int {
+    var dict1 = [Int:Int]()
+    return min(helper(cost, 0, &dict1),helper(cost, 1,&dict1 ))
     }
-
-func calculate(_ grid: [[Int]], _ i: Int, _ j: Int, _ dict: inout [[Int]: Int]) -> Int {
-      guard i < grid.count, j < grid[i].count else { return Int.max }
-      if i == grid.count-1, j == grid[i].count-1 { return grid[i][j] }
-      
-      if dict[[i, j]] != nil {
-          return dict[[i, j]]!
-      }
-      
-      dict[[i, j]] = grid[i][j] + min(calculate(grid, i+1, j, &dict), calculate(grid, i, j+1, &dict))
-      print(dict[[i,j]])
-      return dict[[i, j]]!
-  }
-minPathSum([[1,3,1],[1,5,1],[4,2,1]])
-func minPathSum4(_ grid: [[Int]]) -> Int {
-    var dp = [Int](repeating: Int.max, count: grid.first?.count ?? 0)
-    dp[0] = 0
+func helper(_ cost:[Int],_ index:Int,_ dict: inout [Int:Int]) -> Int {
+    if index == cost.count-1 { return cost[cost.count-1]}
+    if index == cost.count-2 { return cost[cost.count-2]}
     
-    for row in grid {
-        for j in 0..<row.count {
-            if j == 0 {
-                dp[j] += row[j]
-            } else {
-                dp[j] = min(dp[j],dp[j-1]) + row[j]
-            }
-        }
+    if dict[index] != nil {
+        return dict[index]!
     }
-    return dp.last!
+    
+    dict[index] = cost[index] + min(helper(cost, index+1, &dict), helper(cost, index+2, &dict))
+    
+    return dict[index]!
 }
