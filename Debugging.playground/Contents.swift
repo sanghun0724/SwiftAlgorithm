@@ -1,19 +1,26 @@
 import Foundation
 
-
-func coinChange(_ coins: [Int], _ amount: Int) -> Int {
-    guard amount > 0 else { return -1 }
-    
-    var dp = Array(repeating: amount + 1, count: amount+1)
-    dp[0] = 0
-    
-    for amountNum in 1...amount {
-        for coin in coins {
-            if coin <= amountNum {
-                dp[amountNum] = min(dp[amountNum],dp[amountNum - coin]+1) //to protect index bounds
+func minFallingPathSum(_ matrix: [[Int]]) -> Int {
+    var dp = [Int](repeating: Int.max, count: matrix.first?.count ?? 0)
+        
+    for row in 0..<matrix.count {
+        if row == 0 {
+            dp = matrix.first!
+            continue;
+        }
+        var res = [Int](repeating: Int.max, count: matrix.first?.count ?? 0)
+        for col in 0..<matrix[0].count {
+            if col == 0 {
+                res[col] = min(dp[col],dp[col+1]) + matrix[row][col]
+            } else if col == matrix[0].count-1 {
+                res[col] = min(dp[col],dp[col-1]) + matrix[row][col]
+                dp = res
+            } else {
+                res[col] = min(dp[col-1],dp[col],dp[col+1]) + matrix[row][col]
             }
         }
+       
     }
-    return dp[amount] != amount + 1 ? dp[amount] : -1
-   }
-coinChange([2], 3)
+    return dp.min()!
+}
+minFallingPathSum([[-19,57],[-40,-5]])
