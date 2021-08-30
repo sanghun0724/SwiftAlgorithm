@@ -1,16 +1,24 @@
 import Foundation
 
-class Solution {
-    func minFallingPathSum(_ matrix: [[Int]]) -> Int {
-        var dp = matrix
-        let n = matrix.count
-        for row in 1..<n {
-            for col in 0..<n {
-                dp[row][col] += min(dp[row-1][col], dp[row-1][max(0, col-1)], dp[row-1][min(n-1, col+1)])
-                    //MAX와 MIN 을 사용하여 각 끝의 Bound를 정해주고 안나가게함!! 굳 더 간결
-            }
-        }
-        return dp[n-1].min()!
+func mincostTickets(_ days: [Int], _ costs: [Int]) -> Int {
+    guard days.count > 0,costs.count > 0,let last = days.last else {
+        return 0;
     }
-}
-
+    var dp = [Int](repeating: 0, count: last+1)
+    
+    for i in 1..<dp.count {
+        if !days.contains(i) {
+            dp[i] = dp[i-1]
+            continue;
+        }
+        
+        var one = dp[max(i-1,0)] + costs[0]
+        var seven = dp[max(i-7,0)] + costs[1]
+        var thirty = dp[max(i-30,0)] + costs[2]
+        
+        dp[i] = min(one, seven, thirty)
+    }
+    
+    return dp.last!
+    }
+mincostTickets([1,2,3,4,5,6,7,8,9,10,30,31], [2,7,15])
