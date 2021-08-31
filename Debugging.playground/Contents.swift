@@ -1,24 +1,19 @@
 import Foundation
 
-func mincostTickets(_ days: [Int], _ costs: [Int]) -> Int {
-    guard days.count > 0,costs.count > 0,let last = days.last else {
-        return 0;
-    }
-    var dp = [Int](repeating: 0, count: last+1)
+
+func minSteps(_ n: Int) -> Int {
+    var dp = [Int](repeating: 0, count: n+1)
     
-    for i in 1..<dp.count {
-        if !days.contains(i) {
-            dp[i] = dp[i-1]
-            continue;
+    for i in 2..<dp.count {
+        dp[i] = i //// if we cannot found small length (prime number) EX) n = 17 -> return 17
+        for j in stride(from: i-1, to: 1, by: -1) { //// we don't need to find smaller sequence from first
+            if i % j == 0 { //// if sequence of length 'j' can be pasted multiple times to get length 'i' sequence
+                dp[i] = dp[j] + (i/j) //// we just need to paste sequence j (i/j - 1) times, hence additional (i/j) times since we need to copy it first as well.
+                break; /// /we don't need checking any smaller length sequences
+            }
         }
-        
-        var one = dp[max(i-1,0)] + costs[0]
-        var seven = dp[max(i-7,0)] + costs[1]
-        var thirty = dp[max(i-30,0)] + costs[2]
-        
-        dp[i] = min(one, seven, thirty)
     }
-    
-    return dp.last!
-    }
-mincostTickets([1,2,3,4,5,6,7,8,9,10,30,31], [2,7,15])
+    return dp[n]
+   }
+minSteps(6)
+
