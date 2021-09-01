@@ -1,19 +1,34 @@
 import Foundation
 
-
-func minSteps(_ n: Int) -> Int {
-    var dp = [Int](repeating: 0, count: n+1)
+func longestConsecutive(_ nums: [Int]) -> Int {
+    var set = Set<Int>()
+    var longestLen = 0
+    for num in nums {
+        set.insert(num)
+    }
     
-    for i in 2..<dp.count {
-        dp[i] = i //// if we cannot found small length (prime number) EX) n = 17 -> return 17
-        for j in stride(from: i-1, to: 1, by: -1) { //// we don't need to find smaller sequence from first
-            if i % j == 0 { //// if sequence of length 'j' can be pasted multiple times to get length 'i' sequence
-                dp[i] = dp[j] + (i/j) //// we just need to paste sequence j (i/j - 1) times, hence additional (i/j) times since we need to copy it first as well.
-                break; /// /we don't need checking any smaller length sequences
+    for num in set {
+        if !set.contains(num-1) {
+            var current = num
+            var currentLen = 1
+            
+            while set.contains(current+1) {
+                current+=1
+                currentLen+=1
             }
+            longestLen = max(longestLen, currentLen)
         }
     }
-    return dp[n]
-   }
-minSteps(6)
+    return longestLen
+    }
+
+
+
+longestConsecutive([0,3,7,2,5,8,4,6,0,1])
+    
+
+
+
+
+
 
