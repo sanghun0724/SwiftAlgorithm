@@ -1,30 +1,21 @@
 import Foundation
 
-func longestConsecutive(_ nums: [Int]) -> Int {
-    var set = Set<Int>()
-    var longestLen = 0
-    for num in nums {
-        set.insert(num)
-    }
+func numSquares(_ n: Int) -> Int {
+    var dp = [Int](repeating: n+1, count: n+1)
+    dp[0] = 0
     
-    for num in set {
-        if !set.contains(num-1) {
-            var current = num
-            var currentLen = 1
-            
-            while set.contains(current+1) {
-                current+=1
-                currentLen+=1
-            }
-            longestLen = max(longestLen, currentLen)
+    for i in 1...n {
+        var mult = 1
+        while mult*mult <= i {
+            dp[i] = min(dp[i],dp[i - mult*mult] + 1)
+            mult+=1
         }
+        print(dp)
     }
-    return longestLen
-    }
 
-
-
-longestConsecutive([0,3,7,2,5,8,4,6,0,1])
+    return dp[n]
+}
+numSquares(12)
     
 
 
