@@ -1,25 +1,26 @@
 import Foundation
 
-func numSquares(_ n: Int) -> Int {
-    var dp = [Int](repeating: n+1, count: n+1)
-    dp[0] = 0
+
+func lastStoneWeightII(_ stones: [Int]) -> Int {
+    let total = stones.reduce(0,+) //make total value
+    var maxS2 = 0
     
-    for i in 1...n {
-        var mult = 1
-        while mult*mult <= i {
-            dp[i] = min(dp[i],dp[i - mult*mult] + 1)
-            mult+=1
+    var dp = [Bool](repeating: false, count: total/2 + 1)
+    dp[0] = true
+    for stone in stones {
+        var temp = dp
+        if stone > total/2 {continue}
+        for sum in stone...total/2 {
+            if dp[sum-stone] {
+                temp[sum] = true
+                maxS2 = max(maxS2,sum)
+                if maxS2 == total/2 {return total - maxS2 * 2}
+            }
         }
-        print(dp)
+        dp = temp
+    }
+    
+    return total - maxS2 * 2
     }
 
-    return dp[n]
-}
-numSquares(12)
     
-
-
-
-
-
-
