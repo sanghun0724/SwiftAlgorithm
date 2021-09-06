@@ -1,25 +1,26 @@
 import Foundation
 
-func minimumTotal(_ triangle: [[Int]]) -> Int {
-    if triangle.count == 0 {
-        return 0;
-    }
 
-    var dp = [Int](repeating: 10*10*10*10, count: triangle.count)
-    
-    dp[0] = triangle[0][0]
-    
-    for i in 1..<triangle.count {
-        var temp = dp
-        for j in 0..<triangle[i].count {
-            if j == 0 {
-                dp[j] += triangle[i][0]
-            } else {
-                dp[j] = min(temp[j], temp[j-1]) + triangle[i][j]
+    // O(m*n*w) time | O(m*n) space
+    func findMaxForm(_ strs: [String], _ m: Int, _ n: Int) -> Int {
+        var dp = Array(
+            repeating: Array(repeating: 0, count: n+1),
+            count: m+1
+        )
+        
+        for word in strs {
+            let ones = word.filter { $0 == "1" }.count
+            let zeroes = word.filter { $0 == "0" }.count
+            
+            for i in stride(from: m, through: zeroes, by: -1) {
+                for j in stride(from: n, through: ones, by: -1){
+                    dp[i][j] = max(dp[i][j], dp[i-zeroes][j-ones]+1)
+                   print(dp)
+                }
             }
         }
+        
+        return dp[m][n]
     }
-    return dp.min()!
-   }
 
-minimumTotal([[2],[3,4],[6,5,7],[4,1,8,3]])
+findMaxForm(["10","0","1"], 1, 1)
