@@ -1,20 +1,16 @@
 import Foundation
 
-func maximalSquare(_ matrix: [[Character]]) -> Int {
-    guard matrix.count > 0 && matrix[0].count > 0 else { return 0 }
-    var dp = [[Int]](repeating: [Int](repeating: 0, count: matrix[0].count), count: matrix.count)
-    var result = 0
-    
-    for i in 0..<matrix.count {
-        for j in 0..<matrix[0].count {
-            if i == 0 || j == 0 {
-                dp[i][j] = Int(String(matrix[i][j]))!
-            } else if matrix[i][j] == "1" {
-                dp[i][j] = min(dp[i-1][j], dp[i-1][j-1],dp[i][j-1]) + 1
-            }
-            result = max(result,dp[i][j])
+func climbStairs(_ n: Int) -> Int {
+    if n < 3 {
+        return n
+    }
+       var dp = [Int](repeating: 0, count: n+1)
+    dp[1] = 1
+    dp[2] = 2
+    for i in 3..<n+1 {
+        for step in 1...2 {
+            dp[i] += dp[i-step]
         }
     }
-    return result * result
+    return dp[n]
    }
-
