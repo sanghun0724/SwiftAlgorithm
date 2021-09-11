@@ -1,21 +1,26 @@
 
 
-var line = [[String]]()
-for _ in 0...4 { line.append(Array(readLine()!.map{String($0)})) }
+var line = [[Int]]()
+for _ in 0...2 { line.append(Array(readLine()!.split(separator: " ").map{ Int(String($0))!})) }
 
-var flag = true
-var result = ""
-
-for i in 0..<15 {
-    flag = true
-    for word in line {
-        if  i < word.count {
-            result += String(word[i])
-            flag = true
-        } else {
-            continue;
-        }
+for stick in line {
+    var zero = 0
+    var one = 0
+    for value in stick {
+        value == 0 ? (zero+=1) : (one+=1)
     }
-    if flag == false { print(result)}
+    switch (zero,one) {
+    case (1,3):
+        print("A")
+    case (2,2):
+        print("B")
+    case (3,1):
+        print("C")
+    case (4,0):
+        print("D")
+    case (0,4):
+        print("E")
+    case (_, _):
+        print("")
+    }
 }
-print(result)
