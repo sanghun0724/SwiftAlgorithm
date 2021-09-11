@@ -1,16 +1,21 @@
-import Foundation
 
-func uniquePaths(_ m: Int, _ n: Int) -> Int {
-    guard m > 0, n > 0 else {return 0}
-        var dp = [Int](repeating: 1, count: n)
-    
-    for i in 1..<m {
-        var temp = dp
-        for j in 1..<n {
-            temp[j] = temp[j-1] + dp[j]
+
+var line = [[String]]()
+for _ in 0...4 { line.append(Array(readLine()!.map{String($0)})) }
+
+var flag = true
+var result = ""
+
+for i in 0..<15 {
+    flag = true
+    for word in line {
+        if  i < word.count {
+            result += String(word[i])
+            flag = true
+        } else {
+            continue;
         }
-        dp = temp
     }
-    return dp.last!
-    }
-uniquePaths(3, 7)
+    if flag == false { print(result)}
+}
+print(result)
