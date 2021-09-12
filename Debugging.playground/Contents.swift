@@ -1,26 +1,58 @@
 
 
-var line = [[Int]]()
-for _ in 0...2 { line.append(Array(readLine()!.split(separator: " ").map{ Int(String($0))!})) }
 
-for stick in line {
-    var zero = 0
-    var one = 0
-    for value in stick {
-        value == 0 ? (zero+=1) : (one+=1)
-    }
-    switch (zero,one) {
-    case (1,3):
-        print("A")
-    case (2,2):
-        print("B")
-    case (3,1):
-        print("C")
-    case (4,0):
-        print("D")
-    case (0,4):
-        print("E")
-    case (_, _):
-        print("")
-    }
+import Foundation
+
+
+
+
+
+var line = [[String]]()
+for _ in 0...3 { line.append(Array(readLine()!.split(separator: " ").map{ String($0)})) }
+var firstArr = Array(String(line[1].first!))
+var secondArr = Array(String(line[2].first!))
+let time = Int(line.last!.first!)!
+var reversedArray = firstArr.reversed() + secondArr
+
+var dic1 = [Character:Bool]()
+var dic2 = [Character:Bool]()
+
+for first in firstArr {
+    dic1[first] = true
 }
+for second in secondArr {
+    dic2[second] = false
+}
+
+if time == 0
+{ print(String(reversedArray))}
+else {for second in 1...time {
+    var temp = reversedArray
+    for i in 0..<reversedArray.count-1 {
+        if dic1[reversedArray[i]] == true && dic2[reversedArray[i+1]] == false {
+            temp.swapAt(i, i+1)
+        }
+    }
+    reversedArray = temp
+}
+print(String(reversedArray))
+}
+
+
+
+
+
+
+processTime{
+    
+    
+    
+}
+func processTime(closure: () -> ()){
+    let start = CFAbsoluteTimeGetCurrent()
+    closure()
+    let processTime = CFAbsoluteTimeGetCurrent() - start
+    print("경과 시간: \(processTime)")
+}
+
+
