@@ -7,38 +7,56 @@ import Foundation
 
 
 
-var line = [[String]]()
-for _ in 0...3 { line.append(Array(readLine()!.split(separator: " ").map{ String($0)})) }
-var firstArr = Array(String(line[1].first!))
-var secondArr = Array(String(line[2].first!))
-let time = Int(line.last!.first!)!
-var reversedArray = firstArr.reversed() + secondArr
-
-var dic1 = [Character:Bool]()
-var dic2 = [Character:Bool]()
-
-for first in firstArr {
-    dic1[first] = true
-}
-for second in secondArr {
-    dic2[second] = false
+var lines = [String]()
+var firstLine = readLine()!.split(separator: " ").map{ ([Character]($0))}
+let n = Int(String(firstLine.last!))!
+for _ in 1...n {
+    //lines.append(Array(readLine()!.split(separator: " ").map{ (String($0))}))
+    lines.append(readLine()!)
 }
 
-if time == 0
-{ print(String(reversedArray))}
-else {for second in 1...time {
-    var temp = reversedArray
-    for i in 0..<reversedArray.count-1 {
-        if dic1[reversedArray[i]] == true && dic2[reversedArray[i+1]] == false {
-            temp.swapAt(i, i+1)
+var kingRow = firstLine[0][0].unicodeScalars.first?.value
+var kingCol = firstLine[0][1]
+var king = (Int(kingRow!),Int(String(kingCol))!)
+
+var rockRow = firstLine[1][0].unicodeScalars.first?.value
+var rockCol = firstLine[1][1]
+var rock = (Int(rockRow!),Int(String(rockCol))!)
+
+let steps = [(1,0),(-1,0),(0,-1),(0,1),(1,1),(-1,1),(1,-1),(-1,-1)]
+let dir = ["R","L","B","T","RT","LT","RB","LB"]
+
+for line in lines {
+    var temp = king
+    var temp2 = rock
+    for i in 0..<dir.count {
+        if line == dir[i] {
+            temp.0 += steps[i].0
+            temp.1 += steps[i].1
+  
+            if temp == temp2 {
+                temp2.0 += steps[i].0
+                temp2.1 += steps[i].1
+            }
+            if temp.0 < 65 || temp.0 > 72 || temp.1 < 1 || temp.1 > 8 {
+                continue;
+            }
+            if temp2.0 < 65 || temp2.0 > 72 || temp2.1 < 1 || temp2.1 > 8 {
+                continue;
+            }
+            king = temp
+            rock = temp2
         }
     }
-    reversedArray = temp
 }
-print(String(reversedArray))
-}
-
-
+var kingResult = ""
+kingResult += String(UnicodeScalar(king.0)!)
+kingResult += String(king.1)
+var rockResult = ""
+rockResult += String(UnicodeScalar(rock.0)!)
+rockResult += String(rock.1)
+print(kingResult)
+print(rockResult)
 
 
 
