@@ -11,38 +11,27 @@ var firstLine = readLine()!.split(separator: " ").map{ Int(String($0))!}
 for _ in 1...firstLine.first! {
     lines.append(Array(readLine()!.split(separator: " ").map{ Int(String($0))!}))
 }
-var target = firstLine.last!
+var paper = [[Bool]](repeating: [Bool](repeating: false, count: 100), count: 100)
+var count = 0
 
-var dict = [Int:[Int]]()
-
-for i in 0..<lines.count {
-    let contry = lines[i].removeFirst()
-    dict[contry] = lines[i]
-}
-
-var dict2 = [[Int]:Int]()
-//var setArr = Set(lines)
-//var arr = Array(setArr)
-
-var sortedArr = lines.sorted {
-    if $0[0] == $1[0] {
-        if $0[1] == $1[1] {
-           return $0[2] > $1[2]
+for line in lines{
+    for row in line.first!..<line.first!+10 {
+        for col in line.last!..<line.last!+10 {
+            if paper[row][col] == true {continue;}
+            paper[row][col] = true
         }
-        return $0[1] > $1[1]
     }
-   return $0[0] > $1[0]
 }
 
-for i in 1...sortedArr.count {
-    if dict2[sortedArr[i-1]] != nil {
-        continue;
+for i in 0..<100 {
+    for j in 0..<100 {
+        if paper[i][j] == true {
+            count+=1
+        }
     }
-    dict2[sortedArr[i-1]] = i
 }
 
-print(dict2[dict[target]!]!)
-
+print(count)
 
 
 
