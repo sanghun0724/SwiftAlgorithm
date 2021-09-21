@@ -5,119 +5,151 @@ import Foundation
 
 
 
-let dx = [0, 0, 0, -1, 1]
-let dy = [0, 1, -1, 0, 0]
-struct horse{
-    var x: Int
-    var y: Int
-    var d: Int
+var moving = [[Int]]()
+var board = [[Int]]()
+var firstLine = Array(readLine()!.split(separator: " ").map{ Int(String($0))!})
+for _ in 1...firstLine.first! {
+    board.append(Array(readLine()!.split(separator: " ").map{ Int(String($0))!}))
 }
-func reverseDirection(_ dir: Int) -> Int{
-    if(dir == 1){
+for _ in 1...firstLine.last! {
+    moving.append(Array(readLine()!.split(separator: " ").map{ Int(String($0))!}))
+}
+
+var turnCount = 0
+
+func change(_ num:Int) -> Int {
+    switch num {
+    case 1:
         return 2
-    }else if(dir == 2){
+    case 2:
         return 1
-    }else if(dir == 3){
+    case 3:
         return 4
-    }else{
+    case 4:
         return 3
+    default:break
+    }
+    return -1
+}
+func helper(_ num: inout[Int]) -> Void {
+    let check = num[2]
+    switch check {
+    case 1:
+        num[1]+=1
+    case 2:
+        num[1]-=1
+    case 3:
+        num[0]-=1
+    case 4:
+        num[0]+=1
+    default: break
     }
 }
-let nk = readLine()!.split(separator: " ").map{ Int(String($0))! }
+var dict = [[Int]:[Int]]()
 
-let n = nk[0], k = nk[1]
-var arr: [[Int]] = []
-for _ in 0..<n{
-    let tmp = readLine()!.split(separator: " ").map{ Int(String($0))! }
-    arr.append(tmp)
-}
-var horses: [horse] = []
-for _ in 0..<k{
-    let tmp = readLine()!.split(separator: " ").map{ Int(String($0))!}
-    let h = horse(x: tmp[0]-1, y: tmp[1]-1, d: tmp[2])
-    horses.append(h)
+for i in 0..<moving.count {
+    dict[[moving[i][0]-1,moving[i][1]-1]] = [i]
 }
 
-var horseMap: [[[Int]]] = Array(repeating: Array(repeating: [Int](), count: n), count: n)
-
-var num = 0
-for horse in horses{
-    horseMap[horse.x][horse.y].append(num)
-    num += 1
-}
-var t = 0
-while(t<=1000){
-    t += 1
-    for i in 0..<k{
-        let x = horses[i].x
-        let y = horses[i].y
-        let d = horses[i].d
-        var nx = x + dx[d]
-        var ny = y + dy[d]
-        // 파란색이거나 범위를 벗어나면
-        if(nx < 0 || nx >= n || ny < 0 || ny >= n || arr[nx][ny] == 2){
-            horses[i].d = reverseDirection(d)
-            nx = x + dx[horses[i].d]
-            ny = y + dy[horses[i].d]
+outerLoop:for count in 0...1001 {
+    for Index in 0..<moving.count {
+        let prev = [moving[Index][0]-1,moving[Index][1]-1]
+        helper(&moving[Index])
+        var row = moving[Index][0]-1
+        var col = moving[Index][1]-1
+       
+        
+        if row >= board.count || col >= board[0].count || row < 0 || col < 0 {
+            moving[Index][2] = change(moving[Index][2])
+            helper(&moving[Index])
+            var temp = moving[Index]
+            helper(&moving[Index])
+            row = moving[Index][0] - 1
+            col = moving[Index][1] - 1
+            if row >= board.count || col >= board[0].count || row < 0 || col < 0 || board[row][col] == 2 {
+                moving[Index] = temp
+                continue;
+            }
         }
-        if(nx < 0 || nx >= n || ny < 0 || ny >= n || arr[nx][ny] == 2){
-            continue
-        }
-        //흰색이면
-        if(arr[nx][ny] == 0){
-            var idx = -1
-            for j in 0..<horseMap[x][y].count{
-                let num = horseMap[x][y][j]
-                if i == num{
-                    idx = j
-                }
-                if(idx == -1){
-                    continue
-                }
-                horses[num].x = nx
-                horses[num].y = ny
-                horseMap[nx][ny].append(num)
-                if(horseMap[nx][ny].count >= 4){
-                    print(t)
-                    exit(0)
-                }
-            }
-            for _ in idx..<horseMap[x][y].count{
-                horseMap[x][y].removeLast()
-            }
-        }else if(arr[nx][ny] == 1){ // 빨간색이면
-            var idx = -1
-            var tmpArr:[Int] = []
-            for j in 0..<horseMap[x][y].count{
-                let num = horseMap[x][y][j]
-                if(i == num){
-                    idx = j
-                    break
-                }
-            }
-            if(idx == -1){
+        
+        if board[row][col] == 2 {
+            moving[Index][2] = change(moving[Index][2])
+            helper(&moving[Index])
+            var temp = moving[Index]
+            helper(&moving[Index])
+            row = moving[Index][0] - 1
+            col = moving[Index][1] - 1
+            if row >= board.count || col >= board[0].count || row < 0 || col < 0 || board[row][col] == 2 {
+                moving[Index] = temp
                 continue
             }
-            for j in idx..<horseMap[x][y].count{
-                let num = horseMap[x][y][j]
-                tmpArr.append(num)
-                horses[num].x = nx
-                horses[num].y = ny
+        }
+ 
+        if board[row][col] == 0 {
+            if let value = dict[[prev[0],prev[1]]] {
+                
+                var temp = [Int]()
+                for (i,v) in value.enumerated() {
+                    if Index == v {
+                        temp = Array(value[i...])
+                        dict[[prev[0],prev[1]]]!.removeLast(value.count - i)
+                        break;
+                    }
+                }
+                
+                //가려는곳에 말들 있을때
+                if let val = dict[[row,col]], val != [] {
+                    dict[[row,col]]! += temp
+                    for k in temp {
+                        moving[k][0] = row + 1
+                        moving[k][1] = col + 1
+                    }
+                } else {// 없을때
+                    dict[[row,col]] = temp
+                    for k in temp {
+                        moving[k][0] = row + 1
+                        moving[k][1] = col + 1
+                    }
+                }
             }
-            tmpArr.reverse()
-            horseMap[nx][ny] += tmpArr
-            if(horseMap[nx][ny].count >= 4){
-                print(t)
-                exit(0)
-            }
-
-            for _ in idx..<horseMap[x][y].count{
-                horseMap[x][y].removeLast()
+        } else if board[row][col] == 1 {
+            if let value = dict[[prev[0],prev[1]]] {
+                var temp = [Int]()
+                for (i,v) in value.enumerated() {
+                    if Index == v {
+                        temp = Array(value[i...]).reversed()
+                        dict[[prev[0],prev[1]]]!.removeLast(value.count - i)
+                        break;
+                    }
+                }
+                
+                //가려는곳에 말들 있을때
+                if let val = dict[[row,col]], val != [] {
+                    dict[[row,col]]! += temp
+                    for k in temp {
+                        moving[k][0] = row + 1
+                        moving[k][1] = col + 1
+                    }
+                } else {// 없을때
+                    dict[[row,col]] = temp
+                    for k in temp {
+                        moving[k][0] = row + 1
+                        moving[k][1] = col + 1
+                    }
+                }
             }
         }
+        if dict[[row,col]]!.count >= 4 {
+            print("\(turnCount+1)")
+            break outerLoop;
+        }
+    }
+    turnCount+=1
+    if turnCount == 1001 {
+        print(-1)
     }
 }
-print(-1)
+
 processTime{
     
     
