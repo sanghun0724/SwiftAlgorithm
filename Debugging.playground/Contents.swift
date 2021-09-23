@@ -3,267 +3,100 @@
 
 import Foundation
 
-var dirX = [0,0,0,-1,1]
-var dirY = [0,1,-1,0,0]
-
-struct CCTV {
-    var x:Int
-    var y:Int
-    var type:Int
+let ip: (() -> [Int]) = {
+    let S = readLine()!
+    var result:[Int] = []
+    S.forEach {
+        if $0 == " " { return }
+        result.append(Int($0.unicodeScalars.first!.value) -  48)
+    }
+    return result
 }
-var cctvs = [CCTV]()
 
-var board = [[Int]]()
-var firstLine = Array(readLine()!.split(separator: " ").map{ Int(String($0))!})
-for i in 0..<firstLine.first! {
-    let cluster = Array(readLine()!.split(separator: " ").map{ Int(String($0))!})
-    board.append(cluster)
-    for j in 0..<cluster.count {
-        if cluster[j] > 0 && cluster[j] < 6 {
-            cctvs.append(CCTV(x: j, y: i, type: cluster[j]))
+typealias Tuple = (Int,Int,Int)
+let dx = [-1,0,1,0]
+let dy = [0,1,0,-1]
+let arr = ip()
+let (N,M) = (arr[0],arr[1]) //첫줄/
+var G:[[Int]] = [] // 사무실그래프 입력받을
+var cctvList:[Tuple] = []
+var zeroCnt:Int = 0
+
+(0..<N).forEach { _ in
+    G.append(ip())
+} // 걍 2차언배열 저장
+
+for i in G.indices {
+    for j in G[i].indices {
+        if G[i][j] >= 1 && G[i][j] <= 5 {
+            cctvList.append((G[i][j],i,j))
+        } else if G[i][j] == 0 {
+            zeroCnt+=1 //count
         }
     }
 }
 
-var minCount = Int.max
-
-
-func fill(_ board: inout [[Int]],_ cctv:CCTV,_ direction:Int) {
-    var x = cctv.x
-    var y = cctv.y
-    var nx = x
-    var ny = y
-    switch cctv.type {
-    case 1:
-        switch direction {
-        case 1:
-            while y < board.count - 1 && board[y][x] != 6 {
-                y += dirY[1]
-                if  0 < board[y][x] && board[y][x] < 6 || board[y][x] == -1 {
-                    continue;
-                }
-                board[y][x] = -1
-            }
-        case 2:
-            while y > 0 && board[y][x] != 6 {
-                y += dirY[2]
-                if 0 < board[y][x] && board[y][x] < 6 || board[y][x] == -1  {
-                    continue;
-                }
-                board[y][x] = -1
-            }
-        case 3:
-            while x > 0 && board[y][x] != 6 {
-                x += dirX[3]
-                if 0 < board[y][x] && board[x][y] < 6 || board[y][x] == -1  {
-                    continue;
-                }
-                board[y][x] = -1
-            }
-        case 4:
-            while x < board[0].count - 1 && board[y][x] != 6 {
-                x += dirX[4]
-                if 0 < board[y][x] && board[y][x] < 6 || board[y][x] == -1 {
-                    continue;
-                }
-                board[y][x] = -1
-            }
-        default: break;
+//한 방향에서 cctv작동했던범위의 카운트를 알려줌!
+func coverZeroOneline(_ tmpG: inout [[Int]], _ pos:(Int,Int), _ dir:Int) -> Int {
+    var posX = pos.0 + dx[dir]
+    var posY = pos.1 + dy[dir]
+    var coverCnt = 0
+    while posX >= 0 && posY >= 0 && posX < N && posY < M && tmpG[posX][posY] != 6 {
+        if tmpG[posX][posY] == 0 {
+            tmpG[posX][posY] = -1
+            coverCnt += 1
         }
-    case 2:
-        switch direction {
-        case 1,2:
-            while y < board.count - 1 && board[y][x] != 6 {
-                y += dirY[1]
-                if  0 < board[y][x] && board[y][x] < 6 || board[y][x] == -1 {
-                    continue;
-                }
-                board[y][x] = -1
-            }
-            while ny > 0 && board[ny][x] != 6 {
-                ny += dirY[2]
-                if  0 < board[ny][x] && board[ny][x] < 6 || board[ny][x] == -1 {
-                    continue;
-                }
-                board[ny][x] = -1
-            }
-        case 3,4:
-            while x > 0 && board[y][x] != 6 {
-                x += dirX[3]
-                if 0 < board[y][x] && board[y][x] < 6 || board[y][x] == -1  {
-                    continue;
-                }
-                board[y][x] = -1
-            }
-            while nx < board[0].count - 1 && board[y][nx] != 6 {
-                nx += dirX[4]
-                if 0 < board[y][nx] && board[y][nx] < 6 || board[y][nx] == -1  {
-                    continue;
-                }
-                board[y][nx] = -1
-            }
-        default: break;
-        }
-    case 3:
-        switch direction {
-        case 1,2:
-            while y < board.count - 1 && board[y][x] != 6 {
-                y += dirY[1]
-                if  0 < board[y][x] && board[y][x] < 6 || board[y][x] == -1 {
-                    continue;
-                }
-                board[y][x] = -1
-            }
-            
-            if direction == 1 {
-                while x > 0 && board[y][x] != 6 {
-                    x += dirX[3]
-                    if 0 < board[y][x] && board[y][x] < 6 || board[y][x] == -1  {
-                        continue;
-                    }
-                    board[y][x] = -1
-                }
-                
-            } else {
-                while nx < board[0].count - 1 && board[y][x] != 6 {
-                    nx += dirX[4]
-                    if 0 < board[y][nx] && board[y][nx] < 6 || board[y][nx] == -1  {
-                        continue;
-                    }
-                    board[y][nx] = -1
-                }
-            }
-            
-        case 3,4:
-            while y > 0 && board[y][x] != 6 {
-                y += dirY[2]
-                if 0 < board[y][x] && board[y][x] < 6 || board[y][x] == -1  {
-                    continue;
-                }
-                board[y][x] = -1
-            }
-            if direction == 3 {
-                while x > 0 && board[y][x] != 6 {
-                    x += dirX[3]
-                    if 0 < board[y][x] && board[y][x] < 6 || board[y][x] == -1  {
-                        continue;
-                    }
-                    board[y][x] = -1
-                }
-            } else {
-                while nx < board[0].count - 1 && board[y][x] != 6 {
-                    nx += dirX[4]
-                    if 0 < board[y][nx] && board[y][nx] < 6 || board[y][nx] == -1  {
-                        continue;
-                    }
-                    board[y][nx] = -1
-                }
-            }
-            
-        default: break;
-        }
-    case 4:
-        while x > 0 && board[y][x] != 6 {
-            x += dirX[3]
-            if 0 < board[y][x] && board[y][x] < 6 || board[y][x] == -1  {
-                continue;
-            }
-            board[y][x] = -1
-        }
-        while nx < board[0].count - 1 && board[y][x] != 6 {
-            nx += dirX[4]
-            if 0 < board[y][nx] && board[y][nx] < 6 || board[y][nx] == -1  {
-                continue;
-            }
-            board[y][nx] = -1
-        }
-        switch direction {
-        case 1,2:
-            while y < board.count - 1 && board[y][x] != 6 {
-                y += dirY[1]
-                if  0 < board[y][x] && board[y][x] < 6 || board[y][x] == -1 {
-                    continue;
-                }
-                board[y][x] = -1
-            }
-        case 3,4:
-            while y > 0 && board[y][x] != 6 {
-                y += dirY[2]
-                if 0 < board[y][x] && board[y][x] < 6 || board[y][x] == -1  {
-                    continue;
-                }
-                board[y][x] = -1
-            }
-        default:break;
-        }
-    case 5:
-        while x > 0 && board[y][x] != 6 {
-            x += dirX[3]
-            if 0 < board[y][x] && board[y][x] < 6 || board[y][x] == -1  {
-                continue;
-            }
-            board[y][x] = -1
-        }
-        while nx < board[0].count - 1 && board[y][x] != 6 {
-            nx += dirX[4]
-            if 0 < board[y][nx] && board[y][nx] < 6 || board[y][nx] == -1  {
-                continue;
-            }
-            board[y][nx] = -1
-        }
-        while y < board.count - 1 && board[y][x] != 6 {
-            y += dirY[1]
-            if  0 < board[y][x] && board[y][x] < 6 || board[y][x] == -1 {
-                continue;
-            }
-            board[y][x] = -1
-        }
-        while y > 0 && board[y][x] != 6 {
-            y += dirY[2]
-            if 0 < board[y][x] && board[y][x] < 6 || board[y][x] == -1  {
-                continue;
-            }
-            board[y][x] = -1
-        }
-            
-    default:break;
-        }
-        
+        posX += dx[dir]
+        posY += dy[dir]
     }
-
-func check(_ board:[[Int]]) -> Int {
-        var count = 0
-    for i in 0..<board.count {
-        for j in 0..<board[0].count {
-            if board[i][j] == 0 {
-                count+=1
-            }
-        }
-    }
-    return count
-}
-var temp = board
-
-for Index in 0..<cctvs.count {
-  
-    fill(&temp, cctvs[Index], 1)
+    return coverCnt
 }
 
-
-
-   
-    for cctv in cctvs {
-       for direction in 1...4 {
-            fill(&, cctv, direction)
-            minCount = min(check(),minCount)
-            
+func runcCCTV(_ cctvNum:Int, _ pos:(Int,Int), _ dir:Int, _ tmpG: inout [[Int]]) -> Int {
+    var coverToCnt = 0
+    if cctvNum == 1 {
+        coverToCnt += coverZeroOneline(&tmpG, pos, dir)
+    } else if cctvNum == 2 {
+        [0,2].forEach { (dirCnt) in
+            coverToCnt += coverZeroOneline(&tmpG, pos, (dir + dirCnt) % 4)
         }
+    } else if cctvNum == 3 {
+            (0...1).forEach { (dirCnt) in
+                coverToCnt += coverZeroOneline(&tmpG, pos, (dir + dirCnt) % 4)
+            }
+    } else if cctvNum == 4 {
+        (0...2).forEach { (dirCnt) in
+            coverToCnt += coverZeroOneline(&tmpG, pos, (dir + dirCnt) % 4)
+        }
+    } else if cctvNum == 5 {
+        (0...3).forEach { (dirCnt) in
+            coverToCnt += coverZeroOneline(&tmpG, pos, (dir + dirCnt) % 4)
+        }
+    }
+    return coverToCnt
+    }
+
+// cctvList의 모든 cctv방향을 설정한 상태일때 사각지대 크기를 확인하고 메소드를 종료 재귀깊이 1줄임
+var Ans = Int.max
+func DFS(_ cctvIdx:Int,_ coverCnt:Int,_ tmpG:[[Int]]) {
+    if cctvIdx >= cctvList.count {
+        let blindSpotCnt = zeroCnt - coverCnt //기존 0개수에서 메소드돌린 -1커버 개수만큼 뺴기
+        Ans = Ans > blindSpotCnt ? blindSpotCnt : Ans
+        return
     }
     
-
-
-print(minCount)
-
+    var nowG = tmpG
+    let nowCCTV = cctvList[cctvIdx]
+    for dir in (0..<4) {
+        let cctvNum = nowCCTV.0
+        let cctvPos = (nowCCTV.1,nowCCTV.2)
+        let nowCoverCnt = runcCCTV(cctvNum, cctvPos, dir, &nowG)
+        DFS(cctvIdx+1, coverCnt+nowCoverCnt, nowG) //커버개수 체크
+        nowG = tmpG
+    }
+}
+DFS(0, 0, G)
+print(Ans)
 
 
 //var t = [1,2,3,4,5]
