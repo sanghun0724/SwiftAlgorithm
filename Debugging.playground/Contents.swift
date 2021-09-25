@@ -3,63 +3,62 @@
 
 import Foundation
 
+let N = Int(readLine()!)!
+let dirY = [0,-1,0,1]
+let dirX = [1,0,-1,0]
+var x:Int = 0,y:Int = 0,d:Int = 0,g:Int = 0
+var arr = [[Int]]()
+var dirInfo = [Int]()
+var map = [[Int]](repeating: [Int](repeating: 0, count: 101), count: 101)
+(0..<N).forEach { (_) in
+    arr.append(readLine()!.split(separator: " ").map{ Int(String($0))!})
+}
 
-var n = Int(readLine()!)!
-let direction = [(0, 1), (-1, 0), (0, -1), (1, 0)] // (y, x)
-var graph = [[Bool]](repeating: [Bool](repeating: false, count: 101), count:101)
 
-while n > 0 {
-  n -= 1
+getResult()
+print(dirInfo)
 
-  let input = readLine()!.split(separator: " ").map { Int(String($0))! }
-  var x = input[0], y = input[1], d = input[2], g = input[3]
-  var path = [Int]()
-  path.append(d)
-
-  var end = (r: y + direction[d].0, c: x + direction[d].1)
-
-  graph[y][x] = true
-  graph[end.r][end.c] = true
-
-  while g > 0 {
-    g -= 1
-    var curve = [Int]()
-    for direct in path {
-      var rotated = (direct + 1) % 4
-      curve.append(rotated)
+func  makeCurve() {
+    for dir in dirInfo.reversed() {
+        let nd = (dir + 1) % 4
+        x = x + dirX[nd]
+        y = y + dirY[nd]
+        map[x][y] = 1
+        
+        dirInfo.append(nd)
     }
+}
 
-    while !curve.isEmpty {
-      let direct = curve.removeLast()
-      let next = (r: end.r + direction[direct].0, c: end.c + direction[direct].1)
-      path.append(direct)
-      graph[next.r][next.c] = true
-      end = next
+func countSquare() -> Int {
+    var res = 0
+    for i in 0..<map.count {
+        for j in 0..<map[0].count {
+            if map[i][j] == 1 && map[i+1][j] == 1 && map[i][j+1] == 1 && map[i+1][j+1] == 1 {
+                res+=1
+            }
+        }
     }
-  }
+    return res
 }
 
-var ans = 0
-for i in 0 ..< 100 {
-  for j in 0 ..< 100 {
-    if graph[i][j] && graph[i+1][j] && graph[i][j+1] && graph[i+1][j+1] {
-      ans += 1
+func getResult() {
+    for value in arr {
+        x = value[0]; y = value[1]; d = value[2]; g = value[3]
+        
+        dirInfo.removeAll()
+        
+        map[x][y] = 1
+        x = x + dirX[d]
+        y = y + dirY[d]
+        map[x][y] = 1
+        
+        dirInfo.append(d)
+        for _ in 0..<g {
+            makeCurve()
+        }
     }
-  }
+    print(countSquare())
 }
 
-print(ans)
-
-processTime{
-    
-    
-    
-}
-func processTime(closure: () -> ()){
-    let start = CFAbsoluteTimeGetCurrent()
-    closure()
-    let processTime = CFAbsoluteTimeGetCurrent() - start
-    print("경과 시간: \(processTime)")
-}
 
 
