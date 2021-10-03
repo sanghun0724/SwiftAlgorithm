@@ -23,56 +23,106 @@ var dice = [[Int]](repeating: [Int](repeating: 0, count: 3), count: 4)
 
 
 
-for i in 0..<steps.count {
-    let move = steps[i]
-    let nc = dirR[move]
-    let nr = dirC[move]
-    
-    if r+nr >= 0 && c+nc >= 0 && r+nr < N && c+nc < M {
-        c += nc
-        r += nr
-        rolling(move)
-        if graph[r][c] == 0 {
-            graph[r][c] = dice[3][1]
+var chain = [[String]]()
+for _ in 1...4 { chain.append(Array(readLine()!.map{ (String($0))})) }
+
+let k = Int(readLine()!)!
+var direction = [[Int]]()
+for _ in 1...k {
+    let command = readLine()!.split(separator: " ").map{ Int(String($0))!}
+    var dir = [Int]()
+    if command[0] % 2 == 1 {
+        if  command[1] == -1 {
+            dir = [-1,1,-1,1]
         } else {
-            dice[3][1] = graph[r][c]
-            graph[r][c] = 0
+            dir = [1,-1,1,-1]
         }
-        
-        print(dice[1][1])
+    } else {
+        if  command[1] == -1 {
+            dir = [1,-1,1,-1]
+        } else {
+            dir = [-1,1,-1,1]
+        }
     }
-    
-    
+    let checkArr = checkNS()
+    helper(command[0],dir,checkArr)
 }
 
+getResult()
 
-func rolling(_ dir:Int ) {
-    var temp = 0
-    switch dir {
-    case 1://동
-        temp = dice[3][1]
-        dice[3][1] = dice[1][2]
-        dice[1][2] = dice[1][1]
-        dice[1][1] = dice[1][0]
-        dice[1][0] = temp
-    case 2://서
-        temp = dice[3][1]
-        dice[3][1] = dice[1][0]
-        dice[1][0] = dice[1][1]
-        dice[1][1] = dice[1][2]
-        dice[1][2] = temp
-    case 3://남
-        temp = dice[3][1]
-        dice[3][1] = dice[0][1]
-        dice[0][1] = dice[1][1]
-        dice[1][1] = dice[2][1]
-        dice[2][1] = temp
-    case 4://북
-        temp = dice[3][1]
-        dice[3][1] = dice[2][1]
-        dice[2][1] = dice[1][1]
-        dice[1][1] = dice[0][1]
-        dice[0][1] = temp
-    default: break;
+func checkNS() -> [Bool] {
+    var checkArr = [Bool]()
+    chain[0][2] != chain[1][6] ? checkArr.append(true) : checkArr.append(false)
+    chain[1][2] != chain[2][6] ? checkArr.append(true) : checkArr.append(false)
+    chain[2][2] != chain[3][6] ? checkArr.append(true) : checkArr.append(false)
+        
+    return checkArr
+}
+
+func rolling(_ chainNum:Int,_ type:Int) {
+    if type == 1 {
+        let temp = chain[chainNum-1].last!
+        for i in (0...6).reversed() {
+            chain[chainNum-1][i+1] = chain[chainNum-1][i]
+        }
+        chain[chainNum-1][0] = temp
+    } else {
+        let temp = chain[chainNum-1].first!
+        for i in 0...6 {
+            chain[chainNum-1][i] = chain[chainNum-1][i+1]
+        }
+        chain[chainNum-1][7] = temp
     }
+}
+
+func helper(_ startNum:Int,_ dir:[Int], _ checkArr:[Bool]) {
+    rolling(startNum,dir[startNum-1])
+    switch startNum {
+    case 1:
+        for i in 0...2 {
+            if checkArr[i] == true {
+                rolling(i+2,dir[i+1])
+            } else {
+                break;
+            }
+        }
+    case 2:
+        if checkArr[0] == true {
+            rolling(1, dir[0])
+        }
+        if checkArr[1] == true {
+            rolling(3, dir[2])
+            if checkArr[2] == true {
+                rolling(4, dir[3])
+            }
+        }
+    case 3:
+        if checkArr[2] == true {
+            rolling(4, dir[3])
+        }
+        if checkArr[1] == true {
+            rolling(2, dir[1])
+            if checkArr[0] == true {
+                rolling(1, dir[0])
+            }
+        }
+    case 4:
+        for i in (0...2).reversed() {
+            if checkArr[i] == true {
+                rolling(i+1, dir[i])
+            } else {
+                break;
+            }
+        }
+    default:break
+    }
+}
+
+func getResult() {
+    var result = 0
+    if chain[0][0] == "1" { result+=1 }
+    if chain[1][0] == "1" { result+=2 }
+    if chain[2][0] == "1" { result+=4 }
+    if chain[3][0] == "1" { result+=8 }
+    print(result)
 }
