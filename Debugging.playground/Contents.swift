@@ -23,106 +23,62 @@ var dice = [[Int]](repeating: [Int](repeating: 0, count: 3), count: 4)
 
 
 
-var chain = [[String]]()
-for _ in 1...4 { chain.append(Array(readLine()!.map{ (String($0))})) }
+var firstLine = [Int]()
+firstLine = readLine()!.split(separator: " ").map{ Int(String($0))!}
 
-let k = Int(readLine()!)!
-var direction = [[Int]]()
-for _ in 1...k {
-    let command = readLine()!.split(separator: " ").map{ Int(String($0))!}
-    var dir = [Int]()
-    if command[0] % 2 == 1 {
-        if  command[1] == -1 {
-            dir = [-1,1,-1,1]
-        } else {
-            dir = [1,-1,1,-1]
+let N = firstLine[0]
+let M = firstLine[1]
+var graph = [[Int]]()
+for _ in 1...N {
+     graph.append(Array(readLine()!.split(separator: " ").map{ Int(String($0))!}))
+}
+var homes = [Int]()
+var chickens = [Int]()
+var res = Int.max
+
+
+for r in 0..<N {
+    for c in 0..<graph[0].count {
+        if graph[r][c] == 1 {
+            homes.append(r*N + (c))
+        } else if graph[r][c] == 2 {
+            chickens.append(r*N + (c))
         }
+    }
+}
+//치킨집들중 M개 조합 선택 (내가 몰랐던 부분!!)
+func select(_ selected:[Int],_ idx: Int) {
+    if selected.count == M {
+        res = min(res,minDistance(selected))
     } else {
-        if  command[1] == -1 {
-            dir = [1,-1,1,-1]
-        } else {
-            dir = [-1,1,-1,1]
+        for i in idx..<chickens.count {
+            select(selected + [chickens[i]],i+1)
         }
     }
-    let checkArr = checkNS()
-    helper(command[0],dir,checkArr)
 }
 
-getResult()
-
-func checkNS() -> [Bool] {
-    var checkArr = [Bool]()
-    chain[0][2] != chain[1][6] ? checkArr.append(true) : checkArr.append(false)
-    chain[1][2] != chain[2][6] ? checkArr.append(true) : checkArr.append(false)
-    chain[2][2] != chain[3][6] ? checkArr.append(true) : checkArr.append(false)
-        
-    return checkArr
-}
-
-func rolling(_ chainNum:Int,_ type:Int) {
-    if type == 1 {
-        let temp = chain[chainNum-1].last!
-        for i in (0...6).reversed() {
-            chain[chainNum-1][i+1] = chain[chainNum-1][i]
+func minDistance(_ seletedChickens: [Int]) -> Int {
+    var distance = 0
+    
+    for home in homes {
+        let homeCor = transCor(home)
+        var minDist = 987654321
+        for chicken in seletedChickens {
+            let dist = getLocation(transCor(chicken), homeCor)
+            minDist = min(dist,minDist)
         }
-        chain[chainNum-1][0] = temp
-    } else {
-        let temp = chain[chainNum-1].first!
-        for i in 0...6 {
-            chain[chainNum-1][i] = chain[chainNum-1][i+1]
-        }
-        chain[chainNum-1][7] = temp
+        distance+=minDist
     }
+    return distance
 }
 
-func helper(_ startNum:Int,_ dir:[Int], _ checkArr:[Bool]) {
-    rolling(startNum,dir[startNum-1])
-    switch startNum {
-    case 1:
-        for i in 0...2 {
-            if checkArr[i] == true {
-                rolling(i+2,dir[i+1])
-            } else {
-                break;
-            }
-        }
-    case 2:
-        if checkArr[0] == true {
-            rolling(1, dir[0])
-        }
-        if checkArr[1] == true {
-            rolling(3, dir[2])
-            if checkArr[2] == true {
-                rolling(4, dir[3])
-            }
-        }
-    case 3:
-        if checkArr[2] == true {
-            rolling(4, dir[3])
-        }
-        if checkArr[1] == true {
-            rolling(2, dir[1])
-            if checkArr[0] == true {
-                rolling(1, dir[0])
-            }
-        }
-    case 4:
-        for i in (0...2).reversed() {
-            if checkArr[i] == true {
-                rolling(i+1, dir[i])
-            } else {
-                break;
-            }
-        }
-    default:break
-    }
+func transCor(_ val:Int) -> (Int,Int) {
+    return (val/N,val%N)
 }
 
-func getResult() {
-    var result = 0
-    if chain[0][0] == "1" { result+=1 }
-    if chain[1][0] == "1" { result+=2 }
-    if chain[2][0] == "1" { result+=4 }
-    if chain[3][0] == "1" { result+=8 }
-    print(result)
+func getLocation(_ cor1:(Int,Int), _ cor2:(Int,Int)) -> Int {
+    return abs(cor1.0 - cor2.0) + abs(cor1.1 - cor2.1)
 }
+
+select([], 0)
+print(res)
