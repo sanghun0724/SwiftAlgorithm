@@ -1,24 +1,40 @@
 
-let line = readLine()!.split(separator: " ").map { Int(String($0))!}
-let A = line[0]
-let B = line[1]
+let target = Int(readLine()!)!
+let M = readLine()!
+let brokenNums = readLine()?.split(separator: " ").map { Int(String($0))!}
 
-func dfs(low:Int,top:Int,depth:Int,num:Int)->Int {
-   var res = 0
-    if depth >= 10 {
-        return 0
+var broken = [Bool](repeating: false, count: 10)
+for i in brokenNums ?? [] {
+    broken[i] = true
+}
+var ans = abs(target-100)
+
+func compare(_ num:Int) -> Int {
+    var n = num
+    if n == 0 {
+        if broken[0] {
+            return 0
+        } else {
+            return 1
+        }
     }
-    if num > top {
-        return 0
+    var res = 0
+    while n > 0 {
+        if broken[n % 10] { return 0 }
+        n = n / 10
+        res += 1
     }
-    if low <= num && num <= top {
-        res+=1
-    }
-    res += dfs(low: low, top: top, depth: depth+1, num: num*10+4)
-    res += dfs(low: low, top: top, depth: depth+1, num: num*10+7)
     return res
 }
 
-var ans = dfs(low: A, top: B, depth: 0, num: 0)
-print(ans)
+for i in 0...1000000 {
+    let len = compare(i)
+    if len > 0 {
+        let press = abs(target-i)
+        if ans > press + len {
+            ans = press + len
+        }
+    }
+}
 
+print(ans)
