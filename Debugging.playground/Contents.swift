@@ -1,40 +1,22 @@
 
-let target = Int(readLine()!)!
-let M = readLine()!
-let brokenNums = readLine()?.split(separator: " ").map { Int(String($0))!}
+let line = readLine()!.split(separator: " ").map{ Int(String($0))!}
+let N = line[0]
+let M = line[1]
 
-var broken = [Bool](repeating: false, count: 10)
-for i in brokenNums ?? [] {
-    broken[i] = true
+var graph = [[Int]]()
+for _ in 1...N {
+    graph.append(Array(readLine()!.map{ Int(String($0))!}))
 }
-var ans = abs(target-100)
-
-func compare(_ num:Int) -> Int {
-    var n = num
-    if n == 0 {
-        if broken[0] {
-            return 0
-        } else {
-            return 1
-        }
-    }
-    var res = 0
-    while n > 0 {
-        if broken[n % 10] { return 0 }
-        n = n / 10
-        res += 1
-    }
-    return res
-}
-
-for i in 0...1000000 {
-    let len = compare(i)
-    if len > 0 {
-        let press = abs(target-i)
-        if ans > press + len {
-            ans = press + len
+let lay = N < M ? N : M
+var ans = 0
+for d in (0..<lay).reversed() {
+    for i in 0..<graph.count - d {
+        for j in 0..<graph[0].count - d {
+            if graph[i][j] == graph[i+d][j] && graph[i+d][j] == graph[i][j+d] && graph[i][j+d] == graph[i+d][j+d] {
+                ans = max(ans,(d+1)*(d+1))
+            }
         }
     }
 }
-
 print(ans)
+
