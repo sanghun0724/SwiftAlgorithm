@@ -1,43 +1,31 @@
 
 let line = readLine()!.split(separator: " ").map { Int(String($0))! }
-let N = line[0]
-let M = line[1]
+let K = line[0]
+let N = line[1]
 
-let targets = readLine()!.split(separator: " ").map { Int(String($0))! }
 var queue = [Int]()
-for i in 1...N { queue.append(i) }
-var index = 0
-var ans = 0
+for i in 1...K {
+    queue.append(i)
+}
 
-func goLeft() {
+var res = [Int]()
+
+while !queue.isEmpty {
+   
+    for i in 1..<N {
+      let t = queue.removeFirst()
+        queue.append(t)
+    }
     let q = queue.removeFirst()
-    queue.append(q)
-    ans+=1
+    res.append(q)
 }
 
-func goRight() {
-    let q = queue.removeLast()
-    queue.insert(q, at: 0)
-    ans+=1
-}
-
-for i in 0..<targets.count {
-    if targets[i] != queue[index] {
-        let target = queue.firstIndex(of: targets[i])! + 1
-        let left = queue.count - target
-        let right = target - 1
-        while targets[i] != queue[index] {
-            if left < right {
-               goRight()
-            } else {
-                goLeft()
-            }
-        }
+for i in 0..<res.count {
+    if i == 0 { print("<", terminator: "")}
+    if i == res.count-1 { print("\(res[i])", separator: "", terminator: "")}
+    else {
+        print("\(res[i]),", separator: "", terminator: " ")
     }
-    if targets[i] == queue[index] {
-        queue.removeFirst()
-    }
+   
+    if i == res.count-1 { print(">") }
 }
-print(ans)
-
-
