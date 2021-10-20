@@ -1,31 +1,57 @@
 
-let line = readLine()!.split(separator: " ").map { Int(String($0))! }
-let K = line[0]
-let N = line[1]
+let dirR = [-1,0,1,0] //위,오른,아래,왼
+let dirC = [0,1,0,-1]
+let N = Int(readLine()!)!
+let K = Int(readLine()!)!
 
-var queue = [Int]()
-for i in 1...K {
-    queue.append(i)
+var graph = [[Int]](repeating: [Int](repeating: 0, count: N), count: N)
+
+var apple = [[Int]]()
+if K != 0 {
+    for _ in 1...K {
+    apple.append(Array(readLine()!.split(separator: " ").map{Int(String($0))!}))
+}
+}
+let L = Int(readLine()!)!
+var dir = [[String]]()
+for _ in 1...L {
+    dir.append(Array(readLine()!.split(separator:" ").map{ String($0) }))
+}
+for loc in apple {
+    graph[loc[0]-1][loc[1]-1] = 1
 }
 
-var res = [Int]()
-
-while !queue.isEmpty {
-   
-    for i in 1..<N {
-      let t = queue.removeFirst()
-        queue.append(t)
+var time = 0
+var snakeQueue = [[0,0]]
+var r = 0
+var c = 0
+var currentDir = 1
+while true {
+    for i in 0..<dir.count {
+        let timer = Int(dir[i][0])!
+        if time == timer {
+            if dir[i][1] == "D" {
+                currentDir < 3 ? (currentDir+=1) : (currentDir=0)
+            } else if dir[i][1] == "L" {
+                currentDir > 0 ? (currentDir-=1) : (currentDir=3)
+            }
+        }
     }
-    let q = queue.removeFirst()
-    res.append(q)
+    r += dirR[currentDir]
+    c += dirC[currentDir]
+    //break
+    if r < 0 || r >= N || c < 0 || c >= N || snakeQueue.contains([r,c]) {
+        break;
+    }
+    //Apple check
+    if graph[r][c] == 1 {
+        snakeQueue.append([r,c])
+        graph[r][c] = 0
+    } else {
+        snakeQueue.append([r,c])
+        snakeQueue.removeFirst()
+    }
+    time+=1
 }
 
-for i in 0..<res.count {
-    if i == 0 { print("<", terminator: "")}
-    if i == res.count-1 { print("\(res[i])", separator: "", terminator: "")}
-    else {
-        print("\(res[i]),", separator: "", terminator: " ")
-    }
-   
-    if i == res.count-1 { print(">") }
-}
+print(time+1)
