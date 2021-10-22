@@ -1,57 +1,30 @@
 
-let dirR = [-1,0,1,0] //위,오른,아래,왼
-let dirC = [0,1,0,-1]
-let N = Int(readLine()!)!
-let K = Int(readLine()!)!
+import Foundation
 
-var graph = [[Int]](repeating: [Int](repeating: 0, count: N), count: N)
-
-var apple = [[Int]]()
-if K != 0 {
-    for _ in 1...K {
-    apple.append(Array(readLine()!.split(separator: " ").map{Int(String($0))!}))
-}
-}
-let L = Int(readLine()!)!
-var dir = [[String]]()
-for _ in 1...L {
-    dir.append(Array(readLine()!.split(separator:" ").map{ String($0) }))
-}
-for loc in apple {
-    graph[loc[0]-1][loc[1]-1] = 1
-}
-
-var time = 0
-var snakeQueue = [[0,0]]
-var r = 0
-var c = 0
-var currentDir = 1
-while true {
-    for i in 0..<dir.count {
-        let timer = Int(dir[i][0])!
-        if time == timer {
-            if dir[i][1] == "D" {
-                currentDir < 3 ? (currentDir+=1) : (currentDir=0)
-            } else if dir[i][1] == "L" {
-                currentDir > 0 ? (currentDir-=1) : (currentDir=3)
+func solution(_ bridge_length:Int, _ weight:Int, _ truck_weights:[Int]) -> Int {
+    var queue = [(truck_weights.first!,1)]
+    var time = 1
+    var currentWeight = weight - queue.first!.0
+    var maximum = bridge_length - 1
+    var cur = 1
+    while !queue.isEmpty {
+            if queue[0].1 == bridge_length {
+                let w = queue.removeFirst()
+                currentWeight+=w.0
+                maximum+=1
             }
+        if  cur < truck_weights.count , currentWeight >= truck_weights[cur] && maximum != 0  {
+                queue.append((truck_weights[cur],0))
+                currentWeight-=truck_weights[cur]
+                maximum-=1
+                cur+=1
+            }
+        for j in 0..<queue.count {
+            queue[j].1 += 1
         }
+        time+=1
     }
-    r += dirR[currentDir]
-    c += dirC[currentDir]
-    //break
-    if r < 0 || r >= N || c < 0 || c >= N || snakeQueue.contains([r,c]) {
-        break;
-    }
-    //Apple check
-    if graph[r][c] == 1 {
-        snakeQueue.append([r,c])
-        graph[r][c] = 0
-    } else {
-        snakeQueue.append([r,c])
-        snakeQueue.removeFirst()
-    }
-    time+=1
+    return time
 }
 
-print(time+1)
+solution(100, 100, [10, 10, 10, 10, 10, 10, 10, 10, 10, 10])
