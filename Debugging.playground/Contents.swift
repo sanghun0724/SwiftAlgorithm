@@ -1,11 +1,28 @@
 
 import Foundation
 
-func solution(_ numbers:[Int]) -> String {
-    let sortedArr = numbers.sorted{ Int("\($0)\($1)")! > Int("\($1)\($0)")! }
-    if sortedArr[0] == 0 {
-        return "0"
+func solution(_ priorities:[Int], _ location:Int) -> Int {
+    var queue = priorities
+    var ans = 1
+    var locationArr = [Int]()
+    for i in 0..<priorities.count {
+        locationArr.append(i)
     }
-    return sortedArr.reduce("") { $0 + "\($1)"}
+   
+ 
+    while true {
+        let cur = queue.removeFirst()
+        let loc = locationArr.removeFirst()
+        if queue.max() ?? -1 > cur {
+            queue.append(cur)
+            locationArr.append(loc)
+        } else {
+            if loc == location {
+                return ans
+            }
+            ans+=1
+        }
+    }
+    return 0
 }
-solution([6,10,2])
+solution([1,1,9,1,1], 0)
