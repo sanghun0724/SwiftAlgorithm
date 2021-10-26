@@ -1,35 +1,57 @@
 
-let k = Int(readLine()!)!
-var graph = [[Int]]()
-for _ in 1...k {
-    graph.append(Array(readLine()!.split(separator: " ").map{ Int(String($0))! }))
+let k = readLine()?.split(separator: " ").map{ Int(String($0))! }
+let n = k?[0] ?? 0
+let m = k?[1] ?? 0
+var links:[[Int]] = Array(repeating: [], count: n+2)
+for _ in 0..<m {
+    let tmp = readLine()?.split(separator: " ").map{ Int(String($0))! }
+    links[tmp?[1] ?? 0].append(tmp?[0] ?? 0)
 }
-var ans:[[Int]] = Array(repeating: Array(repeating: 0, count: k), count: k)
-var visited = Array(repeating: 0, count: k)
-func dfs(start:Int,limit:Int) {
-    for v in 0..<limit {
-        if visited[v] == 0 && graph[start][v] == 1 {
-            visited[v] = 1
-            dfs(start: v, limit: limit)
+var visited = Array(repeating: 0, count: n+1)
+
+
+func dfs(count:Int,net:Int) -> Int {
+    if links[net].isEmpty {
+        return 0
+    }
+    var res = count
+    for i in 0..<links[net].count {
+        if visited[i] == 0 {
+            visited[i] = 1
+            res += dfs(count:res+1, net: links[net][i])
         }
     }
+    
+    return res
+}
+var resArr = [Int]()
+for i in 0..<n {
+    resArr.append(dfs(count: 1, net: i))
+    
+    
+    for i in 0..<n+1 {
+        visited[i] = 0
+    }
 }
 
-for i in 0..<k {
-    dfs(start: i, limit: k)
-    
-    for j in 0..<k {
-        ans[i][j] = visited[j]
-    }
-    
-    for n in 0..<k {
-        visited[n] = 0
+var ansArr = [Int]()
+for (i,v) in resArr.enumerated() {
+    if resArr.max() == v {
+        ansArr.append(i)
     }
 }
 
-for i in 0..<ans.count {
-    for j in 0..<ans[0].count {
-        print("\(ans[i][j])",terminator:" ")
+
+if m == 0 {
+    if n != 0 {
+        for i in ansArr {
+            print(i+1,terminator:" ")
+        }
     }
-    print()
+} else {
+    for i in ansArr {
+        print(i,terminator:" ")
+    }
+}
+
 }
