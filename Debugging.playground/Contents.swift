@@ -2,32 +2,26 @@
 
 
 
-let dirX = [1,0,-1,0,0,0]
-let dirY = [0,1,0,-1,0,0]
-let dirZ = [0,0,0,0,1,-1]
-let firstLine = Array(readLine()!.split(separator: " ").map{Int(String($0))!})
-let M = firstLine[0]
-let N = firstLine[1]
-let H = firstLine[2]
-var graph3D = [[[Int]]]()
-var queue = [(Int,Int,Int)]()
-for z in 0..<H {
-    var graph2D = [[Int]]()
-    for y in 0..<N {
-        graph2D.append(Array(readLine()!.split(separator: " ").map{Int(String($0))!}))
-        for x in 0..<graph2D[0].count {
-            if graph2D[y][x] == 1 {
-                queue.append((z,y,x))
-            }
+let first = Array(readLine()!.split(separator: " ").map{Int($0)!})
+let M = first[0]
+let N = first[1]
+let dirR = [-1,0,1,0]
+let dirC = [0,-1,0,1]
+var graph = [[Int]]()
+var queue = [(Int,Int)]()
+for i in 0..<N {
+    let map = Array(readLine()!.split(separator: " ").map{Int($0)!})
+    graph.append(map)
+    for j in 0..<map.count {
+        if map[j] == 1 {
+            queue.append((i,j))
         }
     }
-    graph3D.append(graph2D)
 }
-
+var temp = [(Int,Int)]()
 var days = 0
 
-var temp = [(Int,Int,Int)]()
-if queue.count == M * N * H {
+if queue.count == M * N {
     print(0)
 } else {
     bfs()
@@ -37,40 +31,41 @@ if queue.count == M * N * H {
         print(days)
     }
 }
-var index = 0
+
+
+
 func bfs() {
+   var index = 0
     while queue.count > index {
         let cur = queue[index]
-
-        for d in 0..<dirX.count {
-            let x = cur.2 + dirX[d]
-            let y = cur.1 + dirY[d]
-            let z = cur.0 + dirZ[d]
-
-            if z < H && y < N && x < M && z >= 0 && y >= 0 && x >= 0{
-                if graph3D[z][y][x] == 0 {
-                    graph3D[z][y][x] = 1
-                    temp.append((z,y,x))
+        
+        for d in 0..<dirR.count {
+            let row = cur.0 + dirR[d]
+            let col = cur.1 + dirC[d]
+            
+            if row >= 0 && col >= 0 && row < graph.count && col < graph[0].count {
+                if graph[row][col] == 0 {
+                    graph[row][col] = 1
+                    temp.append((row,col))
                 }
             }
         }
-        if queue.count-1 == index,!temp.isEmpty {
-            days+=1
+        if queue.count-1 == index, !temp.isEmpty {
             queue+=temp
             temp.removeAll()
+            days+=1
         }
         index+=1
     }
 }
 
+
+
 func check() -> Int {
-    loop:for z in 0..<H {
-        for y in 0..<N {
-            for x in 0..<M {
-                if graph3D[z][y][x] == 0 {
-                    return -1
-                    break loop;
-                }
+    for i in 0..<graph.count {
+        for j in 0..<graph[0].count {
+            if graph[i][j] == 0 {
+                return -1
             }
         }
     }
