@@ -2,72 +2,33 @@
 
 
 
-let first = Array(readLine()!.split(separator: " ").map{Int($0)!})
-let M = first[0]
-let N = first[1]
-let dirR = [-1,0,1,0]
-let dirC = [0,-1,0,1]
+let first = Array(readLine()!.split(separator: " ").map { Int($0)! })
+let N = first[0]
+let M = first[1]
+let dirR = [-1,1,0,0]
+let dirC = [0,0,-1,1]
 var graph = [[Int]]()
-var queue = [(Int,Int)]()
-for i in 0..<N {
-    let map = Array(readLine()!.split(separator: " ").map{Int($0)!})
-    graph.append(map)
-    for j in 0..<map.count {
-        if map[j] == 1 {
-            queue.append((i,j))
+for _ in 1...N {
+    graph.append(Array(readLine()!).map{ Int(String($0))! })
+}
+var visitied = Array(repeating: Array(repeating: 0, count: M), count: N)
+var ans = Int.max
+func dfs(count:Int,row:Int,col:Int) {
+    if row == N-1 && col == M-1 {
+        ans = min(ans, count)
+    }
+    
+    for d in 0..<4 {
+        let r = row + dirR[d]
+        let c = col + dirC[d]
+        if r >= 0 && c >= 0 && r < N && c < M && visitied[r][c] != 1 , graph[r][c] == 1 {
+            visitied[r][c] = 1
+             dfs(count: count+1, row: r, col: c)
+            visitied[r][c] = 0
         }
     }
 }
-var temp = [(Int,Int)]()
-var days = 0
 
-if queue.count == M * N {
-    print(0)
-} else {
-    bfs()
-    if check() == -1 {
-        print(-1)
-    } else {
-        print(days)
-    }
-}
+dfs(count: 1, row: 0, col: 0)
+print(ans)
 
-
-
-func bfs() {
-   var index = 0
-    while queue.count > index {
-        let cur = queue[index]
-        
-        for d in 0..<dirR.count {
-            let row = cur.0 + dirR[d]
-            let col = cur.1 + dirC[d]
-            
-            if row >= 0 && col >= 0 && row < graph.count && col < graph[0].count {
-                if graph[row][col] == 0 {
-                    graph[row][col] = 1
-                    temp.append((row,col))
-                }
-            }
-        }
-        if queue.count-1 == index, !temp.isEmpty {
-            queue+=temp
-            temp.removeAll()
-            days+=1
-        }
-        index+=1
-    }
-}
-
-
-
-func check() -> Int {
-    for i in 0..<graph.count {
-        for j in 0..<graph[0].count {
-            if graph[i][j] == 0 {
-                return -1
-            }
-        }
-    }
-    return 1
-}
