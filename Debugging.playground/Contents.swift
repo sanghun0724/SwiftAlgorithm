@@ -15,24 +15,15 @@ let target = targets[1]
 var visited = [Int](repeating: 0, count: nums+1)
 
 
-func bfs() {
-    var queue = [start]
-    var index = 0
-
-    while queue.count > index {
-        let cur = queue[index]
-        
-        for man in links[cur] {
-            if man != start && visited[man] == 0 {
-                visited[man] = visited[cur] + 1
-                queue.append(man)
-            }
+func dfs(before:Int) {
+    for man in links[before] {
+        if man != start && visited[man] == 0 {
+            visited[man] = visited[before] + 1
+            dfs(before: man)
         }
-        index+=1
     }
 }
-bfs()
-
+dfs(before: start)
 if visited[target] == 0 {
     print(-1)
 } else {
