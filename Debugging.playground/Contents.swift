@@ -1,32 +1,32 @@
 
 
 
-let nums = Int(readLine()!)!
-let targets = readLine()!.split(separator: " ").map { Int(String($0))! }
+let n = Int(readLine()!)!
 let k = Int(readLine()!)!
-var links = [[Int]](repeating: [], count: nums+1)
+var links = [[Int]](repeating: [], count: n+1)
 for _ in 1...k {
-    let connection = readLine()!.split(separator: " ").map { Int($0)! }
-    links[connection[0]].append(connection[1])
-    links[connection[1]].append(connection[0])
+    let value = readLine()!.split(separator: " ").map { Int($0)! }
+    links[value[0]].append(value[1])
+    links[value[1]].append(value[0])
 }
-let start = targets[0]
-let target = targets[1]
-var visited = [Int](repeating: 0, count: nums+1)
+var visited = [Int](repeating: 0, count: n+1)
 
-
-func dfs(before:Int) {
-    for man in links[before] {
-        if man != start && visited[man] == 0 {
-            visited[man] = visited[before] + 1
-            dfs(before: man)
+func bfs() {
+    var queue = [1]
+    var index = 0
+    
+    while queue.count > index {
+        let cur = queue[index]
+        
+        for man in links[cur] {
+            if man != 1 && visited[man] == 0 {
+                visited[man] = visited[cur] + 1
+                queue.append(man)
+            }
         }
+        index+=1
     }
 }
-dfs(before: start)
-if visited[target] == 0 {
-    print(-1)
-} else {
-    print(visited[target])
-}
-
+bfs()
+let res = visited.filter { $0 == 2 || $0 == 1}.count
+print(res)
