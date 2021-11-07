@@ -1,32 +1,24 @@
 
 
 
-let n = Int(readLine()!)!
-let k = Int(readLine()!)!
-var links = [[Int]](repeating: [], count: n+1)
-for _ in 1...k {
-    let value = readLine()!.split(separator: " ").map { Int($0)! }
-    links[value[0]].append(value[1])
-    links[value[1]].append(value[0])
+public class ListNode {
+    public var val: Int
+    public var next: ListNode?
+    public init() { self.val = 0; self.next = nil; }
+    public init(_ val: Int) { self.val = val; self.next = nil; }
+    public init(_ val: Int, _ next: ListNode?) { self.val = val; self.next = next; }
 }
-var visited = [Int](repeating: 0, count: n+1)
 
-func bfs() {
-    var queue = [1]
-    var index = 0
-    
-    while queue.count > index {
-        let cur = queue[index]
-        
-        for man in links[cur] {
-            if man != 1 && visited[man] == 0 {
-                visited[man] = visited[cur] + 1
-                queue.append(man)
-            }
+class Solution {
+    func reverseList(_ head: ListNode?) -> ListNode? {
+        var resultNode:ListNode? = nil
+        var node = head
+        while node != nil {
+            var tmp = ListNode(node!.val,resultNode)
+            resultNode = tmp
+            node = node?.next
         }
-        index+=1
+        return resultNode
     }
 }
-bfs()
-let res = visited.filter { $0 == 2 || $0 == 1}.count
-print(res)
+
