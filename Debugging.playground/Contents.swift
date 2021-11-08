@@ -1,83 +1,86 @@
 
+let rowCol = readLine()!.split(separator: " ").map {Int($0)!}
 
-let line = readLine()!.split(separator: " ").map { Int(String($0))! }
-var graph = [[Int]]()
-for _ in 1...line[0] {
-    graph.append(readLine()!.split(separator: " ").map { Int(String($0))! })
+let row = rowCol[0]
+let col = rowCol[1]
+var zeroList = [(Int,Int)]()
+var moldList = [(Int,Int)]()
+var direction = [(0,1),(1,0),(0,-1),(-1,0)]
+var defaultArray = Array(repeating: [Int](), count: row)
+var mutableArray = defaultArray
+var maxSafeArea = 0
+
+for i in 0..<row {
+    let rowArray = readLine()!.split(separator: " ").map { Int($0)!}
+    defaultArray[i] = rowArray
 }
-let dirR = [-1,1,0,0]
-let dirC = [0,0,-1,1]
 
-
-//2   바이러스 퍼지게
-func bfs() {
-    for r in 0..<graph.count {
-        for c in 0..<graph[0].count {
-            if graph[r][c] == 2 {
-                var queue = [(r,c)]
-                var index = 0
-                
-                while queue.count > index {
-                    let cur = queue[index]
-                    
-                    for d in 0..<4 {
-                        let r = cur.0 + dirR[d]
-                        let c = cur.1 + dirC[d]
-                        
-                        if r >= 0 && c >= 0 && r < graph.count && c < graph[0].count && graph[r][c] == 0 {
-                            graph[r][c] = 2
-                            queue.append((r,c))
-                        }
-                    }
-                    index+=1
-                }
+func makeZeroList() {
+    for i in 0..<row {
+        for j in 0..<col {
+            if defaultArray[i][j] == 0 {
+                zeroList.append((i,j))
+            } else if defaultArray[i][j] == 2 {
+                moldList.append((i,j))
             }
         }
     }
 }
 
-func check() -> Int{
-    var res = 0
-    for i in 0..<graph.count {
-        for j in 0..<graph[0].count {
-            if graph[i][j] == 0 {
-                res+=1
+func bfs(loc:(Int,Int)) {
+    var queue = [loc]
+    
+    while !queue.isEmpty {
+        let first = queue.removeFirst()
+        for i in 0..<4 {
+            let next = (first.0 + direction[i].0, first.1  + direction[i].1)
+            
+            if next.0 >= row || next.1 >= col || next.0 < 0 || next.1 < 0 {
+                continue
             }
-        }
-    }
-    return res
-}
-
-var result = 0
-
-var tmp = graph
-
-loop:for i in 0..<graph.count {
-    for j in 0..<graph[0].count {
-        if tmp[i][j] == 0 {
-            tmp[i][j] = 1
-            for n in 0..<graph.count {
-                for m in 0..<graph[0].count {
-                    if tmp[n][m] == 0 {
-                        tmp[n][m] = 1
-                        for r in 0..<graph.count {
-                            for c in 0..<graph[0].count {
-                                if tmp[r][c] == 0 {
-                                    tmp[r][c] = 1
-                                    graph = tmp
-                                    bfs()
-                                    result = max(result,check())
-                                    tmp[r][c] = 0
-                                }
-                            }
-                        }
-                        tmp[n][m] = 0
-                    }
-                }
+            
+            if mutableArray[next.0][next.1] == 0 {
+                mutableArray[next.0][next.1] = 2
+                queue.append(next)
             }
-            tmp[i][j] = 0
         }
     }
 }
 
-print(result)
+func getSafeArea() -> Int {
+    var safeCount = 0
+    for i in 0..<row {
+        for j in 0..<col {
+            if mutableArray[i][j] == 0 {
+                safeCount+=1
+            }
+        }
+    }
+    return safeCount
+}
+
+
+makeZeroList()
+for i in 0..<zeroList.count {
+    for j in i+1..<zeroList.count {
+        
+        for k in j+1..<zeroList.count {
+            mutableArray = defaultArray
+            let x1 = zeroList[i]
+            let x2 = zeroList[j]
+            let x3 = zeroList[k]
+            
+            mutableArray[x1.0][x2.1] = 1
+            mutableArray[x2.0][x2.1] = 1
+            mutableArray[x3.0][x3.1] = 1
+            
+            for mold in moldList {
+                bfs(loc: mold)
+            }
+            
+            maxSafeArea = max(maxSafeArea,getSafeArea())
+        }
+    }
+}
+
+print(maxSafeArea)
