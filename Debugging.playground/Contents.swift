@@ -1,86 +1,82 @@
 
-let rowCol = readLine()!.split(separator: " ").map {Int($0)!}
-
-let row = rowCol[0]
-let col = rowCol[1]
-var zeroList = [(Int,Int)]()
-var moldList = [(Int,Int)]()
-var direction = [(0,1),(1,0),(0,-1),(-1,0)]
-var defaultArray = Array(repeating: [Int](), count: row)
-var mutableArray = defaultArray
-var maxSafeArea = 0
-
-for i in 0..<row {
-    let rowArray = readLine()!.split(separator: " ").map { Int($0)!}
-    defaultArray[i] = rowArray
+let line = readLine()!.split(separator: " ").map { Int($0)! }
+let m = line[0]
+var graph = [[Int]]()
+for _ in 1...m {
+    graph.append(Array(readLine()!.split(separator:" ").map{ Int($0)! }))
 }
 
-func makeZeroList() {
-    for i in 0..<row {
-        for j in 0..<col {
-            if defaultArray[i][j] == 0 {
-                zeroList.append((i,j))
-            } else if defaultArray[i][j] == 2 {
-                moldList.append((i,j))
+let dirR = [-1,1,0,0]
+let dirC = [0,0,-1,1]
+var zeroArray = [(Int,Int)]()
+var twoArray = [(Int,Int)]()
+var tmpArray = graph
+
+func makeArray() {
+    for i in 0..<graph.count {
+        for j in 0..<graph[0].count {
+            if graph[i][j] == 0 {
+                zeroArray.append((i,j))
+            } else if graph[i][j] == 2 {
+                twoArray.append((i,j))
             }
         }
     }
 }
-
-func bfs(loc:(Int,Int)) {
-    var queue = [loc]
-    
-    while !queue.isEmpty {
-        let first = queue.removeFirst()
-        for i in 0..<4 {
-            let next = (first.0 + direction[i].0, first.1  + direction[i].1)
-            
-            if next.0 >= row || next.1 >= col || next.0 < 0 || next.1 < 0 {
-                continue
-            }
-            
-            if mutableArray[next.0][next.1] == 0 {
-                mutableArray[next.0][next.1] = 2
-                queue.append(next)
-            }
-        }
+var visitied = [[Int]](repeating: [Int](repeating: 0, count: graph[0].count), count: graph.count)
+var tmpVisited = visitied
+func bfs(start:(Int,Int)) -> Int {
+    var queue = [start]
+    var index = 0
+    var flag = false
+    var res = 0
+    if visitied[start.0][start.1] == 0 {
+        visitied[start.0][start.1] = 1
+        res+=1
     }
-}
-
-func getSafeArea() -> Int {
-    var safeCount = 0
-    for i in 0..<row {
-        for j in 0..<col {
-            if mutableArray[i][j] == 0 {
-                safeCount+=1
-            }
-        }
-    }
-    return safeCount
-}
-
-
-makeZeroList()
-for i in 0..<zeroList.count {
-    for j in i+1..<zeroList.count {
+    while queue.count > index {
+        let cur = queue[index]
         
-        for k in j+1..<zeroList.count {
-            mutableArray = defaultArray
-            let x1 = zeroList[i]
-            let x2 = zeroList[j]
-            let x3 = zeroList[k]
-            
-            mutableArray[x1.0][x2.1] = 1
-            mutableArray[x2.0][x2.1] = 1
-            mutableArray[x3.0][x3.1] = 1
-            
-            for mold in moldList {
-                bfs(loc: mold)
+        for d in 0..<4 {
+            let r = cur.0 + dirR[d]
+            let c = cur.1 + dirC[d]
+        
+            if r < 0 || c < 0 || r >= graph.count || c >= graph[0].count || tmpArray[r][c] == 1 {
+                    continue
+            } else if tmpArray[r][c] == 0 {
+               flag = true
+            } else if tmpArray[r][c] == 2 && visitied[r][c] == 0 {
+                visitied[r][c] = 1
+                res+=1
+                queue.append((r,c))
             }
-            
-            maxSafeArea = max(maxSafeArea,getSafeArea())
         }
+        index+=1
     }
+    
+    return flag ? 0 : res
 }
 
-print(maxSafeArea)
+
+
+makeArray()
+var ans = 0
+for i in 0..<zeroArray.count {
+    for j in i+1..<zeroArray.count {
+        tmpArray = graph
+        
+        let one1 = zeroArray[i]
+        let one2 = zeroArray[j]
+        
+        tmpArray[one1.0][one1.1] = 1
+        tmpArray[one2.0][one2.1] = 1
+        
+        var tmpRes = 0
+        for t in twoArray {
+        tmpRes += bfs(start: t)
+        }
+        visitied = tmpVisited
+        ans = max(ans, tmpRes)
+    }
+}
+print(ans)
