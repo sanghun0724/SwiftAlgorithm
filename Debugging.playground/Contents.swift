@@ -1,111 +1,73 @@
+let dirR = [-1,1,0,0]
+let dirC = [0,0,1,-1]
+let first = Array(readLine()!.split(separator: " ").map { Int($0)! })
+let N = first[0]
+let L = first[1]
+let R = first[2]
 
+var map = [[Int]]()
+for _ in 1...N {
+    map.append(readLine()!.split(separator: " ").map { Int($0)! })
+}
+//bfs
+var days = 0
+var visiting = [[Int]](repeating: [Int](repeating: 0, count: map[0].count), count: map.count)
+var tmpVisiting = visiting
 
-import Foundation
+var before = map
+var after = bfs(map)
 
-func solution(_ character:String, _ monsters:[String]) -> String {
-    var maxExe = 0.0
-    var totalExe = 0.0
-    var indexVal = 0
-    var res = ""
-    //player
-    let player = character.split(separator: " ").map{ Int(String($0))!}
-    var playerHP = player[0]
-    let playerAttack = player[1]
-    let playerDefence = player[2]
-    let tmp = playerHP
-    //Monster
-    loop:for i in 0..<monsters.count {
-        var monster = monsters[i].split(separator: " ").map { String($0) }
-        let monsterName = monster.removeFirst()
-        let monsterInfo = monster.map{ Int($0)! }
-        let value = Double(monsterInfo[0])
-        var monsterHP = monsterInfo[1]
-        let monsterAttack = monsterInfo[2]
-        let monsterDefence = monsterInfo[3]
-
-
-        var sec = 0.0
-        while true {
-            playerHP = tmp
-            sec+=1
-            if playerAttack - monsterDefence > 0 {
-                monsterHP -= (playerAttack-monsterDefence)
-            }
-            if monsterHP <= 0 {
-                break
-            }
-            if monsterAttack - playerDefence > 0 {
-                playerHP -= (monsterAttack-playerDefence)
-            }
-            if playerHP <= 0 {
-                continue loop;
-            }
-            if sec > 1000.0 {
-                continue loop;
-            }
-        }
-        let exe = value / sec
-        if maxExe < exe {
-            maxExe = exe
-            res = monsterName
-            totalExe = value
-            indexVal = i
-        } else if maxExe == exe {
-            if totalExe < value {
-                maxExe = exe
-                res = monsterName
-                totalExe = value
-                indexVal = i
-            } else if totalExe == value {
-                if indexVal > i {
-                    maxExe = exe
-                    res = monsterName
-                    totalExe = value
-                    indexVal = i
-                }
-            }
-        }
+while true {
+    if before == after {
+        print(days)
+        break
+    } else {
+        days+=1
+        visiting = tmpVisiting
+        before = after
+        after = bfs(after)
     }
-    return res
 }
 
-
-solution("10 5 2", ["Knight 3 10 10 3","Wizard 5 10 15 1","Beginner 1 1 15 1"])
-
-
-
-import Foundation
-
-func solution(_ time:Int, _ gold:Int, _ upgrade:[[Int]]) -> Int {
-    var res = 0
-    
-    
-    let firstTime =  upgrade[0][1]
-    res = gold * (time/firstTime)
-    
-    loop:for i in 1...upgrade.count {
+func bfs(_ graph:[[Int]]) -> [[Int]] {
+ var queue = [(0,0)]
+ var index = 0
+ var count = 1
+ var tmp = Set<[Int]>()
+    while queue.count > index {
+        let cur = queue[index]
+        let r = cur.0
+        let c = cur.1
         
-        var tmpTime = time
-        var curMoney = 0
-        for i in 0..<upgrade.count - 1  {
-           let interval = upgrade[i][1]
-          
-            while curMoney < upgrade[i+1][1] {
-                tmpTime -= interval
-                curMoney += gold
-                if tmpTime < interval {
-                    res = max(res,curMoney)
-                    continue loop;
-                }
+        for d in 0..<3 {
+            let row = r + dirR[d]
+            let col = c + dirC[d]
+            
+            if row < 0 || col < 0 || row >= graph.count || col >= graph[0].count || visiting[row][col] == 1 {
+                continue;
             }
-            curMoney -= upgrade[i+1][0]
+            
+            visiting[row][col] = 1
+            if abs(graph[r][c] - graph[row][col]) >= L && abs(graph[r][c] - graph[row][col]) <= R {
+                count+=1
+                tmp.insert([row,col])
+                tmp.insert([r,c])
+            }
+            
         }
-        if tmpTime > 0 {
-            tmpTime -= upgrade.last![1]
-            curMoney += gold
-        }
-        res = max(res, curMoney)
+        index+=1
+    }
+    var total = 0
+    for loc in tmp {
+        total += graph[loc[0]][loc[1]]
+    }
+    let people = total / count
+    var res = graph
+    for loc in tmp {
+        res[loc[0]][loc[1]] = people
     }
     return res
 }
-solution(100, 200, [[0, 5], [1500, 3], [3000, 1]])
+
+
+
