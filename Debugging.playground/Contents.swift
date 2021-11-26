@@ -1,46 +1,41 @@
 
-var res:[[Int]] = [[]]
-func subsets(_ nums: [Int]) -> [[Int]] {
-    for i in nums {
-        helper(i)
+func solveSudoku(_ board: inout [[Character]]) {
+    if board.isEmpty || board[0].isEmpty { return }
+    helper(&board)
+}
+func helper(_ board: inout [[Character]]) -> Bool{
+    func isValid(_ row:Int,_ col:Int,_ num:Character) -> Bool {
+        let n = board.count , m = board[0].count
+        
+        for r in 0..<n where board[r][col] == num {
+            return false
+        }
+        
+        for c in 0..<m where board[row][c] == num {
+            return false
+        }
+        
+        for r in row / 3 * 3 ..< row / 3 * 3 + 3 {
+            for c in col / 3 * 3 ..< col / 3 * 3 + 3  where board[r][c] == num {
+                return false
+            }
+        }
+        return true
     }
-    let tmp = Set(res)
-    return Array(tmp)
+    
+    for i in 0..<board.count {
+        for j in 0..<board[0].count where board[i][j] == "." {
+            for num in 1...9 where isValid(i, j, Character("\(num)")) {
+                    board[i][j] = Character("\(num)")
+                if helper(&board) {
+                    return true
+                } else {
+                    board[i][j] = "."
+                }
+            }
+            return false
+        }
+    }
+    return true
 }
 
-func helper(_ new:Int) {
-    if res.count == 1 {
-        res.append([new])
-        return
-    }
-
-    for val in res {
-        var newArr = val
-        newArr.append(new)
-        res.append(newArr)
-    }
-    res.append([new])
-}
-subsets([1,2,3])
-
-var output = [[Int]]()
-func subsets(_ nums: [Int]) -> [[Int]] {
-    var nums = nums
-    backTracking(&nums, 0, [])
-    return output
-}
-
-func backTracking(_ input: inout [Int],_ index:Int,_ letter:[Int]) {
-
-    if input.count == index {
-        output.append(letter)
-        return
-    }
-    let c = input[index]
-    var letters = letter
-    letters.append(c)
-    backTracking(&input, index+1,letters)
-    backTracking(&input, index+1,letter)
-}
-
-subsets([1,2,3])
