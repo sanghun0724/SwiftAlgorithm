@@ -1,21 +1,17 @@
-var res = Set<[Int]>()
+
 func combine(_ n: Int, _ k: Int) -> [[Int]] {
-     helper([], n, k)
+    var res = Set<[Int]>()
+    func helper(_ arr:[Int],_ i:Int)  {
+        if arr.count == k {
+            res.insert(arr)
+            return
+        }
+        if i > n {return}
+        helper(arr+[i], i+1)
+        helper(arr, i+1)
+     
+    }
+     helper([],1)
     return Array(res)
 }
-
-func helper(_ arr:[Int],_ n:Int,_ k:Int) {
-    if arr.count == k {
-        res.insert(arr)
-        return
-    }
-    var arr1 = arr
-    for i in 1...n {
-        if arr1.contains(i) { return }
-            arr1.append(i)
-        helper(arr1, n, k)
-            arr1.removeLast()
-    }
-}
-
-
+combine(4, 2)
