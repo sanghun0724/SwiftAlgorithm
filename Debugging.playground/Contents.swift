@@ -1,35 +1,62 @@
 
-
-public class ListNode {
+public class TreeNode {
     public var val: Int
-    public var next: ListNode?
-    public init() { self.val = 0; self.next = nil; }
-    public init(_ val: Int) { self.val = val; self.next = nil; }
-    public init(_ val: Int, _ next: ListNode?) { self.val = val; self.next = next; }
+    public var left: TreeNode?
+    public var right: TreeNode?
+    public init() { self.val = 0; self.left = nil; self.right = nil; }
+    public init(_ val: Int) { self.val = val; self.left = nil; self.right = nil; }
+    public init(_ val: Int, _ left: TreeNode?, _ right: TreeNode?) {
+        self.val = val
+        self.left = left
+        self.right = right
+    }
 }
-
 
 class Solution {
-func mergeTwoLists(_ l1: ListNode?, _ l2: ListNode?) -> ListNode? {
-   return recursion(l1, l2, nil)
+      func isSameTree(_ p: TreeNode?, _ q: TreeNode?) -> Bool {
+        if p == nil || q == nil {
+            return p === q
+        }
+        if  p?.val != q?.val {
+            return  false
+        }
+        return isSameTree(p?.right, q?.right) && isSameTree(p?.left, q?.left)
+    }
 }
-func recursion(_ node1:ListNode?,_ node2:ListNode?,_ result:ListNode?) -> ListNode? {
-    guard node1 != nil || node2 != nil else {
-        return nil
-    }
-   
-    var val1 = node1?.val ?? Int.max
-    var val2 = node2?.val ?? Int.max
+//recursive -> itervative
+func check(_ p:TreeNode?,_ q:TreeNode?) -> Bool {
+    if p == nil && q == nil { return true }
+    if p == nil || q == nil { return false }
+    if p?.val != q?.val { return false }
+    return true
+}
+
+func isSameTree(_ p: TreeNode?, _ q: TreeNode?) -> Bool {
+    if p == nil && q == nil { return true }
+    if !check(p,q) { return false }
+    var queueP = [TreeNode?]()
+    var queueQ = [TreeNode?]()
+    queueP.append(p)
+    queueQ.append(q)
     
-    var result:ListNode
-    
-    if val1 > val2 {
-        result = ListNode(val2)
-        result.next = recursion(node1,node2?.next,result.next)
-    } else {
-        result = ListNode(val1)
-        result.next = recursion(node1?.next, node2,result.next)
+    while !queueP.isEmpty {
+        var curP = queueP.removeFirst()!
+        var curQ = queueQ.removeFirst()!
+        
+        if !check(curP, curQ) { return false }
+        
+        if !check(curP.left, curQ.left) { return false }
+        if curQ.left != nil {
+            queueQ.append(curQ.left)
+            queueP.append(curP.left)
+        }
+        
+        if !check(curP.right,curQ.right) { return false }
+        if curP.right != nil {
+            queueQ.append(curQ.right)
+            queueP.append(curP.right)
+        }
     }
-    return result
-  }
+    
+    return true
 }
