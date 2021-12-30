@@ -1,30 +1,21 @@
+let targetNum = Array(readLine()!.split(separator: " ").map { Int($0)!}).last!
+let arr = Array(readLine()!.split(separator: " ").map { Int($0)!})
 
-let input = readLine()!
-let N = Int(String(input.first!))!
-let M = Int(String(input.last!))!
+var res = 0
 
-var res = [[Int]]()
 
-func backTracking(_ arr:[Int],_ idx:Int) {
-    if idx == M {
-        res.append(arr)
+func backTracking(_ cur:Int,_ tot:Int) {
+    if cur == arr.count {
+        if tot == targetNum {
+            res+=1
+        }
         return
     }
-    var arr = arr
-    for i in 1...N {
-        if !arr.contains(i) {
-            arr.append(i)
-            backTracking(arr, idx+1)
-            arr.removeLast()
-        }
-    }
+    
+    backTracking(cur+1, tot)
+    backTracking(cur+1, tot + arr[cur])
 }
 
-
-backTracking([], 0)
-for i in res {
-    for j in i {
-        print(j,terminator:" ")
-    }
-    print("")
-}
+if targetNum == 0 { res -= 1}
+backTracking(0,0)
+print(res)
