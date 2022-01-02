@@ -1,89 +1,53 @@
-enum Direction:CaseIterable {
-    case up
-    case down
-    case left
-    case right
-    
-    var rotateCountToBeLeft:Int {
-        switch self {
-        case .up:
-            return 3
-        case .down:
-            return 1
-        case .left:
-            return 0
-        case .right:
-            return 2
-        }
-    }
+let first = readLine()!.split(separator: " ").map{ Int($0)! }
+let n = first[0]
+let k = first[1] - 5
+var words = [[String]]()
+for _ in 1...n {
+    let a = Array(String(readLine()!)).map{ String($0) }
+    words.append(a)
 }
 
-func rotateRightAngle(_ matrix:[[Int]]) -> [[Int]] {
-    let rowSize = matrix.count
-    let colSize = matrix[0].count
-    var rotated = [[Int]](repeating: [Int](repeating: 0, count: rowSize), count: colSize)
-    
-    for r in 0..<rowSize {
-        for c in 0..<colSize {
-            rotated[c][rowSize-r-1] = matrix[r][c]
-        }
-    }
-    return rotated
-}
 
-func tilt(_ matrix:[[Int]], to dir:Direction) -> [[Int]] {
-    var tilted = matrix
-    (0..<dir.rotateCountToBeLeft).forEach { (_) in
-        tilted = rotateRightAngle(tilted)
-    }
-    
-    for row in tilted.indices {
-        var  mixed = [Int](repeating: 0, count: tilted[row].count)
-        var movingPoint = 0
-        
-        for r in tilted[row] {
-            guard r != 0 else { continue }
-            if mixed[movingPoint] == 0 {
-                mixed[movingPoint] = r
-            } else if mixed[movingPoint] == r {
-                mixed[movingPoint] *= 2
-                movingPoint+=1
-            } else {
-                movingPoint+=1
-                mixed[movingPoint] = r
-            }
-        }
-        tilted[row] = mixed
-    }
-    
-    (0..<(4-dir.rotateCountToBeLeft)).forEach { _ in
-        tilted = rotateRightAngle(tilted)
-    }
-    return tilted
-}
 
-let n = Int(readLine()!)!
-var matrix = [[Int]]()
-
-for _ in 0..<n {
-    matrix.append(readLine()!.split(separator: " ").map{ Int($0)!})
-}
-
+var basic = ["a","n","i","c","t"]
 var maxCount = 0
-func searchmax(_ matrix:[[Int]],_ count:Int) {
-    guard count > 5 else  {
-        matrix.forEach {
-            $0.forEach {
-                maxCount = max(maxCount,$0)
-            }
-        }
+var removedWord = Set<String>()
+var removeTmp = [[String]]()
+for i in 0..<words.count {
+ let remove = words[i].filter {
+        !basic.contains($0)
+    }
+    remove.forEach { (val) in
+        removedWord.insert(val)
+    }
+    removeTmp.append(remove)
+}
+let removeWords = Array(removedWord)
+
+
+func backTracking(_ characters:[String],_ count:Int) {
+    if count == k || k <= 0 {
+        check(characters)
         return
     }
     
-    for dir in Direction.allCases {
-        let tilted = tilt(matrix, to: dir)
-        searchmax(tilted, count+1)
+    var characters = characters
+    for i in 0..<removeWords.count {
+        characters.append(removeWords[i])
+        backTracking(characters, count+1)
+        characters.removeLast()
     }
 }
-searchmax(matrix, 0)
+
+func check(_ arr:[String]) {
+    var maxTmp = 0
+    for remove in removeTmp {
+        if remove.filter({ !arr.contains($0) }).isEmpty {
+            maxTmp+=1
+        }
+    }
+       
+    maxCount = max(maxCount,maxTmp)
+}
+backTracking([], 0)
 print(maxCount)
