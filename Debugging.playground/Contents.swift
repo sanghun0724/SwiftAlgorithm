@@ -1,53 +1,58 @@
-let first = readLine()!.split(separator: " ").map{ Int($0)! }
-let n = first[0]
-let k = first[1] - 5
-var words = [[String]]()
+
+let n = Int(readLine()!)!
+let standard = Array(readLine()!).split(separator: " ").map { Int(String($0))! }
+var map = [[Int]]()
 for _ in 1...n {
-    let a = Array(String(readLine()!)).map{ String($0) }
-    words.append(a)
+    map.append(Array(readLine()!).split(separator: " ").map { Int(String($0))! })
 }
 
+var minimum = Int.max
+var res = [Int]()
 
-
-var basic = ["a","n","i","c","t"]
-var maxCount = 0
-var removedWord = Set<String>()
-var removeTmp = [[String]]()
-for i in 0..<words.count {
- let remove = words[i].filter {
-        !basic.contains($0)
-    }
-    remove.forEach { (val) in
-        removedWord.insert(val)
-    }
-    removeTmp.append(remove)
-}
-let removeWords = Array(removedWord)
-
-
-func backTracking(_ characters:[String],_ count:Int) {
-    if count == k || k <= 0 {
-        check(characters)
+func backTracking(_ gain:[[Int]],_ seq:[Int]) {
+    if check(gain,seq) {
         return
     }
-    
-    var characters = characters
-    for i in 0..<removeWords.count {
-        characters.append(removeWords[i])
-        backTracking(characters, count+1)
-        characters.removeLast()
+    var gain = gain
+    var seq = seq
+    for i in 0..<map.count {
+        if !gain.contains(map[i]) {
+            gain.append(map[i])
+            seq.append(i)
+            backTracking(gain,seq)
+            gain.removeLast()
+            seq.removeLast()
+        }
     }
 }
 
-func check(_ arr:[String]) {
-    var maxTmp = 0
-    for remove in removeTmp {
-        if remove.filter({ !arr.contains($0) }).isEmpty {
-            maxTmp+=1
-        }
+func check(_ arr:[[Int]],_ seq:[Int]) -> Bool {
+    if arr.isEmpty {
+        return false
     }
-       
-    maxCount = max(maxCount,maxTmp)
+    var mp = 0
+    var mf = 0
+    var ms = 0
+    var mu = 0
+    var val = 0
+    for i in 0..<arr.count {
+                mp += arr[i][0]
+                mf += arr[i][1]
+                ms += arr[i][2]
+                mu += arr[i][3]
+                val += arr[i][4]
+    }
+    if mp >= standard[0] && mf >= standard[1] && ms >= standard[2] && mu >= standard[3]  {
+        if minimum > val {
+            minimum = val
+            res = seq
+        }
+        return true
+    }
+    return false
 }
-backTracking([], 0)
-print(maxCount)
+backTracking([],[])
+print(minimum)
+res.forEach { (val) in
+    print(val+1,terminator: " ")
+}
