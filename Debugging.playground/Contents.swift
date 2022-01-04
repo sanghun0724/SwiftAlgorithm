@@ -1,62 +1,45 @@
+//1932
 let n = Int(readLine()!)!
-let standard = Array(readLine()!).split(separator: " ").map { Int(String($0))! }
-var map = [[Int]]()
+var matrix = [[Int]]()
 for _ in 1...n {
-    map.append(Array(readLine()!).split(separator: " ").map { Int(String($0))! })
-}
-var visitied = [Bool](repeating: false, count: 15)
-var minimum = Int.max
-var res = [Int]()
-
-struct node {
-    var num:Int
-    var mp:Int
-    var mf:Int
-    var ms:Int
-    var mu:Int
-    var val:Int
+    matrix.append(readLine()!.split(separator: " ").map{ Int($0)!})
 }
 
-func backTracking(_ idx:Int) {
-    check()
-    if  idx == n {
-        return
+
+for i in 1..<matrix.count {
+    for j in 0..<matrix[i].count {
+        if j == 0 {
+            matrix[i][j] = matrix[i-1][j] + matrix[i][j]
+        } else if j == matrix[i].count-1 {
+            matrix[i][j] = matrix[i-1][j-1] + matrix[i][j]
+        } else {
+        matrix[i][j] = max(matrix[i-1][j], matrix[i-1][j-1]) + matrix[i][j]
     }
-        visitied[idx] = true
-        backTracking(idx+1)
-        visitied[idx] = false
-        backTracking(idx+1)
+}
+}
+print(matrix.last!.max()!)
+
+
+
+
+//9095
+let T = Int(readLine()!)!
+var nums = [Int]()
+(1...T).forEach { _ in
+    nums.append(Int(readLine()!)!)
 }
 
-func check() {
-  
-    var num = [Int]()
-    var mp = 0
-    var mf = 0
-    var ms = 0
-    var mu = 0
-    var val = 0
-    for i in 0..<n {
-        if visitied[i] {
-            mp += map[i][0]
-            mf += map[i][1]
-            ms += map[i][2]
-            mu += map[i][3]
-            val += map[i][4]
-            num.append(i)
-        }
-       
-    }
-    if mp >= standard[0] && mf >= standard[1] && ms >= standard[2] && mu >= standard[3]  {
-        if minimum > val {
-            minimum = val
-            res = num
-        }
-    }
+var dp = [Int](repeating: -1, count: 11)
+dp[0] = 0
+dp[1] = 1
+dp[2] = 2
+dp[3] = 4
+
+for i in 4..<11 {
+    dp[i] = dp[i-3] + dp[i-2] + dp[i-1]
 }
-backTracking(0)
-print(minimum == Int.max ? -1 : minimum)
-res.sort()
-res.forEach { (val) in
-    print(val+1,terminator: " ")
+
+
+for num in nums {
+    print(dp[num])
 }
