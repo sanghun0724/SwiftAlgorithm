@@ -1,30 +1,31 @@
-
-
 let N = Int(readLine()!)!
-var matrix = [[Int]]()
-for _ in 1...N {
-    matrix.append(readLine()!.split(separator: " ").map{ Int($0)! })
+var graph = [[Int]]()
+(1...N).forEach { _ in
+    graph.append(readLine()!.split(separator: " ").map { Int($0)! })
 }
-var visitied = [[Int]](repeating: [Int](repeating: 0, count: N), count: N)
 
-visitied[0][0] = 1
 
-for i in 0..<N {
-    for j in 0..<N {
-        if i == N-1 && j == N-1 || visitied[i][j] == 0 { continue }
-        
-        let jump = matrix[i][j]
-        let row = jump + i
-        let col = jump + j
-        
-        if row < N {
-            visitied[row][j] += visitied[i][j]
-        }
-        
-        if col < N {
-            visitied[i][col] += visitied[i][j]
+var dp = [Int](repeating: 0, count: N)
+for i in 0..<graph.count {
+    dp[i] = graph[i][1]
+}
+
+for i in 1..<N {
+    for j in 0..<i  {
+        if i - j >= graph[j][0] {
+            dp[i] = max(dp[i], dp[j]+graph[i][1])
         }
     }
 }
-print(visitied)
-print(visitied[N-1][N-1])
+
+var res = 0
+
+for i in 0..<N {
+    if i + graph[i][0] <= N {
+        if res < dp[i] {
+            res = dp[i]
+        }
+    }
+}
+
+print(res)
