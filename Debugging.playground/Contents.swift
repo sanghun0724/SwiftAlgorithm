@@ -1,18 +1,26 @@
-let n = Int(readLine()!)!
-let nums = readLine()!.split(separator:" ").map { Int($0)! }
-
-print(nums.min()!,terminator: " ")
-print(nums.max()!)
-
-
-var map = [[Int]]()
-for _ in 1...10 {
-    map.append(readLine()!.split(separator: " ").map{ Int($0)! })
+var nums = [Int]()
+for _ in 1...9 {
+    nums.append(Int(readLine()!)!)
 }
-var res = map[0][1]
-var tmp = res
-for i in 1..<map.count {
-    tmp = tmp - map[i][0] + map[i][1]
-    res = max(res,tmp)
+var res = [Int]()
+func backTracking(_ people:[Int]) {
+    if people.reduce(0,+) == 100 && people.count == 7 {
+        res = people
+        return
+    }
+
+    var people = people
+    for i in 0..<nums.count {
+        if !people.contains(nums[i]) {
+            people.append(nums[i])
+            backTracking(people)
+            people.removeLast()
+        }
+    }
+    
 }
-print(res)
+backTracking([])
+res = res.sorted()
+res.forEach { val in
+    print(val)
+}
