@@ -1,26 +1,24 @@
-var nums = [Int]()
-for _ in 1...9 {
-    nums.append(Int(readLine()!)!)
-}
-var res = [Int]()
-func backTracking(_ people:[Int]) {
-    if people.reduce(0,+) == 100 && people.count == 7 {
-        res = people
-        return
-    }
+let input = readLine()!.split(separator: " ").map{Int($0)!}
+let one = input[0]
+let two = input[1]
+let standard = input.min()!
 
-    var people = people
-    for i in 0..<nums.count {
-        if !people.contains(nums[i]) {
-            people.append(nums[i])
-            backTracking(people)
-            people.removeLast()
-        }
+var big = 0
+var small = 0
+
+//최대공약수
+for i in 1...standard {
+    if one % i == 0 && two % i == 0 && big < i {
+        big = i
     }
-    
 }
-backTracking([])
-res = res.sorted()
-res.forEach { val in
-    print(val)
+
+//최소공배수
+for i in standard...100000000 {
+    if i % one == 0 && i % two == 0 {
+        small = i
+        break
+    }
 }
+print(big)
+print(small)
