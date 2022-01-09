@@ -1,24 +1,39 @@
-let input = readLine()!.split(separator: " ").map{Int($0)!}
-let one = input[0]
-let two = input[1]
-let standard = input.min()!
+//1
+let target = Array(String(readLine()!)).map{Int(String($0))!}
+var nums = readLine()!.split(separator: " ").map { Int($0)! }
+var A = nums[0]
+var B = nums[1]
 
-var big = 0
-var small = 0
+var arr = [Int]()
 
-//최대공약수
-for i in 1...standard {
-    if one % i == 0 && two % i == 0 && big < i {
-        big = i
+for  i in 1...1001 {
+    for j in 1...i {
+        arr.append(i)
     }
 }
 
-//최소공배수
-for i in standard...100000000 {
-    if i % one == 0 && i % two == 0 {
-        small = i
-        break
+print(arr[A-1..<B].reduce(0){ $0 + $1})
+
+//2
+let M = Int(readLine()!)!
+let N = Int(readLine()!)!
+
+var ans = [Int]()
+
+for val in M...N {
+    if val == 1 { continue }
+    var tmp = false
+    for i in 2..<val {
+        if val % i == 0 {
+           tmp = true
+            break
+        }
     }
+    tmp ? () : (ans.append(val))
 }
-print(big)
-print(small)
+if !ans.isEmpty {
+    print(ans.reduce(0,+))
+    print(ans.min()!)
+} else {
+    print(-1)
+}
