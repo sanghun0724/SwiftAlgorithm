@@ -1,39 +1,45 @@
-//1
-let target = Array(String(readLine()!)).map{Int(String($0))!}
-var nums = readLine()!.split(separator: " ").map { Int($0)! }
-var A = nums[0]
-var B = nums[1]
+let inputs = Array(readLine()!).map{String($0)}
 
-var arr = [Int]()
+var stack = [String]()
+var res = 0
+var isCheck = true
+var tmp = 1
 
-for  i in 1...1001 {
-    for j in 1...i {
-        arr.append(i)
-    }
-}
-
-print(arr[A-1..<B].reduce(0){ $0 + $1})
-
-//2
-let M = Int(readLine()!)!
-let N = Int(readLine()!)!
-
-var ans = [Int]()
-
-for val in M...N {
-    if val == 1 { continue }
-    var tmp = false
-    for i in 2..<val {
-        if val % i == 0 {
-           tmp = true
+for i in inputs.indices {
+    
+    if inputs[i] == "(" {
+        tmp *= 2
+        stack.append(inputs[i])
+    }  else if inputs[i] == "[" {
+        tmp *= 3
+        stack.append(inputs[i])
+    } else if inputs[i] == ")" {
+        if stack.isEmpty || stack.last != "(" {
+            isCheck = false
             break
         }
+        
+        if inputs[i-1] == "(" {
+            res += tmp
+        }
+        let _ = stack.popLast()
+        tmp /= 2
+    } else if inputs[i] == "]" {
+        if stack.isEmpty || stack.last != "[" {
+            isCheck = false
+            break
+        }
+        
+        if inputs[i-1] == "[" {
+            res += tmp
+        }
+        let _ = stack.popLast()
+        tmp /= 3
     }
-    tmp ? () : (ans.append(val))
 }
-if !ans.isEmpty {
-    print(ans.reduce(0,+))
-    print(ans.min()!)
+
+if !isCheck || !stack.isEmpty {
+    print(0)
 } else {
-    print(-1)
+    print(res)
 }
