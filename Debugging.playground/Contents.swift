@@ -1,45 +1,29 @@
-var nums = readLine()!.split(separator: " ").map { Int($0)! }
-var A = nums[0]
-var B = nums[1]
-
-var f = 1
-var t = 1
-while A > f  {
-    A -= f
-    f+=1
-}
-while B > t {
-    B -= t
-    t+=1
-}
-
+let f = readLine()!.split(separator: " ").map { Int($0)! }
+let h = f[0]
+let w = f[1]
+let matrix = readLine()!.split(separator: " ").map { Int($0)! }
+var map = [[Bool]](repeating: [Bool](repeating: false, count: w), count: h)
 var res = 0
-if  f != t {
-    diff()
-} else {
-    equals()
+
+for c in 0..<w {
+        for r in (h-matrix[c])..<h {
+            map[r][c] = true
+        }
 }
 
-func equals() {
-    let tmp = abs(A-B)
-    (0...tmp).forEach { _ in
-        res += f
+var tmp = false
+var loc = 0
+for r in 0..<h {
+    for c in 0..<w  {
+        if map[r][c] && tmp == false {
+            tmp = true
+            loc = c
+        } else if map[r][c] == true && tmp == true {
+            res += c - loc - 1
+            loc = c
+        }
     }
+    tmp = false
+    loc = 0
 }
-
-
-func diff() {
-    for _ in A...f {
-        res+=f
-    }
-
-    for _ in 1...B {
-        res+=t
-    }
-
-    for i in (f+1)..<t {
-        res += i * i
-    }
-}
-
 print(res)
