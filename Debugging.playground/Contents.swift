@@ -1,45 +1,45 @@
-let inputs = Array(readLine()!).map{String($0)}
+var nums = readLine()!.split(separator: " ").map { Int($0)! }
+var A = nums[0]
+var B = nums[1]
 
-var stack = [String]()
+var f = 1
+var t = 1
+while A > f  {
+    A -= f
+    f+=1
+}
+while B > t {
+    B -= t
+    t+=1
+}
+
 var res = 0
-var isCheck = true
-var tmp = 1
+if  f != t {
+    diff()
+} else {
+    equals()
+}
 
-for i in inputs.indices {
-    
-    if inputs[i] == "(" {
-        tmp *= 2
-        stack.append(inputs[i])
-    }  else if inputs[i] == "[" {
-        tmp *= 3
-        stack.append(inputs[i])
-    } else if inputs[i] == ")" {
-        if stack.isEmpty || stack.last != "(" {
-            isCheck = false
-            break
-        }
-        
-        if inputs[i-1] == "(" {
-            res += tmp
-        }
-        let _ = stack.popLast()
-        tmp /= 2
-    } else if inputs[i] == "]" {
-        if stack.isEmpty || stack.last != "[" {
-            isCheck = false
-            break
-        }
-        
-        if inputs[i-1] == "[" {
-            res += tmp
-        }
-        let _ = stack.popLast()
-        tmp /= 3
+func equals() {
+    let tmp = abs(A-B)
+    (0...tmp).forEach { _ in
+        res += f
     }
 }
 
-if !isCheck || !stack.isEmpty {
-    print(0)
-} else {
-    print(res)
+
+func diff() {
+    for _ in A...f {
+        res+=f
+    }
+
+    for _ in 1...B {
+        res+=t
+    }
+
+    for i in (f+1)..<t {
+        res += i * i
+    }
 }
+
+print(res)
