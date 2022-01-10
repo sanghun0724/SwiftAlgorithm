@@ -3,7 +3,7 @@ SwiftAlgorithm/[SangHeon BLOG ##Swift](https://sangheon0724.medium.com/, "blog l
 =============
 ---------------------------------------
 * Swift Data-Structure
-  * [기본 자료구조 STACK(Feat.Swift) 알아보기](https://sangheon0724.medium.com/%EA%B8%B0%EB%B3%B8-%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0-stack-feat-swift-%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0-66000b69e950 , "blog post")
+  * [기본 자료구조 STACK(Feat.Swift) 알아보기](https://sangheon0724.medium.com/%EA%B8%B0%EB%B3%B8-%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0-stack-feat-swift-%EC%95%8C%EC%95%84%EB%B3%B4%EA%B8%B0-66000b69e950 "blog post")
   * [기본 자료구조 QUEUE(Feat.Swift)에 대해 알아보자](https://sangheon0724.medium.com/%EA%B8%B0%EB%B3%B8-%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0-queue-feat-swift-%EC%97%90-%EB%8C%80%ED%95%B4-%EC%95%8C%EC%95%84%EB%B3%B4%EC%9E%90-74486c8929f2, "blog post")
   * [자료구조 Circular Queue(ring buffer)에 대해서 알아보자(Feat.Swift)](https://sangheon0724.medium.com/%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0-circular-queue-ring-buffer-%EC%97%90-%EB%8C%80%ED%95%B4%EC%84%9C-%EC%95%8C%EC%95%84%EB%B3%B4%EC%9E%90-feat-swift-f14081aad573, "blog post")
   * [자료구조 Priority Queue(Feat.Swift)에 대해서 알아보자
