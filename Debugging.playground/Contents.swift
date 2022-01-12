@@ -1,53 +1,52 @@
-
+//O(N^2)
 let f = readLine()!.split(separator: " ").map { Int($0)! }
 let N = f[0]
-let K = f[1]
-let objects = readLine()!.split(separator: " ").map {Int($0)!}
+let S = f[1]
+let nums = readLine()!.split(separator: " ").map{ Int($0)! }
 
-var tap = [Int]()
-var res = 0
-var check = false
-for i in 0..<K {
-    //1
-    if tap.contains(objects[i]) { continue }
-    
-    var pVal = -1
-    var removeVal = -1
-    //2
-    if tap.count == N {
-        var last = 0
-        for idx in 0..<tap.count {
-            if !(objects[i+1..<K].contains(tap[idx])) {
-                pVal = tap[idx]
-                break
-            } else {
-                let index = objects[i+1..<K].firstIndex(of: tap[idx])!
-                last = max(last,index)
-                let laterUse = objects[last]
-                removeVal = laterUse
-            }
-        }
-        if pVal != -1 && removeVal != -1 { removeVal = -1 }
-    }
-    
-    if removeVal != -1 {
-        let idx = tap.firstIndex(of: removeVal)!
-        tap.remove(at: idx)
-        res+=1
-    }
-    if pVal != -1 {
-        let idx = tap.firstIndex(of: pVal)!
-        tap.remove(at: idx)
-        res+=1
-    }
-    if tap.count < N {
-        tap.append(objects[i])
-    }
-    if i == K-1 {
-        if !tap.contains(objects[i]) {
-            res+=1
+var p1 = 0
+var p2 = 1
+
+var res = Int.max
+
+for i in 0..<N {
+    let def = nums[i]
+    var arr = [def]
+    if nums[i] == S { res = 1; break}
+    for j in i+1..<N {
+        arr.append(nums[j])
+        let val =  arr.reduce(0,+)
+        if val >= S  {
+            res = min(res, arr.count)
+            break
         }
     }
 }
 
+print(res == Int.max ? 0 : res)
+
+//O(N)
+let f = readLine()!.split(separator: " ").map { Int($0)! }
+let N = f[0]
+let S = f[1]
+var nums = readLine()!.split(separator: " ").map{ Int($0)! }
+nums.append(0)
+var low = 0
+var high = 0
+var res = N+1
+var sum = nums[0]
+
+while low <= high && high < N {
+    if sum < S {
+        high+=1
+        sum+=nums[high]
+    } else  {
+       let len = high - low + 1
+       res = min(res,len)
+       sum-=nums[low]
+       low+=1
+    }
+}
+
+if res == N+1 { res = 0 }
 print(res)
