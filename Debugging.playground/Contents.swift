@@ -1,52 +1,22 @@
-//O(N^2)
-let f = readLine()!.split(separator: " ").map { Int($0)! }
-let N = f[0]
-let S = f[1]
-let nums = readLine()!.split(separator: " ").map{ Int($0)! }
-
-var p1 = 0
-var p2 = 1
-
-var res = Int.max
-
-for i in 0..<N {
-    let def = nums[i]
-    var arr = [def]
-    if nums[i] == S { res = 1; break}
-    for j in i+1..<N {
-        arr.append(nums[j])
-        let val =  arr.reduce(0,+)
-        if val >= S  {
-            res = min(res, arr.count)
-            break
+//벨만포드 시간초과
+let n = Int(readLine()!)!
+let M = Int(readLine()!)!
+var dist = [Int](repeating: Int.max, count: n+1)
+var graph = [[Int]]()
+for _ in 0...M {
+    graph.append(readLine()!.split(separator: " ").map{Int($0)!})
+}
+let t = graph.popLast()!
+dist[t[0]] = 0
+func BellmanFord() {
+    for _ in 1..<n {
+        for e in 0..<M {
+            if dist[graph[e][0]] == Int.max { continue }
+            if dist[graph[e][1]] <= dist[graph[e][0]] + graph[e][2] { continue }
+            dist[graph[e][1]] = dist[graph[e][0]] + graph[e][2]
         }
     }
 }
+BellmanFord()
+print(dist[t[1]])
 
-print(res == Int.max ? 0 : res)
-
-//O(N)
-let f = readLine()!.split(separator: " ").map { Int($0)! }
-let N = f[0]
-let S = f[1]
-var nums = readLine()!.split(separator: " ").map{ Int($0)! }
-nums.append(0)
-var low = 0
-var high = 0
-var res = N+1
-var sum = nums[0]
-
-while low <= high && high < N {
-    if sum < S {
-        high+=1
-        sum+=nums[high]
-    } else  {
-       let len = high - low + 1
-       res = min(res,len)
-       sum-=nums[low]
-       low+=1
-    }
-}
-
-if res == N+1 { res = 0 }
-print(res)
