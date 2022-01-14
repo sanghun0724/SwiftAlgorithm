@@ -1,85 +1,146 @@
-class PriorityQueue<T> {
-    private var heap: [T] = []
-    private let comparing: (_ o1: T, _ o2: T) -> Bool
-    init(_ comparing:  @escaping (_ o1: T, _ o2: T) -> Bool) { self.comparing = comparing }
-    func size() -> Int { heap.count }
-    func isEmpty() -> Bool { heap.isEmpty }
-    func clear() { heap.removeAll() }
-    func peek() -> T? { heap.first }
-    func push(_ value: T) {
-        heap.append(value)
-        if heap.count == 1 { return }
-        var valueIndex = heap.count - 1
-        var parentIndex = (valueIndex - 1) / 2
-        while !comparing(heap[parentIndex], heap[valueIndex]) {
-            heap.swapAt(valueIndex, parentIndex)
-            valueIndex = parentIndex
-            parentIndex = (valueIndex - 1) / 2
-            if valueIndex == 0 { break }
-        }
+import Foundation
+
+final class FastIO {
+    private let buffer: [UInt8]
+    private var index: Int = 0
+    private let fhOutput: FileHandle = FileHandle.standardOutput
+    
+    init(fhInput: FileHandle = FileHandle.standardInput) {
+        buffer = Array(try! fhInput.readToEnd()!) + [UInt8(0)]
     }
-    func pop() -> T? {
-        if heap.count == 0 { return nil }
-        if heap.count == 1 { return heap.removeFirst() }
-        func isChildEmpty(_ value: Int, _ left: Int, _ right: Int) -> Bool {
-            if heap.count <= left { return true }
-            if heap.count > right { return false }
-            if comparing(heap[value], heap[left]) { return true }
-            heap.swapAt(value, left)
-            return true
+    
+    @inline(__always) private func read() -> UInt8 {
+        defer {
+            index += 1
         }
-        heap.swapAt(0, heap.count - 1)
-        let answer = heap.removeLast()
-        var valueIndex = 0
-        var leftIndex = valueIndex * 2 + 1
-        var rightIndex = valueIndex * 2 + 2
-        if isChildEmpty(valueIndex, leftIndex, rightIndex) { return answer }
-        while !comparing(heap[valueIndex], heap[leftIndex])
-                || !comparing(heap[valueIndex], heap[rightIndex])
-        {
-            let index = comparing(heap[leftIndex], heap[rightIndex]) ? leftIndex : rightIndex
-            heap.swapAt(valueIndex, index)
-            valueIndex = index
-            leftIndex = valueIndex * 2 + 1
-            rightIndex = valueIndex * 2 + 2
-            if isChildEmpty(valueIndex, leftIndex, rightIndex) { break }
+        return buffer[index]
+    }
+    
+    @inline(__always) func readInt() -> Int {
+        var sum = 0
+        var now = read()
+        var isPositive = true
+        while now == 10 || now == 32 {
+            now = read()
         }
-        return answer
+        if now == 45 {
+            isPositive.toggle(); now = read()
+        }
+        while now >= 48, now <= 57 {
+            sum = sum * 10 + Int(now - 48)
+            now = read()
+        }
+        return sum * (isPositive ? 1 : -1)
+    }
+    
+    @inline(__always) func readString() -> String {
+        var now = read()
+        while now == 10 || now == 32 {
+            now = read()
+        }
+        let beginIndex = index-1
+        while now != 10, now != 32, now != 0 {
+            now = read()
+        }
+        return String(bytes: Array(buffer[beginIndex..<(index-1)]), encoding: .ascii)!
+    }
+    
+    @inline(__always) func readByteSequenceWithoutSpaceAndLineFeed() -> [UInt8] {
+        var now = read()
+        while now == 10 || now == 32 {
+            now = read()
+        }
+        let beginIndex = index - 1
+        while now != 10,
+              now != 32,
+              now != 0 {
+            now = read()
+        }
+        return Array(buffer[beginIndex..<(index - 1)])
+    }
+    
+    @inline(__always) func print(_ s: String) {
+        fhOutput.write(s.data(using: .utf8)!)
     }
 }
-struct Edge {
-    var target:Int
-    var weight:Int
-}
 
-let N = Int(readLine()!)!
-let M = Int(readLine()!)!
-var dist = [Int](repeating: Int.max, count: N+1)
-var graph = [[Int]](repeating: [Int](repeating: 0, count: N+1), count: N+1)
-for _ in 1...M {
-    let val = readLine()!.split(separator: " ").map{Int($0)!}
-    if graph[val[0]][val[1]] != 0 { graph[val[0]][val[1]] = min(graph[val[0]][val[1]],val[2])}
-    else { graph[val[0]][val[1]] = val[2]}
-}
-let t = readLine()!.split(separator: " ").map{Int($0)!}
-dist[t[0]] = 0
-
-let pq = PriorityQueue<Edge> { $0.weight < $1.weight }
-pq.push(Edge(target: t[0], weight: 0))
-
-
-
-while !pq.isEmpty() {
-    let edge = pq.pop()!
-    for i in 0..<graph.count {
-        if graph[edge.target][i] == 0 {continue}
-        if dist[i] < dist[edge.target] + graph[edge.target][i] {continue}
+struct Heap {
+    var elements: [Int] = [-1]
+    func leftChild(of index: Int) -> Int {
+        return index * 2
+    }
+    func rightChild(of index: Int) -> Int {
+        return index * 2 + 1
+    }
+    func parent(of index: Int) -> Int {
+        return index / 2
+    }
+    mutating func add(element: Int) {
+        elements.append(element)
+    }
+    mutating func diveDown(from index: Int) {
+        var largest = index
+        let leftIndex = self.leftChild(of: index)
+        let rightIndex = self.rightChild(of: index)
         
-        dist[i] = dist[edge.target] + graph[edge.target][i]
-        pq.push(Edge(target: i, weight: dist[edge.target] + graph[edge.target][i]))
+        if leftIndex < elements.endIndex && elements[leftIndex] > elements[index] {
+            largest = leftIndex
+        }
+        if rightIndex < elements.endIndex && elements[rightIndex] > elements[largest] {
+            largest = rightIndex
+        }
+        if largest != index {
+            elements.swapAt(largest, index)
+            self.diveDown(from: largest)
+        }
+    }
+    mutating func swimUp(from index: Int) {
+        var index = index
+        while index > 1 && self.elements[index/2] < self.elements[index] {
+            self.elements.swapAt(index/2, index)
+            index /= 2
+        }
+    }
+    mutating func insert(node: Int) {
+        self.elements.append(node)
+        self.swimUp(from: self.elements.endIndex - 1)
+    }
+    mutating func remove() -> Int? {
+        if self.elements.count == 1 { return nil }
+        self.elements.swapAt(1, elements.endIndex - 1)
+        let deleted = elements.removeLast()
+        self.diveDown(from: 1)
+        
+        return deleted
     }
 }
 
-print(dist[t[1]])
+struct PriorityQueue {
+    private var heap = Heap()
+    var isEmpty: Bool {
+        return heap.elements.count == 1
+    }
+    func peak() -> Int {
+        return self.heap.elements[1]
+    }
+    mutating func push(element: Int) {
+        return self.heap.insert(node: element)
+    }
+    mutating func pop() -> Int? {
+        return self.heap.remove()
+    }
+}
 
+let fio = FastIO()
+let n = fio.readInt()
+var pq = PriorityQueue()
 
+for _ in 0..<(n*n) {
+    pq.push(element: fio.readInt())
+}
+
+for _ in 0..<n-1 {
+    _ = pq.pop()
+}
+
+fio.print("\(pq.peak())")
