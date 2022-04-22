@@ -1,36 +1,36 @@
 import Foundation
 
-let input = readLine()!.split(separator: " ").map { Int($0)! }
-let n = input[0]
-let k = input[1]
+let s = Int(readLine()!)
 
-var queue  = Queue([n])
-var visitied = [Int](repeating: -1, count: 100001)
-visitied[n] = 0 //출발지점이니
+var queue = Queue([(1,0)])
+var visited = [[Int]](repeating: [], count: 2001)
+visited[1].append(0)
+var time = 0
 
-while !queue.isEmpty {
-    let f = queue.pop()!
+loop:while !queue.isEmpty {
     
-    if f == k {
-        var foot = [k]
-        var k = k
+    for _ in 0..<queue.count {
+        let cur = queue.pop()!
         
-        while k != n {
-            foot.append(visitied[k])
-            k = visitied[k]
+        if cur.0 == s {
+            print(time)
+            break loop;
         }
-        print(foot.count-1)
-        print(foot.reversed().map{String($0)}.joined(separator: " "))
-        break;
+        
+        if cur.0-1 >= 0 && !visited[cur.0-1].contains(cur.1) {
+            visited[cur.0-1].append(cur.1)
+            queue.push((cur.0-1,cur.1))
+        }
+        
+        if cur.0 + cur.1 < 2001 && !visited[cur.0 + cur.1].contains(cur.1) {
+            visited[cur.0 + cur.1].append(cur.1)
+            queue.push((cur.0 + cur.1, cur.1))
+        }
+        queue.push((cur.0,cur.0))
     }
-    
-    let comb = [f+1, f-1, f*2]
-    
-    for combFact in comb where combFact >= 0 && combFact < 100001 && visitied[combFact] == -1{
-        visitied[combFact] = f
-        queue.push(combFact)
-    }
+   time+=1
 }
+
 
 class Queue<T> {
     var enqueue: [T]
