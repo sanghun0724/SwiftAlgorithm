@@ -1,35 +1,53 @@
 import Foundation
 
-let s = Int(readLine()!)
-
-var queue = Queue([(1,0)])
-var visited = [[Int]](repeating: [], count: 2001)
-visited[1].append(0)
-var time = 0
-
-loop:while !queue.isEmpty {
-    
-    for _ in 0..<queue.count {
-        let cur = queue.pop()!
-        
-        if cur.0 == s {
-            print(time)
-            break loop;
-        }
-        
-        if cur.0-1 >= 0 && !visited[cur.0-1].contains(cur.1) {
-            visited[cur.0-1].append(cur.1)
-            queue.push((cur.0-1,cur.1))
-        }
-        
-        if cur.0 + cur.1 < 2001 && !visited[cur.0 + cur.1].contains(cur.1) {
-            visited[cur.0 + cur.1].append(cur.1)
-            queue.push((cur.0 + cur.1, cur.1))
-        }
-        queue.push((cur.0,cur.0))
-    }
-   time+=1
+let input = readLine()!.split(separator: " ").map { Int($0)! }
+let n = input[0]
+let m = input[1]
+var matrix = [[Int]]()
+for _ in 1...n {
+    matrix.append(readLine()!.split(separator: " ").map { Int($0)! })
 }
+
+let dirR = [-1,1,0,0,-1,1,-1,1]
+let dirC = [0,0,-1,1,-1,1,1,-1]
+
+var distance = 0
+
+func bfs(_ r:Int,_ c:Int) {
+    var queue = Queue([(r,c,0)])
+    var visitied = [[Bool]](repeating: [Bool](repeating: false, count: 51), count: 51)
+    while !queue.isEmpty {
+        let cur = queue.pop()!
+        let row = cur.0
+        let col = cur.1
+        let dis = cur.2
+        
+        if matrix[row][col] == 1 {
+            dis > distance ? (distance = dis):()
+            break;
+        }
+        
+        for i in 0..<8 {
+            let r = row + dirR[i]
+            let c = col + dirC[i]
+            
+            if r >= 0 && r < n && c >= 0 && c < m && !visitied[r][c] {
+                visitied[r][c] = true
+                queue.push((r,c,dis+1))
+            }
+        }
+    }
+}
+
+for r in 0..<n {
+    for c in 0..<m {
+        if matrix[r][c] != 1 {
+            bfs(r,c)
+        }
+    }
+}
+
+print(distance)
 
 
 class Queue<T> {
