@@ -7,7 +7,12 @@
 
 // 장점
 // 시간 복잡도가 좋은 편
-// 가장 유용할때는 가장 극값들을 구할때 유용 
+// 가장 유용할때는 가장 극값들을 구할때 유용
+
+// heap sort 구현 두가지 방법
+// -> 사실 원리는 같음
+
+// MARK: 1번 케이스
 public struct Heap<T> {
     
     // heap's node 저장 하는 Array
@@ -136,8 +141,57 @@ public func heapsort<T>(_ a: [T], _ sort: @escaping (T, T) -> Bool) -> [T] {
   return h.sort()
 }
 
-let arr = [230, 10, 60, 550, 40, 220, 20]
-var heap = Heap(array: arr, sort: >)
-print(heap.sort())
-
 // ref : https://devmjun.github.io/archive/HeapSort
+
+
+
+// MARK:  2번 케이스
+// Max heap 일때
+func heapsort(_ arr: inout [Int]) -> [Int] {
+    func siftdown(_ arr: inout [Int], at i: Int, size: Int) {
+        let leftChildIndex = 2 * i + 1
+        let rightChildIndex = leftChildIndex + 1
+        var largest = i
+
+        if leftChildIndex < size && arr[leftChildIndex] > arr[i] {
+            largest = leftChildIndex
+        }
+
+        if rightChildIndex < size && arr[rightChildIndex] > arr[largest] {
+            largest = rightChildIndex
+        }
+
+        if largest != i {
+            arr.swapAt(i, largest)
+            siftdown(&arr, at: largest, size: size)
+        }
+    }
+
+    func heapify(_ arr: inout [Int], size: Int) {
+        var p = (size / 2) - 1
+
+        while p >= 0 {
+            siftdown(&arr, at: p, size: size)
+            p -= 1
+        }
+    }
+
+    var arr = arr
+    let size = arr.count
+
+    heapify(&arr, size: size)
+    var end = size - 1
+
+    while end > 0 {
+        arr.swapAt(0, end)
+        siftdown(&arr, at: 0, size: end)
+        end -= 1
+    }
+
+    return arr
+}
+
+var arr = [230, 10, 60, 550, 40, 220, 20]
+//var heap = Heap(array: arr, sort: >)
+let sortedArr = heapsort(&arr)
+print(sortedArr)

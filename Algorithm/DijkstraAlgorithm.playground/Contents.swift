@@ -1,6 +1,6 @@
-import Foundation
 
 
+// MARK: 구현 버전 1
 
 let graph: [String: [String: Int]] = [
     "A" : ["B": 9, "C" : 1, "D" : 15],
@@ -146,3 +146,7 @@ func dijikstra(graph:[String:[String:Int]], start:String) -> [String:Int] {
 //2.우선순위 큐에 insert/pop 하는 과정 = 𝑂(𝑙𝑜𝑔𝐸) (heap완전이진트리니까)
 //이렇게 걸림!! 따라서 이 둘을 더한
 //𝑂(𝐸𝑙𝑜𝑔𝐸) <- 시간 복잡도
+
+
+// MARK: 구현 버전 2
+
